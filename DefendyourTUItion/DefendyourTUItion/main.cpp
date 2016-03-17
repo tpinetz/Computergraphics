@@ -9,9 +9,11 @@ int main() {
 	}
 
 	if (!scene->run()) {
-		std::cerr << "Unexpectatly failed to running the game";
+		std::cerr << "Unexpectatly failed running the game";
 		return -1;
 	}
+
+	delete scene;
 
 	return 0;
 }

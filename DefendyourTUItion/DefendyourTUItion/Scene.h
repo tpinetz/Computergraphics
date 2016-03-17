@@ -1,10 +1,11 @@
 #pragma once
 #include "MainHeaders.h"
+#include "ShaderHelper.h"
 
 class Scene
 {
 private:
-	GLFWwindow* window;
+	void render();
 
 public:
 	Scene();
@@ -13,5 +14,12 @@ public:
 	bool init();
 
 	bool run();
+
+private:
+	GLFWwindow* window;
+	GLuint VertexArrayID;
+	GLuint vertexbuffer;
+	ShaderHelper* shaderHelper;
+
 };
 
