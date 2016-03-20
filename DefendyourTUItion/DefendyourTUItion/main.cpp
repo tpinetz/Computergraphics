@@ -3,6 +3,7 @@
 int main() {
 	Scene* scene = new Scene();
 	
+	
 	if (!scene->init()) {
 		std::cerr << "Failed to init Scene.";
 		return -1;
