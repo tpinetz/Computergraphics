@@ -50,7 +50,7 @@ bool Scene::init() {
 	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	this->shaderHelper = new ShaderHelper(); 
-	if (!this->shaderHelper->loadShader("DefendyourTUItion/VertexShader.vertexshader", "DefendyourTUItion/fragmentShader.fragmentshader")) {
+	if (!this->shaderHelper->loadShader("VertexShader.vertexshader", "fragmentShader.fragmentshader")) {
 		std::cerr << "Failed to read Shader";
 		return false;
 	}

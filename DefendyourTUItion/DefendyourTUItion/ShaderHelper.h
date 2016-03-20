@@ -1,6 +1,11 @@
 #pragma once
 #include "MainHeaders.h"
 
+#include <stdio.h>  /* defines FILENAME_MAX */
+
+#include <direct.h>
+
+
 class ShaderHelper
 {	
 

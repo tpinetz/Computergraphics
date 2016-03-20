@@ -30,7 +30,11 @@ bool ShaderHelper::loadShader(const char* vertexShader, const char* fragmentShad
 
 	}
 	else{
-		printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", vertexShader);
+		char cCurrentPath[FILENAME_MAX];
+
+		getcwd(cCurrentPath, sizeof(cCurrentPath));
+		
+		printf("Impossible to open %s. Are you in the right directory ? You are in %s. Don't forget to read the FAQ !\n", vertexShader, cCurrentPath);
 		getchar();
 		return false;
 
