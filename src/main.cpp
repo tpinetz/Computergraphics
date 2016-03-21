@@ -52,6 +52,7 @@ int main(int argc, char** argv)
 				newWindow = glfwCreateWindow(modes[count -1].width, modes[count -1].height, "Dunjun",
 					glfwGetPrimaryMonitor(), window);
 			}
+
 			else
 			{
 				newWindow = glfwCreateWindow(g_windowWidth, g_windowHeight, "Dunjun",
