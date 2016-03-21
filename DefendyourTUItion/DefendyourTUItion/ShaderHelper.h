@@ -16,7 +16,7 @@ public:
 
 	GLuint getProgramId();
 private:
-	GLuint programID;
+	GLuint m_programID;
 
 };
 
