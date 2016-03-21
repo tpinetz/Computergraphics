@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 int main() {
-	Scene* scene = new Scene();
+	Scene::Scene* scene = new Scene::Scene();
 	
 	
 	if (!scene->init()) {

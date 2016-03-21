@@ -1,25 +1,33 @@
 #pragma once
 #include "MainHeaders.h"
+#include "GameObjectManager.h"
 #include "ShaderHelper.h"
 
-class Scene
-{
-private:
-	void render();
+namespace Scene {
 
-public:
-	Scene();
-	~Scene();
+	class Scene
+	{
+	private:
+		void render();
+		bool initInternalObjects();
 
-	bool init();
+	public:
+		Scene();
+		~Scene();
 
-	bool run();
+		bool init();
 
-private:
-	GLFWwindow* window;
-	GLuint VertexArrayID;
-	GLuint vertexbuffer;
-	ShaderHelper* shaderHelper;
+		bool run();
 
-};
+	private:
+		GLFWwindow* window;
+		GLuint VertexArrayID;
+		GLuint vertexbuffer;
+		ShaderHelper* shaderHelper;
+		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 
+		double m_time;
+
+	};
+
+}

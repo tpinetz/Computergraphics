@@ -8,6 +8,12 @@
     <ClCompile Include="ShaderHelper.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>GameObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainHeaders.h" />
@@ -16,6 +22,12 @@
     </ClInclude>
     <ClInclude Include="ShaderHelper.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>GameObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +39,12 @@
     </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{b3915a79-4992-4554-9864-04ddb2bb2bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjectManager">
+      <UniqueIdentifier>{4a77acb7-8a2a-4786-b7d3-5fdb3d7b2597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{f3af92b1-7779-44bf-98d5-7b834c82e224}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
