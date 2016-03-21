@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderHelper.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>GameObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainHeaders.h" />
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderHelper.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>GameObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{5a98fb77-00c4-48f2-b114-30e985cf75a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{378a862f-4e7c-4309-b6e8-24c994809006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{b3915a79-4992-4554-9864-04ddb2bb2bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjectManager">
+      <UniqueIdentifier>{4a77acb7-8a2a-4786-b7d3-5fdb3d7b2597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{f3af92b1-7779-44bf-98d5-7b834c82e224}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VertexShader.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="fragmentShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
