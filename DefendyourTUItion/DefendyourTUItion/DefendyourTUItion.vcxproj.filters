@@ -23,6 +23,12 @@
     <ClCompile Include="KeyboardManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainHeaders.h" />
@@ -347,6 +353,12 @@
     <ClInclude Include="KeyboardManager.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -381,6 +393,9 @@
     </Filter>
     <Filter Include="Input">
       <UniqueIdentifier>{55c01b21-3e04-4b72-979f-d03367215101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{3fba8bfe-7689-4c1e-8efb-c6160b250115}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

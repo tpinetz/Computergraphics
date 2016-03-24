@@ -94,12 +94,14 @@ namespace Scene {
 
 		double deltaTime = time - m_time;
 		m_time = time;
+		m_renderer->setShader(this->shaderHelper->getProgramId());
 
 		do {
-			this->render();
+			glfwPollEvents();
+			m_renderer->beginDrawing(this->window);
 			
 			m_gameObjectManager->update(deltaTime);
-			m_gameObjectManager->render();
+			m_gameObjectManager->render(m_renderer);
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 
@@ -107,10 +109,7 @@ namespace Scene {
 	}
 
 	void Scene::render() {
-		glfwSwapBuffers(this->window);
-		glfwPollEvents();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(this->shaderHelper->getProgramId());
+
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);

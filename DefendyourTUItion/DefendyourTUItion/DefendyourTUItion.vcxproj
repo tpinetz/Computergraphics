@@ -159,6 +159,8 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderHelper.cpp" />
   </ItemGroup>
@@ -269,6 +271,8 @@
     <ClInclude Include="glm\vector_relational.hpp" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="MainHeaders.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderHelper.h" />
   </ItemGroup>

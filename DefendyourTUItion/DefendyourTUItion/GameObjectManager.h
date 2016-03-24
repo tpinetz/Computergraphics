@@ -14,7 +14,7 @@ namespace GameObjectManager
 		void removeObject(GameObject::GameObject gameObject);
 	
 		void update(double deltaTime);
-		void render();
+		void render(std::shared_ptr<Renderer::Renderer> renderer);
 
 	private:
 		std::vector<std::shared_ptr<GameObject::GameObject>> m_gameObjectList;

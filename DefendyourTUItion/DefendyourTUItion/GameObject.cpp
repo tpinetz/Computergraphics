@@ -15,7 +15,7 @@ namespace GameObject {
 
 	}
 
-	void GameObject::render() {
+	void GameObject::render(std::shared_ptr<Renderer::Renderer> renderer) {
 
 	}
 

@@ -28,13 +28,13 @@ namespace GameObjectManager {
 
 	void GameObjectManager::update(double deltaTime) {
 		for (auto gameObject : this->m_gameObjectList) {
-			gameObject.get()->update(deltaTime);
+			gameObject->update(deltaTime);
 		}
 	}
 
-	void GameObjectManager::render() {
+	void GameObjectManager::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		for (auto gameObject : this->m_gameObjectList) {
-			gameObject.get()->render();
+			gameObject->render(renderer);
 		}
 	}
 }

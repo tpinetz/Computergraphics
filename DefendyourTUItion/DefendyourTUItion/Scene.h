@@ -6,6 +6,7 @@
 #include "Avatar.h"
 #include "KeyboardManager.h"
 #include "btBulletDynamicsCommon.h"
+#include "Renderer.h"
 
 namespace Scene {
 
@@ -34,6 +35,7 @@ namespace Scene {
 		double m_time;
 		std::shared_ptr<Input::KeyboardManager> m_keyboardManager;
 		std::shared_ptr<btBroadphaseInterface> m_btBroadphaseInterface;
+		std::shared_ptr<Renderer::Renderer> m_renderer;
 
 	};
 
