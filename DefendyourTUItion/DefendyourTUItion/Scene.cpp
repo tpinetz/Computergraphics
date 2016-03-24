@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include <direct.h>
 
 namespace Scene {
 
@@ -13,6 +12,7 @@ namespace Scene {
 
 	Scene::Scene()
 	{
+		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
 	}
 
 
@@ -20,6 +20,7 @@ namespace Scene {
 	{
 		delete shaderHelper;
 		glUseProgram(0);
+		glfwTerminate();
 	}
 
 
@@ -58,13 +59,28 @@ namespace Scene {
 			return false;
 		}
 
-		return initInternalObjects();
+
+		return initBullet() && initInternalObjects();
+	}
+
+	bool Scene::initBullet() {
+		m_btBroadphaseInterface = std::shared_ptr<btBroadphaseInterface>(new btDbvtBroadphase());
+
+
+		return true;
 	}
 
 	bool Scene::initInternalObjects() {
 		m_gameObjectManager = std::shared_ptr<GameObjectManager::GameObjectManager>(new GameObjectManager::GameObjectManager());
-
+		std::shared_ptr<Camera::Camera> camera = std::shared_ptr<Camera::Camera>(
+			new Camera::Camera(m_keyboardManager));
+		
+		m_gameObjectManager->addObject(
+			std::shared_ptr<GameObject::GameObject>(
+				new Avatar::Avatar(camera)));
 		m_time = glfwGetTime();
+
+		glfwSetKeyCallback(window, Input::KeyboardManager::key_callback);
 
 		return true;
 	}
@@ -80,10 +96,11 @@ namespace Scene {
 		m_time = time;
 
 		do {
+			this->render();
+			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render();
-			this->render();
-		} while (glfwGetKey(this->window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 
 		return true;
@@ -92,7 +109,6 @@ namespace Scene {
 	void Scene::render() {
 		glfwSwapBuffers(this->window);
 		glfwPollEvents();
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(this->shaderHelper->getProgramId());
 

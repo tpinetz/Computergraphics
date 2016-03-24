@@ -10,14 +10,14 @@ namespace GameObjectManager
 		GameObjectManager();
 		~GameObjectManager();
 
-		void addObject(GameObject::GameObject gameObject);
+		void addObject(std::shared_ptr<GameObject::GameObject> gameObject);
 		void removeObject(GameObject::GameObject gameObject);
 	
 		void update(double deltaTime);
 		void render();
 
 	private:
-		std::vector<GameObject::GameObject> m_gameObjectList;
+		std::vector<std::shared_ptr<GameObject::GameObject>> m_gameObjectList;
 	};
 
 }

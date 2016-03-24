@@ -1,5 +1,7 @@
 #pragma once
 #include "MainHeaders.h"
+#include "LinearMath\btVector3.h"
+
 namespace GameObject {
 	class GameObject
 	{
@@ -11,10 +13,10 @@ namespace GameObject {
 		virtual void render();
 
 		std::string getName();
-		bool operator==(const GameObject& rhs) const {
+		bool operator==(GameObject& rhs) {
 			return m_name == rhs.m_name;
 		}
-	private:
+	protected:
 		std::string m_name;
 	};
 }
