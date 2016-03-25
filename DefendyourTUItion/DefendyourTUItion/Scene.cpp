@@ -11,8 +11,13 @@ namespace Scene {
 
 
 	Scene::Scene()
+		:Scene(1024, 768)
 	{
-		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
+	}
+
+	Scene::Scene(float right, float top) {
+		m_right = right;
+		m_top = top;
 	}
 
 
@@ -35,7 +40,7 @@ namespace Scene {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL 
 
 
-		this->window = glfwCreateWindow(1024, 768, "Defend your TUItion", NULL, NULL);
+		this->window = glfwCreateWindow(m_right, m_top, "Defend your TUItion", NULL, NULL);
 		if (this->window == NULL) {
 			std::cerr << "Failed to create Window";
 			return false;
@@ -54,7 +59,7 @@ namespace Scene {
 		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
 		this->shaderHelper = new ShaderHelper();
-		if (!this->shaderHelper->loadShader("VertexShader.vertexshader", "fragmentShader.fragmentshader")) {
+		if (!this->shaderHelper->loadShader("../DefendyourTUItion/VertexShader.vertexshader", "../DefendyourTUItion/fragmentShader.fragmentshader")) {
 			std::cerr << "Failed to read Shader";
 			return false;
 		}
@@ -71,59 +76,44 @@ namespace Scene {
 	}
 
 	bool Scene::initInternalObjects() {
+		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
+
 		m_gameObjectManager = std::shared_ptr<GameObjectManager::GameObjectManager>(new GameObjectManager::GameObjectManager());
-		std::shared_ptr<Camera::Camera> camera = std::shared_ptr<Camera::Camera>(
-			new Camera::Camera(m_keyboardManager));
+		m_camera = std::shared_ptr<Camera::Camera>(
+			new Camera::Camera(m_keyboardManager, m_right, m_top));
 		
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
-				new Avatar::Avatar(camera)));
+			new Avatar::Avatar(m_camera)));
 		m_time = glfwGetTime();
 
 		glfwSetKeyCallback(window, Input::KeyboardManager::key_callback);
+
+		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
 
 		return true;
 	}
 
 	bool Scene::run() {
-		glGenBuffers(1, &this->vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
 		double time = glfwGetTime();
 
 		double deltaTime = time - m_time;
 		m_time = time;
-		m_renderer->setShader(this->shaderHelper->getProgramId());
+		m_renderer->setCamera(m_camera);
+		m_renderer->startShader(this->shaderHelper->getProgramId());
 
 		do {
 			glfwPollEvents();
 			m_renderer->beginDrawing(this->window);
+			m_camera->update(deltaTime);
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
+		
+		m_renderer->stopShader();
 
 		return true;
 	}
-
-	void Scene::render() {
-
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-			);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-		glDisableVertexAttribArray(0);
-	}
-
 }

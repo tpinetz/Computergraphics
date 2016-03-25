@@ -72,7 +72,6 @@ namespace Avatar{
 	}
 
 	void Avatar::update(double deltaTime) {
-		m_camera->update(deltaTime);
 	}
 
 	void Avatar::render(std::shared_ptr<Renderer::Renderer> renderer) {
