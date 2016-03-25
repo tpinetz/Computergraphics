@@ -5,6 +5,7 @@
 #include <direct.h>
 #include "Avatar.h"
 #include "KeyboardManager.h"
+#include "MouseInputManager.h"
 #include "btBulletDynamicsCommon.h"
 #include "Renderer.h"
 
@@ -36,6 +37,7 @@ namespace Scene {
 		float m_top;
 		float m_right;
 		std::shared_ptr<Input::KeyboardManager> m_keyboardManager;
+		std::shared_ptr<Input::MouseInputManager> m_mouseInputManager;
 		std::shared_ptr<btBroadphaseInterface> m_btBroadphaseInterface;
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;

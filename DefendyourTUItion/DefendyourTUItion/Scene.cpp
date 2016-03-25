@@ -77,10 +77,14 @@ namespace Scene {
 
 	bool Scene::initInternalObjects() {
 		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
+		m_mouseInputManager = std::shared_ptr<Input::MouseInputManager>
+			(Input::MouseInputManager::getMouseInputManagerInstance());
 
 		m_gameObjectManager = std::shared_ptr<GameObjectManager::GameObjectManager>(new GameObjectManager::GameObjectManager());
 		m_camera = std::shared_ptr<Camera::Camera>(
 			new Camera::Camera(m_keyboardManager, m_right, m_top));
+
+		m_mouseInputManager->setCamera(m_camera);
 		
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
@@ -88,6 +92,7 @@ namespace Scene {
 		m_time = glfwGetTime();
 
 		glfwSetKeyCallback(window, Input::KeyboardManager::key_callback);
+		glfwSetCursorPosCallback(window, Input::MouseInputManager::mouse_callback);
 
 		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
 
