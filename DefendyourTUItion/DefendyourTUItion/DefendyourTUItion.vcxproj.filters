@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -32,9 +31,12 @@
     <ClCompile Include="MouseInputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Floor.cpp">
+      <Filter>GameObject\Floor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainHeaders.h" />
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -365,6 +367,10 @@
     <ClInclude Include="MouseInputManager.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="MainHeaders.h" />
+    <ClInclude Include="Floor.h">
+      <Filter>GameObject\Floor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -402,6 +408,9 @@
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{3fba8bfe-7689-4c1e-8efb-c6160b250115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Floor">
+      <UniqueIdentifier>{061e5cab-6a21-4edf-9d7a-0f314826afcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

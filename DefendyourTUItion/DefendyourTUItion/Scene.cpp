@@ -65,7 +65,7 @@ namespace Scene {
 		}
 
 
-		return initBullet() && initInternalObjects();
+		return initBullet() && initInternalObjects() && addSceneRelevantGameObjects();
 	}
 
 	bool Scene::initBullet() {
@@ -86,15 +86,25 @@ namespace Scene {
 
 		m_mouseInputManager->setCamera(m_camera);
 		
-		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(
-			new Avatar::Avatar(m_camera)));
+
+
 		m_time = glfwGetTime();
 
 		glfwSetKeyCallback(window, Input::KeyboardManager::key_callback);
 		glfwSetCursorPosCallback(window, Input::MouseInputManager::mouse_callback);
 
 		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
+
+		return true;
+	}
+
+	bool Scene::addSceneRelevantGameObjects() {
+		m_gameObjectManager->addObject(
+			std::shared_ptr<GameObject::GameObject>(
+			new Avatar::Avatar(m_camera)));
+
+		m_gameObjectManager->addObject(
+			std::shared_ptr<GameObject::GameObject>(new GameObject::Floor()));
 
 		return true;
 	}

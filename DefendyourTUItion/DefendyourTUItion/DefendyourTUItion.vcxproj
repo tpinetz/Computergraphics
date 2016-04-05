@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
@@ -168,6 +169,7 @@
   <ItemGroup>
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="glm\common.hpp" />

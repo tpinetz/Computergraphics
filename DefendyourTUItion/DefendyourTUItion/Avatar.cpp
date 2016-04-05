@@ -60,8 +60,8 @@ namespace Avatar{
 
 		glGenBuffers(1, vertexBuffer.get());
 		glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Avatar::m_modelVertices), Avatar
-			::m_modelVertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Avatar::m_modelVertices), 
+			Avatar::m_modelVertices, GL_STATIC_DRAW);
 
 		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vertexBuffer, 12));
 	}

@@ -8,6 +8,8 @@
 #include "MouseInputManager.h"
 #include "btBulletDynamicsCommon.h"
 #include "Renderer.h"
+#include "Scene.h"
+#include "Floor.h"
 
 namespace Scene {
 
@@ -16,6 +18,7 @@ namespace Scene {
 	private:
 		bool initInternalObjects();
 		bool initBullet();
+		bool addSceneRelevantGameObjects();
 
 	public:
 		Scene();
