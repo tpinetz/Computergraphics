@@ -6,10 +6,10 @@
 #include "Avatar.h"
 #include "KeyboardManager.h"
 #include "MouseInputManager.h"
-#include "btBulletDynamicsCommon.h"
 #include "Renderer.h"
 #include "Scene.h"
 #include "Floor.h"
+#include "PhysicsWorld.h"
 
 namespace Scene {
 
@@ -17,7 +17,6 @@ namespace Scene {
 	{
 	private:
 		bool initInternalObjects();
-		bool initBullet();
 		bool addSceneRelevantGameObjects();
 
 	public:
@@ -41,9 +40,9 @@ namespace Scene {
 		float m_right;
 		std::shared_ptr<Input::KeyboardManager> m_keyboardManager;
 		std::shared_ptr<Input::MouseInputManager> m_mouseInputManager;
-		std::shared_ptr<btBroadphaseInterface> m_btBroadphaseInterface;
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;
+		std::shared_ptr<Physics::PhysicsWorld> m_physicsWorld;
 
 	};
 

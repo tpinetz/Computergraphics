@@ -68,7 +68,7 @@ namespace GameObject {
 
 		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vertexBuffer, 12));
 
-		m_position = glm::vec3(0, 0, 0);
+		m_position = glm::vec3(0, -1, 0);
 		m_scale = glm::vec3(1000, 0.1, 1000);
 	}
 

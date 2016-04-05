@@ -65,14 +65,7 @@ namespace Scene {
 		}
 
 
-		return initBullet() && initInternalObjects() && addSceneRelevantGameObjects();
-	}
-
-	bool Scene::initBullet() {
-		m_btBroadphaseInterface = std::shared_ptr<btBroadphaseInterface>(new btDbvtBroadphase());
-
-
-		return true;
+		return initInternalObjects() && addSceneRelevantGameObjects();
 	}
 
 	bool Scene::initInternalObjects() {
@@ -86,7 +79,11 @@ namespace Scene {
 
 		m_mouseInputManager->setCamera(m_camera);
 		
+		m_physicsWorld = std::shared_ptr<Physics::PhysicsWorld>(new Physics::PhysicsWorld());
 
+		if (!m_physicsWorld->initPhysics()) {
+			return false;
+		}
 
 		m_time = glfwGetTime();
 
@@ -119,6 +116,7 @@ namespace Scene {
 
 		do {
 			glfwPollEvents();
+			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);
 			m_camera->update(deltaTime);
 			

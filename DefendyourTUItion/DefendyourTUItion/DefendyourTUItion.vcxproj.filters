@@ -35,6 +35,9 @@
     <ClCompile Include="Floor.cpp">
       <Filter>GameObject\Floor</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsWorld.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -371,6 +374,9 @@
     <ClInclude Include="Floor.h">
       <Filter>GameObject\Floor</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsWorld.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -411,6 +417,9 @@
     </Filter>
     <Filter Include="GameObject\Floor">
       <UniqueIdentifier>{061e5cab-6a21-4edf-9d7a-0f314826afcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{adf48264-700f-46cc-95e3-bc45b4417b5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
