@@ -103,6 +103,9 @@ namespace Scene {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Floor()));
 
+		m_gameObjectManager->addObject(
+			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(10, 1, 10))));
+
 		return true;
 	}
 

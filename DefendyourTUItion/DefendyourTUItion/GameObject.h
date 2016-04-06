@@ -7,6 +7,8 @@
 namespace GameObject {
 	class GameObject
 	{
+	protected:
+		glm::mat4 getTransformMatrix();
 	public:
 		GameObject();
 		virtual ~GameObject();

@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "Floor.h"
 #include "PhysicsWorld.h"
+#include "Enemy.h"
 
 namespace Scene {
 

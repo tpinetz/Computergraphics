@@ -38,6 +38,9 @@
     <ClCompile Include="PhysicsWorld.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -377,6 +380,9 @@
     <ClInclude Include="PhysicsWorld.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -420,6 +426,9 @@
     </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{adf48264-700f-46cc-95e3-bc45b4417b5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Enemy">
+      <UniqueIdentifier>{c0617e07-47d4-4721-965f-aa3501443e40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
