@@ -1,0 +1,23 @@
+﻿Build started 2016-03-26 12:29:45.
+     1>Project "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\DefendyourTUItion\DefendyourTUItion.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\\External\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\\" /Fd"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\Debug\DefendyourTUItion.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\\External\Lib" glew32.lib opengl32.lib glfw.lib zlib.lib BulletCollision_Debug.lib BulletDynamics_Debug.lib LinearMath_Debug.lib SDL.lib SDLmain.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:MSVCRT /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\Debug\DefendyourTUItion.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\Debug\DefendyourTUItion.lib" /MACHINE:X86 "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\Avatar.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\Camera.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\GameObject.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\GameObjectManager.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\KeyboardManager.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\main.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\Model.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\ObjectLoader.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\Renderer.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\Scene.obj"
+         "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\build-Debug\ShaderHelper.obj"
+         DefendyourTUItion.vcxproj -> C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\Debug\DefendyourTUItion.exe
+     1>Done Building Project "C:\Users\zpils\Downloads\Defend_your_TUition-93bf7b5\Defend_your_TUition-93bf7b5\DefendyourTUItion\DefendyourTUItion\DefendyourTUItion.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.51
