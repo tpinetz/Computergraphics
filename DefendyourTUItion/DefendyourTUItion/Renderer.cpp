@@ -27,7 +27,7 @@ namespace Renderer {
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 
 		glBindBuffer(GL_ARRAY_BUFFER, *model->getVertexBuffer());
-		glDrawArrays(GL_TRIANGLES, 0, model->getTriangleCount() * 3);
+		glDrawArrays(GL_TRIANGLES, 0, model->getTriangleCount() * 1000);		//You need to change it with diffrent objects, i guess it should be vertices size
 	}
 
 	void Renderer::beginDrawing(GLFWwindow* window) {

@@ -41,6 +41,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp">
+      <Filter>ObjectLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -383,6 +386,9 @@
     <ClInclude Include="Enemy.h">
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectLoader.hpp">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -429,6 +435,9 @@
     </Filter>
     <Filter Include="GameObject\Enemy">
       <UniqueIdentifier>{c0617e07-47d4-4721-965f-aa3501443e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectLoader">
+      <UniqueIdentifier>{d9ecb40f-2a32-4a67-9d6b-c4cec0d57aa9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

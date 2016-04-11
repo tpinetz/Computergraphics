@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "Model.h"
 #include "Renderer.h"
+#include "ObjectLoader.hpp"
 
 namespace GameObject{
 
