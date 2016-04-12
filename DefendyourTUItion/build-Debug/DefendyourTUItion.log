@@ -1,0 +1,29 @@
+﻿Build started 2016-04-12 23:45:57.
+     1>Project "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\DefendyourTUItion\DefendyourTUItion.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\\External\Include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\\" /Fd"C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp
+         Enemy.cpp
+     1>c:\users\zpils\desktop\defend_your_tuition\defendyourtuition\defendyourtuition\enemy.cpp(85): warning C4244: 'initializing' : conversion from 'double' to 'GLfloat', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\Debug\DefendyourTUItion.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\\External\Lib glew32.lib opengl32.lib glfw.lib zlib.lib BulletCollision_Debug.lib BulletDynamics_Debug.lib LinearMath_Debug.lib SOIL.lib assimp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:MSVCRT /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\Debug\DefendyourTUItion.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\Debug\DefendyourTUItion.lib" /MACHINE:X86 "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Avatar.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Camera.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Enemy.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Floor.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\GameObject.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\GameObjectManager.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\KeyboardManager.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\main.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Mesh.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Model.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\MouseInputManager.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\ObjectLoader.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\PhysicsWorld.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Renderer.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\Scene.obj"
+         "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\build-Debug\ShaderHelper.obj"
+         DefendyourTUItion.vcxproj -> C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\Debug\DefendyourTUItion.exe
+     1>Done Building Project "C:\Users\zpils\Desktop\Defend_your_TUition\DefendyourTUItion\DefendyourTUItion\DefendyourTUItion.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.23
