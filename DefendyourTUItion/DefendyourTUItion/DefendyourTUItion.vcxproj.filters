@@ -44,6 +44,9 @@
     <ClCompile Include="ObjectLoader.cpp">
       <Filter>ObjectLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>ObjectLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -387,6 +390,15 @@
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ObjectLoader.hpp">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
       <Filter>ObjectLoader</Filter>
     </ClInclude>
   </ItemGroup>
