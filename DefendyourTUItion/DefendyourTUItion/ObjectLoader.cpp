@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <direct.h>
 
 #include "glm/glm.hpp"
 
@@ -50,7 +51,11 @@ bool loadOBJ(
 
 	FILE * file = fopen(path, "r");
 	if (file == NULL){
-		printf("Impossible to open the file ! Are you in the right path ?\n");
+		char cCurrentPath[FILENAME_MAX];
+
+		getcwd(cCurrentPath, sizeof(cCurrentPath));
+
+		printf("Impossible to open %s. Are you in the right directory ? You are in %s. Don't forget to read the FAQ !\n", path, cCurrentPath);
 		getchar();
 		return false;
 	}
