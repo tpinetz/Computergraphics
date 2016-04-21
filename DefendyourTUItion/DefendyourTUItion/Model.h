@@ -10,6 +10,7 @@ namespace Renderer {
 		Model();
 		Model(GLuint vao);
 		Model(GLuint vao, int triangles);
+		Model(GLuint vao, int triangles, bool indices);
 		~Model();
 
 		inline GLuint getVAO() {
@@ -20,10 +21,15 @@ namespace Renderer {
 			return m_triangles;
 		}
 
+		inline bool getHasIndices() {
+			return m_indices;
+		}
+
 	private:
 		GLuint m_vertexArrayID;
 		GLuint m_vao;
 		int m_triangles;
+		bool m_indices;
 	};
 
 }

@@ -9,12 +9,17 @@ namespace Renderer {
 
 	Model::Model(GLuint vao)
 		: Model(vao, 0) {
-		m_vao = vao;
 	}
 
-	Model::Model(GLuint vao, int triangles) {
+	Model::Model(GLuint vao, int triangles) 
+		: Model(vao, triangles, false) {
+
+	}
+
+	Model::Model(GLuint vao, int triangles, bool indices) {
 		m_vao = vao;
 		m_triangles = triangles;
+		m_indices = indices;
 
 	}
 

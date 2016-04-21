@@ -18,6 +18,7 @@ namespace GameObject {
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
 	private:
 		static GLfloat m_modelVertices[];
+		static GLuint m_modelIndices[];
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<btCollisionShape> m_groundShape;
 	};
