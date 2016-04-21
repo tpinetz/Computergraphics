@@ -166,6 +166,7 @@
     <ClCompile Include="MouseInputManager.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderHelper.cpp" />
@@ -285,6 +286,7 @@
     <ClInclude Include="MouseInputManager.h" />
     <ClInclude Include="ObjectLoader.hpp" />
     <ClInclude Include="PhysicsWorld.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />

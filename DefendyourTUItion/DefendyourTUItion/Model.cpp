@@ -7,13 +7,13 @@ namespace Renderer {
 	{
 	}
 
-	Model::Model(std::shared_ptr<GLuint> vertexBuffer)
-		: Model(vertexBuffer, 0) {
-		m_vertexBuffer = vertexBuffer;
+	Model::Model(GLuint vao)
+		: Model(vao, 0) {
+		m_vao = vao;
 	}
 
-	Model::Model(std::shared_ptr<GLuint> vertexBuffer, int triangles) {
-		m_vertexBuffer = vertexBuffer;
+	Model::Model(GLuint vao, int triangles) {
+		m_vao = vao;
 		m_triangles = triangles;
 
 	}

@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Model.h"
-#include "Model.h"
 #include "Renderer.h"
 #include "ObjectLoader.hpp"
 
@@ -22,7 +21,7 @@ namespace GameObject{
 
 
 	private:
-		GLfloat movementSpeed = 1;
+		GLfloat movementSpeed = 0.01;
 		static GLfloat m_modelVertices[];
 		std::shared_ptr<Renderer::Model> m_model;
 

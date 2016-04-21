@@ -47,6 +47,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>ObjectLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>GameObject\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -401,6 +404,9 @@
     <ClInclude Include="Shader.h">
       <Filter>ObjectLoader</Filter>
     </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>GameObject\Projectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -450,6 +456,9 @@
     </Filter>
     <Filter Include="ObjectLoader">
       <UniqueIdentifier>{d9ecb40f-2a32-4a67-9d6b-c4cec0d57aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Projectile">
+      <UniqueIdentifier>{d4a94e9b-2ebf-4369-82c2-b38ed5c51ab0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

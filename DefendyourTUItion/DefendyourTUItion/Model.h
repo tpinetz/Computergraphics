@@ -8,12 +8,12 @@ namespace Renderer {
 	{
 	public:
 		Model();
-		Model(std::shared_ptr<GLuint> vertexBuffer);
-		Model(std::shared_ptr<GLuint> vertexBuffer, int triangles);
+		Model(GLuint vao);
+		Model(GLuint vao, int triangles);
 		~Model();
 
-		inline std::shared_ptr<GLuint> getVertexBuffer() {
-			return m_vertexBuffer;
+		inline GLuint getVAO() {
+			return m_vao;
 		}
 
 		inline int getTriangleCount() {
@@ -22,7 +22,7 @@ namespace Renderer {
 
 	private:
 		GLuint m_vertexArrayID;
-		std::shared_ptr<GLuint> m_vertexBuffer;
+		GLuint m_vao;
 		int m_triangles;
 	};
 

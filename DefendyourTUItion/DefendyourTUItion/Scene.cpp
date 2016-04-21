@@ -53,9 +53,6 @@ namespace Scene {
 			return false;
 		}
 
-		glGenVertexArrays(1, &this->VertexArrayID);
-		glBindVertexArray(this->VertexArrayID);
-
 		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
 		this->shaderHelper = new ShaderHelper();

@@ -7,10 +7,10 @@ namespace GameObject {
 	}
 
 	glm::mat4 GameObject::getTransformMatrix() {
-		glm::mat4 transform;
+		glm::mat4 transform = glm::mat4();
 		transform = glm::translate(transform, m_position);
-		//TODO: Add Rotation.
 		transform = glm::scale(transform, m_scale);
+		//TODO: Add Rotation.
 
 		return transform;
 	}

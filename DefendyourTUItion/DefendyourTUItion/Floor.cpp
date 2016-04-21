@@ -60,23 +60,15 @@ namespace GameObject {
 
 	void Floor::initModel() {
 		std::shared_ptr<GLuint> vertexBuffer = std::shared_ptr<GLuint>(new GLuint);
+		GLuint vao;
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 
 		glGenBuffers(1, vertexBuffer.get());
 		glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Floor::m_modelVertices), 
 			Floor::m_modelVertices, GL_STATIC_DRAW);
 
-		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vertexBuffer, 12));
-
-		m_position = glm::vec3(0, -1, 0);
-		m_scale = glm::vec3(1000, 0.1, 1000);
-	}
-
-	void Floor::update(double time) {
-
-	}
-
-	void Floor::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(
 			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
@@ -87,10 +79,26 @@ namespace GameObject {
 			(void*)0            // array buffer offset
 			);
 
+		glBindVertexArray(0);
+
+
+		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, 12));
+
+
+		m_position = glm::vec3(0, -1, 0);
+		m_scale = glm::vec3(1000, 0.1, 1000);
+	}
+
+	void Floor::update(double time) {
+
+	}
+
+	void Floor::render(std::shared_ptr<Renderer::Renderer> renderer) {
+
+
 		glm::mat4 transform = getTransformMatrix();
 
 		renderer->drawModel(m_model, transform);
 
-		glDisableVertexAttribArray(0);
 	}
 }
