@@ -33,7 +33,8 @@ namespace Scene {
 		GLFWwindow* window;
 		GLuint VertexArrayID;
 		GLuint vertexbuffer;
-		ShaderHelper* shaderHelper;
+		std::shared_ptr<ShaderHelper> shaderHelper;
+		std::shared_ptr<ShaderHelper> m_textureShader;
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 
 		double m_time;

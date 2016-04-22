@@ -8,3 +8,6 @@
 #include <istream>
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <map>
+#include <set>

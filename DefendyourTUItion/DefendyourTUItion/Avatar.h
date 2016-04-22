@@ -14,7 +14,7 @@ namespace Avatar {
 		void initModel();
 
 	public:
-		Avatar(std::shared_ptr<Camera::Camera> camera);
+		Avatar(std::shared_ptr<Camera::Camera> camera, GLuint shader);
 		~Avatar();
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
@@ -26,7 +26,7 @@ namespace Avatar {
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<Renderer::Model> m_model;
 		static GLfloat m_modelVertices[];
-
+		GLuint m_shader;
 	};
 
 }

@@ -23,7 +23,6 @@ namespace Scene {
 
 	Scene::~Scene()
 	{
-		delete shaderHelper;
 		glUseProgram(0);
 		glfwTerminate();
 	}
@@ -55,17 +54,27 @@ namespace Scene {
 
 		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
-		this->shaderHelper = new ShaderHelper();
-		if (!this->shaderHelper->loadShader("../DefendyourTUItion/VertexShader.vertexshader", "../DefendyourTUItion/fragmentShader.fragmentshader")) {
-			std::cerr << "Failed to read Shader";
-			return false;
-		}
-
 
 		return initInternalObjects() && addSceneRelevantGameObjects();
 	}
 
 	bool Scene::initInternalObjects() {
+		// Shader Initiliazition
+
+		this->shaderHelper = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->shaderHelper->loadShader("../DefendyourTUItion/VertexShader.vertexshader", "../DefendyourTUItion/fragmentShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
+		this->m_textureShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_textureShader->loadShader("../DefendyourTUItion/TextureShader.vertexshader", "../DefendyourTUItion/TextureShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
+		//Input Initialization
+
 		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
 		m_mouseInputManager = std::shared_ptr<Input::MouseInputManager>
 			(Input::MouseInputManager::getMouseInputManagerInstance());
@@ -95,13 +104,13 @@ namespace Scene {
 	bool Scene::addSceneRelevantGameObjects() {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
-			new Avatar::Avatar(m_camera)));
+			new Avatar::Avatar(m_camera, shaderHelper->getProgramId())));
 
 		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(new GameObject::Floor()));
+			std::shared_ptr<GameObject::GameObject>(new GameObject::Floor(m_textureShader->getProgramId())));
 
 		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(10, 1, 10))));
+			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));
 
 		return true;
 	}

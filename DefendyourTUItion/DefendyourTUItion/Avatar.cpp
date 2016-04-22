@@ -46,12 +46,14 @@ namespace Avatar{
 		-0.5f, 0.5f, -0.5f,
 	};
 
-	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera)
+	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, GLuint shader)
 	{
 		m_name = "Avatar";
 		m_camera = camera;
 		m_position = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_scale = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		m_shader = shader;
 
 		initModel();
 	}
@@ -94,7 +96,8 @@ namespace Avatar{
 	void Avatar::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		glm::mat4 transform = this->getTransformMatrix();
 
+		renderer->startShader(m_shader);
 		renderer->drawModel(m_model, transform);
-
+		renderer->stopShader();
 	}
 }

@@ -11,6 +11,9 @@ namespace Renderer {
 
 	class Renderer
 	{
+	private:
+		void activateTextures(std::shared_ptr<Model> model);
+		void deactivateTextures(std::shared_ptr<Model> model);
 	public:
 		Renderer();
 		~Renderer();

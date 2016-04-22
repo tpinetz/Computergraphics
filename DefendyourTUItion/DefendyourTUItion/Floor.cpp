@@ -3,43 +3,54 @@
 namespace GameObject {
 
 	GLfloat Floor::m_modelVertices[] = {
-		// front
-		-1.0, -1.0, 1.0,
-		1.0, -1.0, 1.0,
-		1.0, 1.0, 1.0,
-		-1.0, 1.0, 1.0,
-		// back
-		-1.0, -1.0, -1.0,
-		1.0, -1.0, -1.0,
-		1.0, 1.0, -1.0,
-		-1.0, 1.0, -1.0,
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 
+		-0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+
+		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+		-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+
+		-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+		-0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		-0.5f, -0.5f, 0.5f, -0.0f, 0.0f, 
+		-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 
+		0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 
+
+		-0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+		0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 
+		-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+		-0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 
 	};
 
-	GLuint Floor::m_modelIndices[] = {
-		// front
-		0, 1, 2,
-		2, 3, 0,
-		// top
-		1, 5, 6,
-		6, 2, 1,
-		// back
-		7, 6, 5,
-		5, 4, 7,
-		// bottom
-		4, 0, 3,
-		3, 7, 4,
-		// left
-		4, 5, 1,
-		1, 0, 4,
-		// right
-		3, 2, 6,
-		6, 7, 3,
-	};
 
-
-	Floor::Floor()
+	Floor::Floor(GLuint shader)
 	{
 		this->m_name = "Floor";
+		this->m_shader = shader;
 
 		this->initModel();
 	}
@@ -61,9 +72,6 @@ namespace GameObject {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Floor::m_modelVertices), 
 			Floor::m_modelVertices, GL_STATIC_DRAW);
 
-		glGenBuffers(1, &indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_modelIndices), m_modelIndices, GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(
@@ -74,12 +82,23 @@ namespace GameObject {
 			0,                  // stride
 			(void*)0            // array buffer offset
 			);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(
+			1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+			2,                  // size
+			GL_FLOAT,           // type
+			GL_FALSE,           // normalized?
+			0,                  // stride
+			(GLvoid*)(3 * sizeof(GLfloat))            // array buffer offset
+			);
 
 		glBindVertexArray(0);
 
 
-		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, 12, true));
+		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, 12));
 
+		m_model->addTexture(Common::TextureHelper::getInstance()->getTextureByName(
+			"../Assets/Textures/ground.jpg"));
 
 		m_position = glm::vec3(0, -1, 0);
 		m_scale = glm::vec3(1000, 0.1, 1000);
@@ -93,8 +112,12 @@ namespace GameObject {
 
 
 		glm::mat4 transform = getTransformMatrix();
+		
+		renderer->startShader(m_shader);
 
 		renderer->drawModel(m_model, transform);
+
+		renderer->stopShader();
 
 	}
 }

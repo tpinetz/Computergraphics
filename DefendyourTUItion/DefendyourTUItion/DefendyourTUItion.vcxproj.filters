@@ -50,6 +50,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>GameObject\Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="TextureHelper.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -407,6 +410,9 @@
     <ClInclude Include="Projectile.h">
       <Filter>GameObject\Projectile</Filter>
     </ClInclude>
+    <ClInclude Include="TextureHelper.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -689,6 +695,12 @@
     </None>
     <None Include="glm\gtc\vec1.inl">
       <Filter>glm\gtc</Filter>
+    </None>
+    <None Include="TextureShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="TextureShader.vertexshader">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

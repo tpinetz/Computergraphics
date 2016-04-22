@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "MainHeaders.h"
 #include "btBulletDynamicsCommon.h"
+#include "TextureHelper.h"
 
 namespace GameObject {
 
@@ -12,7 +13,7 @@ namespace GameObject {
 		void initModel();
 
 	public:
-		Floor();
+		Floor(GLuint shader);
 		~Floor();
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
@@ -21,6 +22,7 @@ namespace GameObject {
 		static GLuint m_modelIndices[];
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<btCollisionShape> m_groundShape;
+		GLuint m_shader;
 	};
 
 }

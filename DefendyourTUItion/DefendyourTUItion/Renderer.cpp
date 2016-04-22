@@ -26,6 +26,8 @@ namespace Renderer {
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 
+		activateTextures(model);
+
 		glBindVertexArray(model->getVAO());
 
 		if (model->getHasIndices()) {
@@ -36,6 +38,23 @@ namespace Renderer {
 		}
 
 		glBindVertexArray(0);
+		deactivateTextures(model);
+	}
+
+	void Renderer::activateTextures(std::shared_ptr<Model> model) {
+		for (unsigned int i = 0; i < model->getTextures()->size(); i++){
+			GLuint texture = model->getTextures()->at(i);
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, texture);
+		}
+	}
+	
+	void Renderer::deactivateTextures(std::shared_ptr<Model> model) {
+		for (unsigned int i = 0; i < model->getTextures()->size(); i++){
+			GLuint texture = model->getTextures()->at(i);
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 
 	void Renderer::beginDrawing(GLFWwindow* window) {

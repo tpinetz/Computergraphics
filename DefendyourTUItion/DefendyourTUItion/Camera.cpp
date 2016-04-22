@@ -7,7 +7,7 @@ namespace Camera {
 		m_cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-		m_cameraSpeed = 1.f;
+		m_cameraSpeed = 0.5f;
 		m_mouseSensitivity = 0.4f;
 
 		m_keyboardManager = keyboardManager;
