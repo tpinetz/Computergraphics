@@ -62,58 +62,56 @@ namespace GameObject {
 	}
 
 	void Enemy::initModel() {
-		GLuint vao;
-		GLuint vertexBuffer;
-		GLuint vertexTextureBuffer;
+		std::vector<Vertex> vertices = loadOBJ(this->m_modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
 
-		std::vector<glm::vec3> vertices;
-		std::vector<glm::vec2> uvs;
-		std::vector<glm::vec3> normals; // Won't be used at the moment.
-		bool res = loadOBJ("cat.obj", vertices, uvs, normals);		//"monkey.obj", "cube.obj","cat.obj"
-
-		if (!res) {
-			std::cerr << "Failed to load model.";
+		if (vertices.empty()) {
+			std::cerr << "Failed to load model Floor.";
 			return;
 		}
 
+		glGenVertexArrays(1, &m_vao);
+		glBindVertexArray(m_vao);
 
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+		glGenBuffers(1, &m_vertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, (sizeof(glm::vec3) + sizeof(glm::vec2) + sizeof(glm::vec3)) * vertices.size(),
+			&vertices[0], GL_STATIC_DRAW);
 
 
-		
-		glGenBuffers(1, &vertexTextureBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexTextureBuffer);
-		glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &normals[0], GL_STATIC_DRAW);
-
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);	
-
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(
 			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 			3,                  // size
 			GL_FLOAT,           // type
 			GL_FALSE,           // normalized?
-			0,                  // stride
+			sizeof(Vertex),                  // stride
 			(void*)0            // array buffer offset
 			);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vertexTextureBuffer);
-		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(
-			1,
-			2,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(GLvoid*)(sizeof(GLfloat)* 3));
+			1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+			3,                  // size
+			GL_FLOAT,           // type
+			GL_FALSE,           // normalized?
+			sizeof(Vertex),                  // stride
+			(GLvoid*)offsetof(Vertex, Normal)            // array buffer offset
+			);
+
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(
+			2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+			2,                  // size
+			GL_FLOAT,           // type
+			GL_FALSE,           // normalized?
+			sizeof(Vertex),                  // stride
+			(GLvoid*)offsetof(Vertex, TexCoords)             // array buffer offset
+			);
+
+
 		glBindVertexArray(0);
 
-		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, vertices.size()));
+		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(m_vao, vertices.size()));
 
 		m_model->addTexture(Common::TextureHelper::getInstance()->getTextureByName("../Assets/Textures/ground.jpg"));
 

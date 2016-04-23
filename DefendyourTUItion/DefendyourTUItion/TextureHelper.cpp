@@ -20,6 +20,11 @@ namespace Common {
 	}
 
 	GLuint TextureHelper::getTextureByName(std::string filename) {
+		GLenum huboError = glGetError();
+		if (huboError){
+
+			std::cout << "There was an error before loading the texture" << std::endl;
+		}
 
 		if (m_textureMap.find(filename) == m_textureMap.end()) {
 			FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(filename.c_str(), 0);//Automatocally detects the format(from over 20 formats!)
