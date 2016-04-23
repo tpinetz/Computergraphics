@@ -696,10 +696,10 @@
     <None Include="glm\gtc\vec1.inl">
       <Filter>glm\gtc</Filter>
     </None>
-    <None Include="TextureShader.fragmentshader">
+    <None Include="TextureShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="TextureShader.vertexshader">
+    <None Include="TextureShader.fragmentshader">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
