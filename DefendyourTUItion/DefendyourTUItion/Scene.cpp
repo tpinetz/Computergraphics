@@ -112,6 +112,12 @@ namespace Scene {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));
 
+		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(new GameObject::Light(glm::vec3(1.0f,1.0f,1.0f), shaderHelper->getProgramId(), 0.5f));
+
+		m_gameObjectManager->addObject(light);
+
+		m_renderer->addLight(light->getRenderData());
+
 		return true;
 	}
 
@@ -131,6 +137,8 @@ namespace Scene {
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);
+
+			m_renderer->endDrawing(this->window);
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 		

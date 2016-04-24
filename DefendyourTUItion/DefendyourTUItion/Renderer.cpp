@@ -26,6 +26,10 @@ namespace Renderer {
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 
+		if (m_useLighting) {
+			setLightingRelatedConfiguration();
+		}
+
 		activateTextures(model);
 
 		glBindVertexArray(model->getVAO());
@@ -57,9 +61,28 @@ namespace Renderer {
 		}
 	}
 
+	void Renderer::setLightingRelatedConfiguration() {
+		GLint lightColorLoc = glGetUniformLocation(m_currentProgram, "lightColor");
+		glUniform3f(lightColorLoc, m_lightcolor.x, m_lightcolor.y, m_lightcolor.z);
+
+		for (int i = 0; i < m_lights.size(); i++) {
+			auto light = m_lights[i];
+			GLint lightPosLoc = glGetUniformLocation(m_currentProgram, "lightPos" + i);
+
+			glUniform3f(lightPosLoc, light->position.x, light->position.y, light->position.z);
+		}
+
+		GLint viewPosLoc = glGetUniformLocation(m_currentProgram, "viewPos");
+		glUniform3f(viewPosLoc, m_camera->getCameraPosition().x, m_camera->getCameraPosition().y, m_camera->getCameraPosition().z);
+
+	}
+
 	void Renderer::beginDrawing(GLFWwindow* window) {
-		glfwSwapBuffers(window);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	void Renderer::endDrawing(GLFWwindow* window) {
+		glfwSwapBuffers(window);
 	}
 
 	void Renderer::startShader(GLuint programID) {
