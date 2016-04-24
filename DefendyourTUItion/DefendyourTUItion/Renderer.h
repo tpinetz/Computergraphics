@@ -11,7 +11,9 @@ namespace Renderer {
 
 	struct LightRenderingData {
 		glm::vec3 position;
-		GLfloat lightStrength;
+		glm::vec3 ambient;
+		glm::vec3 diffuse;
+		glm::vec3 specular;
 	};
 
 	class Renderer

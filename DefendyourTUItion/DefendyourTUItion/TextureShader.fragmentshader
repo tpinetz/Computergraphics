@@ -8,6 +8,9 @@ out vec4 color;
 uniform sampler2D ourTexture;
 uniform vec3 lightColor;
 uniform vec3 lightPos0;
+uniform vec3 ambient0;
+uniform vec3 diffuse0;
+uniform vec3 specular0; 
 uniform vec3 viewPos;
 
 void main(){
@@ -27,5 +30,5 @@ void main(){
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 	vec3 specular = specularStrength * spec * lightColor;  
 
-	color = vec4((ambient + diffuse + specular), 1.0f) * texture(ourTexture, TexCoord);
+	color = vec4((ambient0 * ambient + diffuse0*diffuse + specular0*specular), 1.0f) * texture(ourTexture, TexCoord);
 }

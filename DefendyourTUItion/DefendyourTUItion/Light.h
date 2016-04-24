@@ -6,7 +6,7 @@ namespace GameObject {
 		: public GameObject
 	{
 	public:
-		Light(glm::vec3 position, GLuint shader, GLfloat lightStrength);
+		Light(glm::vec3 position, GLuint shader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
 		~Light();
 
 		void update(double time);
@@ -17,7 +17,9 @@ namespace GameObject {
 		}
 	private:
 		GLuint m_shader;
-		GLfloat m_lightStrength;
+		glm::vec3 m_ambient;
+		glm::vec3 m_diffuse;
+		glm::vec3 m_specular;
 
 		std::shared_ptr<Renderer::LightRenderingData> m_renderData;
 	};

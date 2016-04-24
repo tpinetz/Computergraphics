@@ -112,7 +112,14 @@ namespace Scene {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));
 
-		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(new GameObject::Light(glm::vec3(1.0f,1.0f,1.0f), shaderHelper->getProgramId(), 0.5f));
+		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
+			new GameObject::Light(
+			glm::vec3(1.0f,1.0f,1.0f),      // Position
+			shaderHelper->getProgramId(),	// Shader
+			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
+			glm::vec3(0.5f, 0.5f, 0.5f),	// Diffuse Light Color
+			glm::vec3(1.0f, 1.0f, 1.0f)		// Specular Light Color
+			));
 
 		m_gameObjectManager->addObject(light);
 
