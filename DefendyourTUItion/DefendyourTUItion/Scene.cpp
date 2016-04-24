@@ -117,8 +117,8 @@ namespace Scene {
 			glm::vec3(1.0f,1.0f,1.0f),      // Position
 			shaderHelper->getProgramId(),	// Shader
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
-			glm::vec3(0.5f, 0.5f, 0.5f),	// Diffuse Light Color
-			glm::vec3(1.0f, 1.0f, 1.0f)		// Specular Light Color
+			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color
+			glm::vec3(0.5f, 0.5f, 0.5f)		// Specular Light Color
 			));
 
 		m_gameObjectManager->addObject(light);

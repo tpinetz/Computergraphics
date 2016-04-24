@@ -67,16 +67,16 @@ namespace Renderer {
 
 		for (int i = 0; i < m_lights.size(); i++) {
 			auto light = m_lights[i];
-			GLint lightPosLoc = glGetUniformLocation(m_currentProgram, "lightPos" + i);
+			GLint lightPosLoc = glGetUniformLocation(m_currentProgram, "light.position" );
 			glUniform3f(lightPosLoc, light->position.x, light->position.y, light->position.z);
 
-			GLint lightAmbientLoc = glGetUniformLocation(m_currentProgram, "ambient" + i);
+			GLint lightAmbientLoc = glGetUniformLocation(m_currentProgram, "light.ambient" );
 			glUniform3f(lightAmbientLoc, light->ambient.x, light->ambient.y, light->ambient.z);
 
-			GLint lightDiffuseLoc = glGetUniformLocation(m_currentProgram, "diffuse" + i);
+			GLint lightDiffuseLoc = glGetUniformLocation(m_currentProgram, "light.diffuse");
 			glUniform3f(lightDiffuseLoc, light->diffuse.x, light->diffuse.y, light->diffuse.z);
 			
-			GLint lightSpecularLoc = glGetUniformLocation(m_currentProgram, "specular" + i);
+			GLint lightSpecularLoc = glGetUniformLocation(m_currentProgram, "light.specular" );
 			glUniform3f(lightSpecularLoc, light->specular.x, light->specular.y, light->specular.z);
 		}
 
