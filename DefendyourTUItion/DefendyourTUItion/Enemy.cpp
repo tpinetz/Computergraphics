@@ -18,20 +18,21 @@ namespace GameObject {
 	}
 
 	void Enemy::initModel() {
-		std::vector<Vertex> vertices = loadOBJ(this->m_modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
+		//std::vector<Vertex> vertices = loadOBJ(this->m_modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
+		mod.loadModel(m_modelString.c_str());
 
-		if (vertices.empty()) {
+		/*if (vertices.empty()) {
 			std::cerr << "Failed to load model Floor.";
 			return;
-		}
+		} */
 
 		glGenVertexArrays(1, &m_vao);
 		glBindVertexArray(m_vao);
 
 		glGenBuffers(1, &m_vertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, (sizeof(glm::vec3) + sizeof(glm::vec2) + sizeof(glm::vec3)) * vertices.size(),
-			&vertices[0], GL_STATIC_DRAW);
+		//glBufferData(GL_ARRAY_BUFFER, (sizeof(glm::vec3) + sizeof(glm::vec2) + sizeof(glm::vec3)) * vertices.size(),
+		//	&vertices[0], GL_STATIC_DRAW);
 
 
 		glEnableVertexAttribArray(0);
@@ -67,9 +68,9 @@ namespace GameObject {
 
 		glBindVertexArray(0);
 
-		m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(m_vao, vertices.size()));
+		//m_model = std::shared_ptr<Renderer::Model>(new Renderer::Model(m_vao, vertices.size()));
 
-		m_model->addTexture(Common::TextureHelper::getInstance()->getTextureByName("../Assets/Textures/ground.jpg"));
+		//m_model->addTexture(Common::TextureHelper::getInstance()->getTextureByName("../Assets/Textures/ground.jpg"));
 
 
 	}
@@ -86,9 +87,9 @@ namespace GameObject {
 	void Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
 
 		glm::mat4 transform = getTransformMatrix();
-
 		renderer->startShader(m_shader);
-		renderer->drawModel(m_model, transform);
+		//renderer->drawModel(m_model, transform);
+		renderer->drawModel(m_model, transform, mod);
 		renderer->stopShader();
 	}
 }

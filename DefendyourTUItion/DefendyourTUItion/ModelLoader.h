@@ -1,59 +1,3 @@
-/*#pragma once
-#include "MainHeaders.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include <SOIL\src\SOIL.h>
-//#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-//#include "Shader.h"
-
-
-#include "Mesh.h"
-
-GLint TextureFromFile(const char* path, std::string directory);
-
-class ModelLoader{
-public:
-	ModelLoader(GLchar* path);
-	void Draw(Shader shader);
-private:
-	std::vector<Mesh> meshes;
-	std::string directory;
-	std::vector<Texture> textures_loaded;
-
-	void loadModel(std::string path);
-	void processNode(aiNode* node, const aiScene* scene);
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
-};
-
-GLint TextureFromFile(const char* path, std::string directory)
-{
-	//Generate texture ID and load texture data 
-	std::string filename = std::string(path);
-	filename = directory + '/' + filename;
-	std::cout << filename << std::endl;
-	GLuint textureID;
-	glGenTextures(1, &textureID);
-	int width, height;
-	unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-	// Assign texture to ID
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	// Parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	SOIL_free_image_data(image);
-	return textureID;
-} */
-
-
 #pragma once
 // Std. Includes
 #include <string>
@@ -71,37 +15,41 @@ using namespace std;
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "TextureHelper.h"
 
 #include "Mesh.h"
 
-GLint TextureFromFile(const char* path, string directory);
-
-class Model
+class ModelLoader
 {
 public:
-	/*  Functions  */
-	// Constructor, expects a filepath to a 3D model.
-	Model(GLchar* path)
+
+	GLint TextureFromFile(const char* path, string directory)
 	{
-		this->loadModel(path);
+		//Generate texture ID and load texture data 
+		string filename = string(path);
+		filename = directory + '/' + filename;
+		//cout << filename << endl;
+		GLuint textureID;
+		glGenTextures(1, &textureID);
+		int width, height;
+		unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
+		// Assign texture to ID
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		SOIL_free_image_data(image);
+		return textureID;
 	}
 
-	// Draws the model, and thus all its meshes
-	void Draw(Shader shader)
-	{
-		for (GLuint i = 0; i < this->meshes.size(); i++)
-			this->meshes[i].Draw(shader);
-	}
-
-private:
-	/*  Model Data */
-	vector<Mesh> meshes;
-	string directory;
-	vector<Texture> textures_loaded;	// Stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-
-	/*  Functions  */ 
 	// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	void loadModel(string path)
+	void loadModel(const string path)
 	{
 		// Read file via ASSIMP
 		Assimp::Importer importer;
@@ -118,6 +66,22 @@ private:
 		// Process ASSIMP's root node recursively
 		this->processNode(scene->mRootNode, scene);
 	}
+
+
+	// Draws the model, and thus all its meshes
+	void Draw(GLuint shader)
+	{
+		for (GLuint i = 0; i < this->meshes.size(); i++)
+			this->meshes[i].Draw(shader);
+	}
+
+private:
+	/*  Model Data */
+	vector<Mesh> meshes;
+	string directory;
+	vector<Texture> textures_loaded;	// Stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+
+	/*  Functions  */
 
 	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
 	void processNode(aiNode* node, const aiScene* scene)
@@ -172,6 +136,7 @@ private:
 			}
 			else
 				vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+
 			vertices.push_back(vertex);
 		}
 		// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -229,6 +194,8 @@ private:
 			{   // If texture hasn't been loaded already, load it
 				Texture texture;
 				texture.id = TextureFromFile(str.C_Str(), this->directory);
+				//Common::TextureHelper getTextureByName();
+				//texture.id = Common::TextureHelper::getInstance()->getTextureByName(str.C_Str());
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);
@@ -238,31 +205,3 @@ private:
 		return textures;
 	}
 };
-
-
-
-
-GLint TextureFromFile(const char* path, string directory)
-{
-	//Generate texture ID and load texture data 
-	string filename = string(path);
-	filename = directory + '/' + filename;
-	cout << filename << endl;
-	GLuint textureID;
-	glGenTextures(1, &textureID);
-	int width, height;
-	unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-	// Assign texture to ID
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	// Parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	SOIL_free_image_data(image);
-	return textureID;
-} 

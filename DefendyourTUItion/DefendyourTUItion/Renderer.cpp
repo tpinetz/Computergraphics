@@ -45,6 +45,54 @@ namespace Renderer {
 		deactivateTextures(model);
 	}
 
+	void Renderer::drawModel(std::shared_ptr<Model> model, glm::mat4 transform, ModelLoader mod) {
+		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+		if (m_useLighting) {
+			setLightingRelatedConfiguration();
+		}
+
+		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
+		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+		mod.Draw(m_currentProgram);
+		//activateTextures(model);
+
+		//glBindVertexArray(model->getVAO());
+
+		//if (model->getHasIndices()) {
+		//	glDrawElements(GL_TRIANGLES, model->getTriangleCount() * 3, GL_UNSIGNED_INT, (GLvoid*)0);
+		//}
+		//else {
+		//	mod.Draw(m_currentProgram);
+		//}
+		/*int count = model->getTriangleCount();
+		//std::cout << count << std::endl;
+		if (count > 100)
+		{
+		//count = count - 45000;
+		//glDrawArrays(GL_TRIANGLES, 0, count * 3);
+
+		//for (unsigned int i = 0; i < model->getTextures()->size(); i++){
+		//	GLuint texture = 2;//model->getTextures()->at(i);
+		//	glActiveTexture(GL_TEXTURE0 + i);
+		//	//glUniform1i(glGetUniformLocation(m_currentProgram, (name + number).c_str()), i);
+		//	glBindTexture(GL_TEXTURE_2D, texture);
+		//}
+		//glDrawArrays(GL_TRIANGLES, count*3, 45000*3);
+
+
+		}
+		else
+		glDrawArrays(GL_TRIANGLES, 0, model->getTriangleCount() * 3);		//You need to change it with diffrent objects, i guess it should be vertices size
+		}
+
+		glBindVertexArray(0);
+		deactivateTextures(model); */
+	}
+
 	void Renderer::activateTextures(std::shared_ptr<Model> model) {
 		for (unsigned int i = 0; i < model->getTextures()->size(); i++){
 			GLuint texture = model->getTextures()->at(i);

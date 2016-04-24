@@ -4,6 +4,8 @@
 #include "Renderer.h"
 #include "ObjectLoader.hpp"
 #include "TextureHelper.h"
+#include "ModelLoader.h"
+
 
 namespace GameObject{
 
@@ -23,12 +25,13 @@ namespace GameObject{
 
 	private:
 		GLfloat movementSpeed = 0.01;
-		static GLfloat m_modelVertices[];
+		//static GLfloat m_modelVertices[];
 		std::shared_ptr<Renderer::Model> m_model;
 		GLuint m_shader;
 		GLuint m_vertexBuffer;
 		GLuint m_vao;
-		std::string m_modelString = "../Assets/Model/cat.obj";
+		std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
+		ModelLoader mod;
 	};
 }
 

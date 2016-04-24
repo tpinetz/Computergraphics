@@ -6,6 +6,7 @@
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "ModelLoader.h"
 
 namespace Renderer {
 
@@ -34,6 +35,7 @@ namespace Renderer {
 
 		void drawModel(std::shared_ptr<Model> model);
 		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform);
+		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform, ModelLoader mod);
 
 		inline void setUseLighting(bool useLighting) {
 			m_useLighting = useLighting;
