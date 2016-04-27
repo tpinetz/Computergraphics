@@ -3,11 +3,19 @@
 namespace GameObject {
 
 	Floor::Floor(GLuint shader)
+		:Floor(shader, 10, 10, glm::vec3(0,-1,0))
 	{
+
+	}
+
+
+	Floor::Floor(GLuint shader, GLfloat width, GLfloat height, glm::vec3 position) {
 		this->m_name = "Floor";
 		this->m_shader = shader;
 
 		this->initModel();
+		m_position = position;
+		m_scale = glm::vec3(width, 0.1, height);
 	}
 
 
@@ -73,8 +81,6 @@ namespace GameObject {
 		m_model->addTexture(Common::TextureHelper::getInstance()->getTextureByName(
 			m_textureString));
 
-		m_position = glm::vec3(0, -1, 0);
-		m_scale = glm::vec3(10, 0.1, 10);
 	}
 
 	void Floor::update(double time) {

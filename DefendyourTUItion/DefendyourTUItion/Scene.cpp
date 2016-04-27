@@ -107,7 +107,10 @@ namespace Scene {
 			new Avatar::Avatar(m_camera, shaderHelper->getProgramId())));
 
 		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(new GameObject::Floor(m_textureShader->getProgramId())));
+			std::shared_ptr<GameObject::GameObject>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000)));
+
+	//	m_gameObjectManager->addObject(
+		//	std::shared_ptr<GameObject::GameObject>(new GameObject::Floor(m_textureShader->getProgramId())));
 
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));

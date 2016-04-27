@@ -12,6 +12,7 @@
 #include "PhysicsWorld.h"
 #include "Light.h"
 #include "Enemy.h"
+#include "Ground.h"
 
 namespace Scene {
 

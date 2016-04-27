@@ -33,7 +33,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp">
-      <Filter>GameObject\Floor</Filter>
+      <Filter>GameObject\Ground\Floor</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsWorld.cpp">
       <Filter>Physics</Filter>
@@ -55,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>GameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>GameObject\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,7 +393,7 @@
     </ClInclude>
     <ClInclude Include="MainHeaders.h" />
     <ClInclude Include="Floor.h">
-      <Filter>GameObject\Floor</Filter>
+      <Filter>GameObject\Ground\Floor</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsWorld.h">
       <Filter>Physics</Filter>
@@ -418,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>GameObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>GameObject\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -457,9 +463,6 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{3fba8bfe-7689-4c1e-8efb-c6160b250115}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Floor">
-      <UniqueIdentifier>{061e5cab-6a21-4edf-9d7a-0f314826afcc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{adf48264-700f-46cc-95e3-bc45b4417b5e}</UniqueIdentifier>
     </Filter>
@@ -474,6 +477,12 @@
     </Filter>
     <Filter Include="GameObject\Light">
       <UniqueIdentifier>{f0856935-65ab-4cde-a6ae-a04b37c0a522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Ground">
+      <UniqueIdentifier>{3f7be0c8-52d8-4e03-8eae-8f676079b92b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Ground\Floor">
+      <UniqueIdentifier>{061e5cab-6a21-4edf-9d7a-0f314826afcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -709,6 +718,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="TextureShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="MeshShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="MeshShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

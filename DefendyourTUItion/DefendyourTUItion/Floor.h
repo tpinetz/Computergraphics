@@ -16,6 +16,7 @@ namespace GameObject {
 
 	public:
 		Floor(GLuint shader);
+		Floor(GLuint shader, GLfloat width, GLfloat height, glm::vec3 position);
 		~Floor();
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);

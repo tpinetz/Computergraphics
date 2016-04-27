@@ -193,9 +193,9 @@ private:
 			if (!skip)
 			{   // If texture hasn't been loaded already, load it
 				Texture texture;
-				texture.id = TextureFromFile(str.C_Str(), this->directory);
+				//texture.id = TextureFromFile(str.C_Str(), this->directory);
 				//Common::TextureHelper getTextureByName();
-				//texture.id = Common::TextureHelper::getInstance()->getTextureByName(str.C_Str());
+				texture.id = Common::TextureHelper::getInstance()->getTextureByName(this->directory + "/" + str.C_Str());
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);

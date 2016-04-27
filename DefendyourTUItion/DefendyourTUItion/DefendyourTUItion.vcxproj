@@ -159,6 +159,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="glm\vec3.hpp" />
     <ClInclude Include="glm\vec4.hpp" />
     <ClInclude Include="glm\vector_relational.hpp" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MainHeaders.h" />
@@ -372,6 +374,8 @@
     <None Include="glm\gtx\vector_angle.inl" />
     <None Include="glm\gtx\vector_query.inl" />
     <None Include="glm\gtx\wrap.inl" />
+    <None Include="MeshShader.fragmentshader" />
+    <None Include="MeshShader.vertexshader" />
     <None Include="TextureShader.fragmentshader" />
     <None Include="TextureShader.vertexshader" />
     <None Include="VertexShader.vertexshader" />
