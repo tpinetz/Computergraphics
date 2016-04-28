@@ -15,6 +15,8 @@ namespace Physics
 		
 		bool initPhysics();
 		void runPhysics(float deltaTime);
+
+		void addRigidBody(std::shared_ptr<btRigidBody> rigidBody);
 		
 		inline std::shared_ptr<btDiscreteDynamicsWorld> getPhysicWorld() {
 			return m_world;
@@ -26,6 +28,8 @@ namespace Physics
 		std::shared_ptr<btCollisionDispatcher> m_dispatcher;
 		std::shared_ptr<btSequentialImpulseConstraintSolver> m_solver;
 		std::shared_ptr<btDiscreteDynamicsWorld> m_world;
+
+		vector<std::shared_ptr<btRigidBody>> m_rigidBodies;
 
 	};
 

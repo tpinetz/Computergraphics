@@ -9,6 +9,9 @@ namespace Physics {
 
 	PhysicsWorld::~PhysicsWorld()
 	{
+		for (auto rigidBody : m_rigidBodies) {
+			m_world->removeRigidBody(rigidBody.get());
+		}
 	}
 
 	bool PhysicsWorld::initPhysics() {
@@ -35,7 +38,12 @@ namespace Physics {
 	}
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
-		m_world->stepSimulation(deltaTime, 5);
+		m_world->stepSimulation(deltaTime);
+	}
+
+	void PhysicsWorld::addRigidBody(std::shared_ptr<btRigidBody> rigidBody) {
+		m_rigidBodies.push_back(rigidBody);
+		m_world->addRigidBody(rigidBody.get());
 	}
 
 }

@@ -119,14 +119,14 @@ namespace Scene {
 		
 		auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
 		m_gameObjectManager->addObject(ground);
-		m_physicsWorld->getPhysicWorld()->addRigidBody(ground->getRigidBody().get());
+		m_physicsWorld->addRigidBody(ground->getRigidBody());
 
 		
 		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy1", glm::vec3(1, 10, -10), 
+			new GameObject::Enemy("enemy1", glm::vec3(1, 3, -10), 
 			m_textureShader->getProgramId()));
 		m_gameObjectManager->addObject(enemy1);
-		m_physicsWorld->getPhysicWorld()->addRigidBody(enemy1->getRigidBody().get());
+		m_physicsWorld->addRigidBody(enemy1->getRigidBody());
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
