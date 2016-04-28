@@ -112,7 +112,7 @@ namespace Scene {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
 			new GameObject::Avatar(m_camera, 
-				shaderHelper->getProgramId(), 
+				m_physicsWorld,
 				m_extraGameObjectManager, 
 				m_textureShader->getProgramId())));
 

@@ -2,7 +2,8 @@
 
 namespace GameObject{
 
-	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, GLuint shader, 
+	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, 
+		std::shared_ptr<Physics::PhysicsWorld> physicsWorld,
 		std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader)
 	{
 		m_name = "Avatar";
@@ -11,14 +12,14 @@ namespace GameObject{
 		m_scale = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_gameObjectManager = gameObjectManager;
 
-		m_shader = shader;
+		m_physicsWorld = physicsWorld;
 		m_projectileShader = projectileShader;
 
-		initModel();
-	}
+		m_projectileModel = Common::ModelLoaderHelper::getInstance()
+			->getTextureModel(m_projectileModelString, m_projectileTextureString);
 
-	void Avatar::initModel() {
-
+		this->initPhysics(m_position,
+			std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 1, 1))));
 	}
 
 
@@ -28,12 +29,21 @@ namespace GameObject{
 
 	void Avatar::update(double deltaTime) {
 		m_position = m_camera->getCameraPosition();
+		btTransform trans;
+		getRigidBody()->getMotionState()->getWorldTransform(trans);
+		m_position.y = trans.getOrigin().getY() + 0.5f;
+
+		m_camera->setCameraPosition(m_position);
+
 		m_bulletCooldown -= deltaTime;
 		if (Input::MouseInputManager::getMouseInputManagerInstance()
 			->isKeyPressed(GLFW_MOUSE_BUTTON_1) && m_bulletCooldown < 0.0f) {
 			std::shared_ptr<Projectile> newProjectile =
-				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_position, glm::vec3(0.2f, 0.2f, 0.2f), m_camera->getCameraDirection()));
+				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_position, 
+				glm::vec3(0.2f, 0.2f, 0.2f), m_camera->getCameraDirection(),
+				m_projectileModel));
 			m_gameObjectManager->addObject(newProjectile);
+			m_physicsWorld->addRigidBody(newProjectile->getRigidBody());
 			m_bulletCooldown = m_bulletCooldownAttribute;
 		}
 	}

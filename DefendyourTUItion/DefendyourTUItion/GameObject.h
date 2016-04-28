@@ -15,8 +15,8 @@ namespace GameObject {
 		GameObject();
 		virtual ~GameObject();
 
-		virtual void update(double time);
-		virtual void render(std::shared_ptr<Renderer::Renderer> renderer);
+		virtual void update(double time) = 0;
+		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
 
 		std::string getName();
 		bool operator==(GameObject& rhs) {

@@ -15,7 +15,7 @@ namespace GameObjectManager {
 		this->m_gameObjectList.push_back(gameObject);
 	}
 
-	void GameObjectManager::removeObject(GameObject::GameObject gameObject) {
+	void GameObjectManager::removeObject(GameObject::GameObject& gameObject) {
 		for (auto it = m_gameObjectList.begin(); it != m_gameObjectList.end(); it++) {
 			if (*(it->get()) == gameObject) {
 				m_gameObjectList.erase(it);

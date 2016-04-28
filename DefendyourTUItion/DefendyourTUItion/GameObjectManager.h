@@ -11,7 +11,7 @@ namespace GameObjectManager
 		~GameObjectManager();
 
 		void addObject(std::shared_ptr<GameObject::GameObject> gameObject);
-		void removeObject(GameObject::GameObject gameObject);
+		void removeObject(GameObject::GameObject& gameObject);
 	
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);

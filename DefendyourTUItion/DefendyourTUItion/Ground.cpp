@@ -9,7 +9,8 @@ namespace GameObject {
 
 		try {
 
-			auto model = initTile(m_modelString, m_textureString);
+			auto model = Common::ModelLoaderHelper::getInstance()
+				->getTextureModel(m_modelString, m_textureString);
 
 			for (GLint i = -fromWidth; i <= fromWidth; i += m_tileWidth) {
 				for (GLint j = -fromHeight; j <= fromHeight; j += m_tileHeight) {
@@ -28,63 +29,6 @@ namespace GameObject {
 
 	}
 
-	std::shared_ptr<Renderer::Model> Ground::initTile(std::string modelString, std::string texture) {
-		std::vector<Vertex> vertices = loadOBJ(modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
-
-		if (vertices.empty()) {
-			std::cerr << "Failed to load model Floor." << std::endl;
-			throw new exception();
-		}
-
-		glGenVertexArrays(1, &m_vao);
-		glBindVertexArray(m_vao);
-
-		glGenBuffers(1, &m_vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, (sizeof(glm::vec3) + sizeof(glm::vec2) + sizeof(glm::vec3)) * vertices.size(),
-			&vertices[0], GL_STATIC_DRAW);
-
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(
-			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			sizeof(Vertex),                  // stride
-			(void*)0            // array buffer offset
-			);
-
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(
-			1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			sizeof(Vertex),                  // stride
-			(GLvoid*)offsetof(Vertex, Normal)            // array buffer offset
-			);
-
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(
-			2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-			2,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			sizeof(Vertex),                 // stride
-			(GLvoid*)offsetof(Vertex, TexCoords)             // array buffer offset
-			);
-
-		glBindVertexArray(0);
-
-
-		auto model = std::shared_ptr<Renderer::Model>(new Renderer::Model(m_vao, 12));
-
-		model->addTexture(Common::TextureHelper::getInstance()->getTextureByName(
-			texture));
-
-		return model;
-	}
 
 	void Ground::initPhysics(GLint width) {
 		m_shape = std::shared_ptr<btCollisionShape>(new btStaticPlaneShape(btVector3(0, 1, 0), 0));

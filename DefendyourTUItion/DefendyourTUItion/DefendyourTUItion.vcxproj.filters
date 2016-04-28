@@ -62,6 +62,12 @@
     <ClCompile Include="FormattingHelper.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoaderHelper.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -429,6 +435,12 @@
       <Filter>GameObject\Ground</Filter>
     </ClInclude>
     <ClInclude Include="FormattingHelper.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoaderHelper.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

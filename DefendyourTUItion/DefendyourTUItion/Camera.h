@@ -27,6 +27,11 @@ namespace Camera {
 		inline glm::vec3 getCameraPosition() {
 			return m_cameraPos;
 		}
+
+		inline void setCameraPosition(glm::vec3 position) {
+			m_cameraPos = position;
+		}
+
 		inline glm::mat4 getViewMatrix() {
 			return glm::lookAt(m_cameraPos,
 				m_cameraPos + m_cameraFront,

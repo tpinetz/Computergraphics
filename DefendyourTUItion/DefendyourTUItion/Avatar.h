@@ -1,23 +1,22 @@
 #pragma once
-#include "GameObject.h"
+#include "PhysicsObject.h"
 #include "Camera.h"
 #include "Model.h"
 #include "Renderer.h"
 #include "GameObjectManager.h"
 #include "MouseInputManager.h"
 #include "Projectile.h"
+#include "ModelLoaderHelper.h"
 
 namespace GameObject {
 
 
 	class Avatar :
-		public GameObject
+		public PhysicsObject
 	{
-	private:
-		void initModel();
-
 	public:
-		Avatar(std::shared_ptr<Camera::Camera> camera, GLuint shader, 
+		Avatar(std::shared_ptr<Camera::Camera> camera, 
+			std::shared_ptr<Physics::PhysicsWorld> physicsWorld,
 			std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader);
 		~Avatar();
 		void update(double deltaTime);
@@ -30,8 +29,13 @@ namespace GameObject {
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
+		std::shared_ptr<Physics::PhysicsWorld> m_physicsWorld;
+
+		std::shared_ptr<Renderer::Model> m_projectileModel;
+		std::string m_projectileModelString = "../Assets/Model/Floor/Floor.obj";
+		std::string m_projectileTextureString = "../Assets/Textures/ground.jpg";
+
 		static GLfloat m_modelVertices[];
-		GLuint m_shader;
 		GLuint m_projectileShader;
 
 		GLfloat m_bulletCooldownAttribute = 50.0f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x seconds)

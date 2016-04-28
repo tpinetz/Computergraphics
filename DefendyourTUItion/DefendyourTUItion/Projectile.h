@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "PhysicsObject.h"
 #include "Model.h"
 #include "ObjectLoader.hpp"
 #include "FormattingHelper.h"
@@ -7,13 +7,12 @@
 namespace GameObject {
 	
 class Projectile :
-		public GameObject
+		public PhysicsObject
 	{
-	private:
-		void initModel();
 	public:
 		Projectile();
-		Projectile(GLuint shader, glm::vec3 position, glm::vec3 scale, glm::vec3 direction);
+		Projectile(GLuint shader, glm::vec3 position, glm::vec3 scale, 
+			glm::vec3 direction, std::shared_ptr<Renderer::Model> model);
 		~Projectile();
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
@@ -31,7 +30,8 @@ class Projectile :
 		std::string m_textureString = "../Assets/Textures/ground.jpg";
 
 		bool m_active;
-		GLfloat movementSpeed = 0.05f;
+		GLfloat m_force = 5000.f;
+		GLfloat m_lifeTime = 1000.0f;
 	};
 
 }

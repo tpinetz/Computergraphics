@@ -3,13 +3,13 @@
 #include "Floor.h"
 #include "btBulletDynamicsCommon.h"
 #include "PhysicsWorld.h"
+#include "ModelLoaderHelper.h"
 
 namespace GameObject {
 	class Ground
 		: public GameObject
 	{
 	private:
-		std::shared_ptr<Renderer::Model> initTile(std::string modelString, std::string texture);
 		void initPhysics(GLint width);
 	public:
 		Ground(GLuint shader, GLint width, GLint height);

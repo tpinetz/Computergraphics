@@ -14,29 +14,12 @@ namespace GameObject {
 		this->m_shader = shader;
 
 		mod.loadModel(m_modelString.c_str());
+		m_mass = 5;
 
-		this->initPhysics(position);
+		this->initPhysics(position, 
+			std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 2, 1))));
 	}
 
-	void Enemy::initPhysics(glm::vec3 position) {
-		m_shape = std::shared_ptr<btCollisionShape>(new btSphereShape(1));
-		m_motionState = std::shared_ptr<btDefaultMotionState>(
-			new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), 
-			btVector3(position.x,position.y, position.z)))
-			);
-
-		m_fallInertia = btVector3(0, 0, 0);
-		m_shape->calculateLocalInertia(m_mass, m_fallInertia);
-		
-
-		btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(
-			m_mass, 
-			m_motionState.get(), 
-			m_shape.get(), 
-			m_fallInertia);
-		m_rigidBody = std::shared_ptr<btRigidBody>(new btRigidBody(rigidBodyCI));
-
-	}
 
 
 	
@@ -44,12 +27,15 @@ namespace GameObject {
 		GLfloat deltaTime = time;
 
 		btTransform trans;
-		m_rigidBody->getMotionState()->getWorldTransform(trans);
-		m_position.y = trans.getOrigin().getY();
+		getRigidBody()->getMotionState()->getWorldTransform(trans);
+		m_position = glm::vec3(trans.getOrigin().getX(),
+			trans.getOrigin().getY(),
+			trans.getOrigin().getZ());
+		
 
 
 		m_position += glm::normalize(-m_position) * movementSpeed * deltaTime;
-
+		this->setPhysicsPosition(m_position);
 	}
 
 

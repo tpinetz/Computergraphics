@@ -7,10 +7,8 @@ namespace Renderer {
 	class Model
 	{
 	public:
-		Model();
-		Model(GLuint vao);
-		Model(GLuint vao, int triangles);
-		Model(GLuint vao, int triangles, bool indices);
+		Model(GLuint vao, GLuint vertexBuffer, int triangles);
+		Model(GLuint vao, GLuint vertexBuffer, int triangles , bool indices);
 		~Model();
 
 		inline GLuint getVAO() {
@@ -34,8 +32,8 @@ namespace Renderer {
 		}
 
 	private:
-		GLuint m_vertexArrayID;
 		GLuint m_vao;
+		GLuint m_vertexBuffer;
 		int m_triangles;
 		bool m_indices;
 		std::shared_ptr<std::vector<GLuint>> m_textures;
