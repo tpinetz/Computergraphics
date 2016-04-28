@@ -15,6 +15,11 @@ namespace Physics
 		
 		bool initPhysics();
 		void runPhysics(float deltaTime);
+		
+		inline std::shared_ptr<btDiscreteDynamicsWorld> getPhysicWorld() {
+			return m_world;
+		}
+
 	private:
 		std::shared_ptr<btBroadphaseInterface> m_broadphase;
 		std::shared_ptr<btDefaultCollisionConfiguration> m_collisionConfiguration;

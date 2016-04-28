@@ -4,7 +4,7 @@
 namespace Camera {
 
 	Camera::Camera(std::shared_ptr<Input::KeyboardManager> keyboardManager, float right, float top) 	{
-		m_cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+		m_cameraPos = glm::vec3(0.0f, 0.5f, 0.0f);
 		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_cameraSpeed = 0.05f;

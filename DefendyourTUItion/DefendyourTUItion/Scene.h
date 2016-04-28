@@ -21,6 +21,7 @@ namespace Scene {
 	private:
 		bool initInternalObjects();
 		bool addSceneRelevantGameObjects();
+		bool initPhysics();
 
 	public:
 		Scene();

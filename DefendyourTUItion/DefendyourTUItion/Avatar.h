@@ -34,7 +34,7 @@ namespace GameObject {
 		GLuint m_shader;
 		GLuint m_projectileShader;
 
-		GLfloat m_bulletCooldownAttribute = 100.0f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x seconds)
+		GLfloat m_bulletCooldownAttribute = 50.0f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x seconds)
 		GLfloat m_bulletCooldown = 0.0f; // How long the weapon still cools down;
 	};
 

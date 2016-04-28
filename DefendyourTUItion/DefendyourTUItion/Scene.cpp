@@ -54,8 +54,14 @@ namespace Scene {
 
 		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
 
+		// It is important that the Physics is initialized first.
+		return initPhysics() && initInternalObjects() && addSceneRelevantGameObjects();
+	}
 
-		return initInternalObjects() && addSceneRelevantGameObjects();
+	bool Scene::initPhysics() {
+		m_physicsWorld = std::shared_ptr<Physics::PhysicsWorld>(new Physics::PhysicsWorld());
+
+		return m_physicsWorld->initPhysics();
 	}
 
 	bool Scene::initInternalObjects() {
@@ -90,12 +96,6 @@ namespace Scene {
 			new Camera::Camera(m_keyboardManager, m_right, m_top));
 
 		m_mouseInputManager->setCamera(m_camera);
-		
-		m_physicsWorld = std::shared_ptr<Physics::PhysicsWorld>(new Physics::PhysicsWorld());
-
-		if (!m_physicsWorld->initPhysics()) {
-			return false;
-		}
 
 		m_time = glfwGetTime();
 
@@ -116,11 +116,17 @@ namespace Scene {
 				m_extraGameObjectManager, 
 				m_textureShader->getProgramId())));
 
-		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000)));
+		
+		auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
+		m_gameObjectManager->addObject(ground);
+		m_physicsWorld->getPhysicWorld()->addRigidBody(ground->getRigidBody().get());
 
-		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));
+		
+		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
+			new GameObject::Enemy("enemy1", glm::vec3(1, 10, -10), 
+			m_textureShader->getProgramId()));
+		m_gameObjectManager->addObject(enemy1);
+		m_physicsWorld->getPhysicWorld()->addRigidBody(enemy1->getRigidBody().get());
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(

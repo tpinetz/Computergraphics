@@ -4,6 +4,7 @@
 #include "LinearMath\btVector3.h"
 #include "glm\vec3.hpp"
 #include "Renderer.h"
+#include "PhysicsWorld.h"
 
 namespace GameObject {
 	class GameObject
@@ -26,8 +27,8 @@ namespace GameObject {
 		}
 	protected:
 		std::string m_name;
-		glm::vec3 m_position;
-		glm::vec3 m_rotation;
-		glm::vec3 m_scale;
+		glm::vec3 m_position = glm::vec3(0, 0, 0);
+		glm::vec3 m_rotation = glm::vec3(0, 0, 0);
+		glm::vec3 m_scale = glm::vec3(1, 1, 1);
 	};
 }

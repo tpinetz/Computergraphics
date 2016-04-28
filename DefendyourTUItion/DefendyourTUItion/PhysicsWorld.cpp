@@ -19,7 +19,7 @@ namespace Physics {
 		m_dispatcher = std::shared_ptr
 			<btCollisionDispatcher>(new btCollisionDispatcher(m_collisionConfiguration.get()));
 
-		btGImpactCollisionAlgorithm::registerAlgorithm(m_dispatcher.get());
+		//btGImpactCollisionAlgorithm::registerAlgorithm(m_dispatcher.get());
 		m_solver = std::shared_ptr
 			<btSequentialImpulseConstraintSolver>(new btSequentialImpulseConstraintSolver);
 
@@ -29,13 +29,13 @@ namespace Physics {
 			m_solver.get(), 
 			m_collisionConfiguration.get()));
 
-		m_world->setGravity(btVector3(0, -10, 0));
+		m_world->setGravity(btVector3(0, -2, 0));
 
 		return true;
 	}
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
-		m_world->stepSimulation(deltaTime);
+		m_world->stepSimulation(deltaTime, 5);
 	}
 
 }
