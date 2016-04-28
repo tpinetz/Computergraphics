@@ -36,6 +36,10 @@ namespace Camera {
 		inline glm::mat4 getProjectionMatrix() {
 			return m_projMatrix;
 		}
+
+		inline glm::vec3 getCameraDirection() {
+			return m_cameraFront;
+		}
 	private:
 		glm::vec3 m_cameraPos; 
 		glm::vec3 m_cameraFront;

@@ -157,6 +157,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="FormattingHelper.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="FormattingHelper.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="glm\common.hpp" />

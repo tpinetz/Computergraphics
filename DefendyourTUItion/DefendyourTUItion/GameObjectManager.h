@@ -16,6 +16,10 @@ namespace GameObjectManager
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
 
+		inline std::vector<std::shared_ptr<GameObject::GameObject>>& getGameObjects() {
+			return m_gameObjectList;
+		}
+
 	private:
 		std::vector<std::shared_ptr<GameObject::GameObject>> m_gameObjectList;
 	};

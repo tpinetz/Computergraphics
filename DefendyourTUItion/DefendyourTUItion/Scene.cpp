@@ -79,7 +79,13 @@ namespace Scene {
 		m_mouseInputManager = std::shared_ptr<Input::MouseInputManager>
 			(Input::MouseInputManager::getMouseInputManagerInstance());
 
+		// Game Object Manager Initialization
+
 		m_gameObjectManager = std::shared_ptr<GameObjectManager::GameObjectManager>(new GameObjectManager::GameObjectManager());
+		m_extraGameObjectManager = std::shared_ptr < GameObjectManager::GameObjectManager>(
+			new GameObjectManager::GameObjectManager()
+			);
+
 		m_camera = std::shared_ptr<Camera::Camera>(
 			new Camera::Camera(m_keyboardManager, m_right, m_top));
 
@@ -95,6 +101,7 @@ namespace Scene {
 
 		glfwSetKeyCallback(window, Input::KeyboardManager::key_callback);
 		glfwSetCursorPosCallback(window, Input::MouseInputManager::mouse_callback);
+		glfwSetMouseButtonCallback(window, Input::MouseInputManager::mouse_button_callback);
 
 		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
 
@@ -104,13 +111,13 @@ namespace Scene {
 	bool Scene::addSceneRelevantGameObjects() {
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
-			new Avatar::Avatar(m_camera, shaderHelper->getProgramId())));
+			new GameObject::Avatar(m_camera, 
+				shaderHelper->getProgramId(), 
+				m_extraGameObjectManager, 
+				m_textureShader->getProgramId())));
 
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000)));
-
-	//	m_gameObjectManager->addObject(
-		//	std::shared_ptr<GameObject::GameObject>(new GameObject::Floor(m_textureShader->getProgramId())));
 
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(new GameObject::Enemy("enemy1", glm::vec3(1, 1, -3), m_textureShader->getProgramId())));
@@ -149,6 +156,11 @@ namespace Scene {
 			m_gameObjectManager->render(m_renderer);
 
 			m_renderer->endDrawing(this->window);
+
+			for (auto newGameObject : m_extraGameObjectManager->getGameObjects()) {
+				m_gameObjectManager->addObject(newGameObject);
+			}
+
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 		

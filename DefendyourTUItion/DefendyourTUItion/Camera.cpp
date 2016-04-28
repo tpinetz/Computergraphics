@@ -25,6 +25,7 @@ namespace Camera {
 	{
 	}
 
+
 	void Camera::update(float deltaTime) {
 		
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_W)) {

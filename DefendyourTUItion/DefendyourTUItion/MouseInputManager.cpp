@@ -6,6 +6,9 @@ namespace Input {
 
 	MouseInputManager::MouseInputManager()
 	{
+		for (int i = 0; i < m_numKeys; i++) {
+			m_keys[i] = 0;
+		}
 	}
 
 
@@ -45,6 +48,23 @@ namespace Input {
 		if (m_camera != NULL) {
 			m_camera->ProcessMouseMovement(xoffset, yoffset);
 		}
+	}
+
+	void MouseInputManager::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+		MouseInputManager::getMouseInputManagerInstance()->memberCallback(button, action);
+	}
+
+	void MouseInputManager::memberCallback(int button, int action) {
+		if (action == GLFW_PRESS) {
+			m_keys[button] = true;
+		}
+		else if ( action == GLFW_RELEASE) {
+			m_keys[button] = false;
+		}
+	}
+
+	bool MouseInputManager::isKeyPressed(int key) {
+		return m_keys[key];
 	}
 
 }

@@ -15,7 +15,7 @@ namespace GameObject {
 	
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
-		GLint m_tileWidth = 100, m_tileHeight = 100;
+		GLint m_tileWidth = 75, m_tileHeight = 75;
 	};
 }
 

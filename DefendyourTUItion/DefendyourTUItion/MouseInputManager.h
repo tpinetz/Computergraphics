@@ -8,12 +8,15 @@ namespace Input {
 	{
 	private:
 		MouseInputManager();
+		void memberCallback(int button, int action);
 
 	public:
 		~MouseInputManager();
 		static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
 		static MouseInputManager* getMouseInputManagerInstance();
+		
 		bool isKeyPressed(int key);
 		void member_key_callback(double xpos, double ypos);
 		void setCamera(std::shared_ptr<Camera::Camera> camera);
@@ -25,6 +28,9 @@ namespace Input {
 
 		std::shared_ptr<Camera::Camera> m_camera = NULL;
 		static MouseInputManager* m_instance;
+
+		bool m_keys[100];
+		int m_numKeys = 100;
 	};
 
 }
