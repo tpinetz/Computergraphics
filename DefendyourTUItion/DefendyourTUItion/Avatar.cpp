@@ -34,6 +34,8 @@ namespace GameObject{
 		m_position.y = trans.getOrigin().getY() + 0.5f;
 
 		m_camera->setCameraPosition(m_position);
+		m_camera->update(deltaTime);
+		m_position = m_camera->getCameraPosition();
 
 		m_bulletCooldown -= deltaTime;
 		if (Input::MouseInputManager::getMouseInputManagerInstance()
@@ -43,7 +45,7 @@ namespace GameObject{
 				glm::vec3(0.2f, 0.2f, 0.2f), m_camera->getCameraDirection(),
 				m_projectileModel));
 			m_gameObjectManager->addObject(newProjectile);
-			m_physicsWorld->addRigidBody(newProjectile->getRigidBody());
+			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
 		}
 	}

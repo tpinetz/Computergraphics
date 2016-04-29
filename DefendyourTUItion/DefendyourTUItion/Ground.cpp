@@ -19,27 +19,11 @@ namespace GameObject {
 				}
 			}
 
-			initPhysics(width);
+			this->initPhysics(glm::vec3(0, 0, 0), std::shared_ptr<btCollisionShape>(new btStaticPlaneShape(btVector3(0, 1, 0), 0)));
 		}
 		catch (exception e) {
 			std::cerr << "Failed to create ground" << std::endl;
-		}
-
-		
-
-	}
-
-
-	void Ground::initPhysics(GLint width) {
-		m_shape = std::shared_ptr<btCollisionShape>(new btStaticPlaneShape(btVector3(0, 1, 0), 0));
-		m_motionState = std::shared_ptr<btDefaultMotionState>(
-			new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0))));
-
-		btRigidBody::btRigidBodyConstructionInfo rigidBodyInfo(0,
-			m_motionState.get(),
-			m_shape.get(), btVector3(0, 0, 0));
-
-		m_rigidBody = std::shared_ptr<btRigidBody>(new btRigidBody(rigidBodyInfo));
+		}		
 	}
 
 

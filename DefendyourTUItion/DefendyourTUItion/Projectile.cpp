@@ -14,6 +14,7 @@ namespace GameObject{
 		this->m_shader = shader;
 		this->m_model = model;
 
+
 		initPhysics(m_position, std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 1, 1))));
 
 		glm::vec3 forceVector = m_direction * m_force;

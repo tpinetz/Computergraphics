@@ -4,7 +4,6 @@
 #include "LinearMath\btVector3.h"
 #include "glm\vec3.hpp"
 #include "Renderer.h"
-#include "PhysicsWorld.h"
 
 namespace GameObject {
 	class GameObject

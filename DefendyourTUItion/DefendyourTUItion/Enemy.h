@@ -22,7 +22,7 @@ namespace GameObject{
 
 
 	private:
-		GLfloat movementSpeed = 0.01;
+		GLfloat movementSpeed = 3;
 		//static GLfloat m_modelVertices[];
 		std::shared_ptr<Renderer::Model> m_model;
 		GLuint m_shader;

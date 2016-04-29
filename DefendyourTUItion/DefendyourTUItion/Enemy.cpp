@@ -14,14 +14,12 @@ namespace GameObject {
 		this->m_shader = shader;
 
 		mod.loadModel(m_modelString.c_str());
-		m_mass = 5;
+		m_mass = 1;
 
 		this->initPhysics(position, 
-			std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 2, 1))));
+			std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 1.5, 1))));
 	}
-
-
-
+	
 	
 	void Enemy::update(double time) {
 		GLfloat deltaTime = time;
@@ -31,11 +29,9 @@ namespace GameObject {
 		m_position = glm::vec3(trans.getOrigin().getX(),
 			trans.getOrigin().getY(),
 			trans.getOrigin().getZ());
-		
 
-
-		m_position += glm::normalize(-m_position) * movementSpeed * deltaTime;
-		this->setPhysicsPosition(m_position);
+		glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
+		getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 	}
 
 

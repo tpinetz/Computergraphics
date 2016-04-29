@@ -1,8 +1,7 @@
 #pragma once
-#include "MainHeaders.h"
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h"
-#include "GameObject.h"
+#include "PhysicsObject.h"
 
 namespace Physics
 		{
@@ -12,15 +11,18 @@ namespace Physics
 	public:
 		PhysicsWorld();
 		~PhysicsWorld();
+		static void myTickCallback(btDynamicsWorld *world, btScalar timeStep);
 		
 		bool initPhysics();
 		void runPhysics(float deltaTime);
 
-		void addRigidBody(std::shared_ptr<btRigidBody> rigidBody);
+		void addPhysicsObject(std::shared_ptr<GameObject::PhysicsObject> physicObject);
 		
 		inline std::shared_ptr<btDiscreteDynamicsWorld> getPhysicWorld() {
 			return m_world;
 		}
+
+		void myProcessCallback(btScalar timestep);
 
 	private:
 		std::shared_ptr<btBroadphaseInterface> m_broadphase;
@@ -29,7 +31,7 @@ namespace Physics
 		std::shared_ptr<btSequentialImpulseConstraintSolver> m_solver;
 		std::shared_ptr<btDiscreteDynamicsWorld> m_world;
 
-		vector<std::shared_ptr<btRigidBody>> m_rigidBodies;
+		vector<std::shared_ptr<GameObject::PhysicsObject>> m_physicsObjects;
 
 	};
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "btBulletDynamicsCommon.h"
+
 namespace GameObject {
 	class PhysicsObject :
 		public GameObject

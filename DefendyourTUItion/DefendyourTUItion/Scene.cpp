@@ -119,14 +119,14 @@ namespace Scene {
 		
 		auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
 		m_gameObjectManager->addObject(ground);
-		m_physicsWorld->addRigidBody(ground->getRigidBody());
+		m_physicsWorld->addPhysicsObject(ground);
 
 		
 		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
 			new GameObject::Enemy("enemy1", glm::vec3(1, 3, -10), 
 			m_textureShader->getProgramId()));
 		m_gameObjectManager->addObject(enemy1);
-		m_physicsWorld->addRigidBody(enemy1->getRigidBody());
+		m_physicsWorld->addPhysicsObject(enemy1);
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
@@ -156,7 +156,6 @@ namespace Scene {
 			glfwPollEvents();
 			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);
-			m_camera->update(deltaTime);
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);

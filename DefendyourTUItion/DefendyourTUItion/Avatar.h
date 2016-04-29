@@ -7,6 +7,7 @@
 #include "MouseInputManager.h"
 #include "Projectile.h"
 #include "ModelLoaderHelper.h"
+#include "PhysicsWorld.h"
 
 namespace GameObject {
 
