@@ -1,6 +1,8 @@
 #pragma once
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h"
+#include "Enemy.h"
+#include "Projectile.h"
 #include "PhysicsObject.h"
 
 namespace Physics
@@ -31,7 +33,8 @@ namespace Physics
 		std::shared_ptr<btSequentialImpulseConstraintSolver> m_solver;
 		std::shared_ptr<btDiscreteDynamicsWorld> m_world;
 
-		vector<std::shared_ptr<GameObject::PhysicsObject>> m_physicsObjects;
+		vector<std::shared_ptr<GameObject::Enemy>> m_physicsEnemyObjects;
+		vector<std::shared_ptr<GameObject::Projectile>> m_projectileObjects;
 
 	};
 

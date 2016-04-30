@@ -27,6 +27,11 @@ namespace GameObject{
 	{
 	}
 
+
+	void Avatar::handlePhysicsCollision(PhysicsObject* physicsObject) {
+
+	}
+
 	void Avatar::update(double deltaTime) {
 		m_position = m_camera->getCameraPosition();
 		btTransform trans;

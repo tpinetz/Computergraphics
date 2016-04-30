@@ -1,6 +1,30 @@
 #include "PhysicsWorld.h"
+#include "BulletCollision\CollisionDispatch\btCollisionWorld.h"
 
 namespace Physics {
+
+
+	struct btDrawingResult : public btCollisionWorld::ContactResultCallback
+	{
+
+		GameObject::PhysicsObject* objectA;
+		GameObject::PhysicsObject* objectB;
+
+		virtual	btScalar addSingleResult(btManifoldPoint& cp,
+			const btCollisionObjectWrapper* colObj0Wrap, 
+			int partId0, 
+			int index0, 
+			const btCollisionObjectWrapper* colObj1Wrap, 
+			int partId1, 
+			int index1)
+		{
+
+			objectA->handlePhysicsCollision(objectB);
+			objectB->handlePhysicsCollision(objectA);
+
+			return 0;
+		}
+	};
 
 	PhysicsWorld::PhysicsWorld()
 	{
@@ -13,25 +37,22 @@ namespace Physics {
 	}
 
 	void PhysicsWorld::myProcessCallback(btScalar timestep) {
-		int numManifolds = m_world->getDispatcher()->getNumManifolds();
-		for (int i = 0; i<numManifolds; i++)
-		{
-			btPersistentManifold* contactManifold = m_world->getDispatcher()->getManifoldByIndexInternal(i);
-			const btCollisionObject* obA = (contactManifold->getBody0());
-			const btCollisionObject* obB = (contactManifold->getBody1());
-			btRigidBody* rigidBody;
-			
+		for (int i = 0; i < m_projectileObjects.size(); i++) {
+			auto objectA = m_projectileObjects[i].get();
+			if (!objectA->isActive()) continue;
 
-			int numContacts = contactManifold->getNumContacts();
-			for (int j = 0; j<numContacts; j++)
-			{
-				btManifoldPoint& pt = contactManifold->getContactPoint(j);
-				if (pt.getDistance()<0.f)
-				{
-					const btVector3& ptA = pt.getPositionWorldOnA();
-					const btVector3& ptB = pt.getPositionWorldOnB();
-					const btVector3& normalOnB = pt.m_normalWorldOnB;
-				}
+			for (int j = 0; j < m_physicsEnemyObjects.size(); j++) {
+				auto objectB = m_physicsEnemyObjects[j].get();
+
+				if (objectB->isDead()) continue;
+				if (!objectA->isActive()) break;
+				btDrawingResult physicsCallback;
+
+				physicsCallback.objectA = objectA;
+				physicsCallback.objectB = objectB;
+				
+				m_world->contactPairTest(objectA->getRigidBody().get(),
+					objectB->getRigidBody().get(), physicsCallback);
 			}
 		}
 
@@ -39,7 +60,10 @@ namespace Physics {
 
 	PhysicsWorld::~PhysicsWorld()
 	{
-		for (auto physicsObject : m_physicsObjects) {
+		for (auto physicsObject : m_physicsEnemyObjects) {
+			m_world->removeRigidBody(physicsObject->getRigidBody().get());
+		}
+		for (auto physicsObject : m_projectileObjects) {
 			m_world->removeRigidBody(physicsObject->getRigidBody().get());
 		}
 	}
@@ -73,7 +97,16 @@ namespace Physics {
 	}
 
 	void PhysicsWorld::addPhysicsObject(std::shared_ptr<GameObject::PhysicsObject> physicObject) {
-		m_physicsObjects.push_back(physicObject);
+		
+		if (physicObject->getName().compare(GameObject::Enemy::m_typeName) == 0) {
+			m_physicsEnemyObjects.push_back(std::shared_ptr<GameObject::Enemy>
+				(dynamic_cast<GameObject::Enemy*>(physicObject.get())));
+		}
+		else if (physicObject->getName().compare(GameObject::Projectile::m_typeName) == 0) {
+			m_projectileObjects.push_back(std::shared_ptr<GameObject::Projectile>
+				(dynamic_cast<GameObject::Projectile*>(physicObject.get())));
+		}
+		
 		m_world->addRigidBody(physicObject->getRigidBody().get());
 	}
 

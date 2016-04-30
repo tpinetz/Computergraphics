@@ -1,6 +1,7 @@
 #include "Enemy.h"
 
 namespace GameObject {
+	std::string Enemy::m_typeName = "Enemy";
 
 	Enemy::~Enemy()
 	{
@@ -8,7 +9,7 @@ namespace GameObject {
 
 	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader)
 	{
-		this->m_name = name;
+		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = glm::vec3(0.2f, 0.2f, 0.2f);
 		this->m_shader = shader;
@@ -22,24 +23,32 @@ namespace GameObject {
 	
 	
 	void Enemy::update(double time) {
-		GLfloat deltaTime = time;
+		if (!m_dead) {
 
-		btTransform trans;
-		getRigidBody()->getMotionState()->getWorldTransform(trans);
-		m_position = glm::vec3(trans.getOrigin().getX(),
-			trans.getOrigin().getY(),
-			trans.getOrigin().getZ());
+			GLfloat deltaTime = time;
 
-		glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
-		getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
+			btTransform trans;
+			getRigidBody()->getMotionState()->getWorldTransform(trans);
+			m_position = glm::vec3(trans.getOrigin().getX(),
+				trans.getOrigin().getY(),
+				trans.getOrigin().getZ());
+
+			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
+			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
+		}
+	}
+
+	void Enemy::handlePhysicsCollision(PhysicsObject* otherObject) {
+		m_dead = true;
 	}
 
 
 	void Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
-
-		glm::mat4 transform = getTransformMatrix();
-		renderer->startShader(m_shader);
-		renderer->drawModel(mod, transform);
-		renderer->stopShader();
+		if (!m_dead) {
+			glm::mat4 transform = getTransformMatrix();
+			renderer->startShader(m_shader);
+			renderer->drawModel(mod, transform);
+			renderer->stopShader();
+		}
 	}
 }

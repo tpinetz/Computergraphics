@@ -127,6 +127,14 @@ namespace Scene {
 			m_textureShader->getProgramId()));
 		m_gameObjectManager->addObject(enemy1);
 		m_physicsWorld->addPhysicsObject(enemy1);
+		m_enemies.push_back(enemy1);
+
+		auto enemy2 = std::shared_ptr<GameObject::Enemy>(
+			new GameObject::Enemy("enemy2", glm::vec3(5, 1, -13),
+			m_textureShader->getProgramId()));
+		m_gameObjectManager->addObject(enemy2);
+		m_physicsWorld->addPhysicsObject(enemy2);
+		m_enemies.push_back(enemy2);
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
@@ -164,6 +172,28 @@ namespace Scene {
 
 			for (auto newGameObject : m_extraGameObjectManager->getGameObjects()) {
 				m_gameObjectManager->addObject(newGameObject);
+			}
+
+			bool won = true;
+			bool lost = false;
+			for (auto enemy : m_enemies) {
+				if (!enemy->isDead()) {
+					won = false;
+				}
+				if (glm::abs(enemy->getPosition().x) < 0.2 &&
+					glm::abs(enemy->getPosition().y) < 0.2 &&
+					glm::abs(enemy->getPosition().z) < 0.2) {
+					lost = true;
+				}
+			}
+
+			if (won) {
+				std::cout << "Game is won!" << std::endl;
+				break;
+			}
+			else if (lost) {
+				std::cout << "Game is lost!" << std::endl;
+				break;
 			}
 
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&

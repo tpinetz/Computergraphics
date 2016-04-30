@@ -7,8 +7,9 @@ namespace GameObject {
 		GLint fromWidth = width / 2;
 		GLint fromHeight = height / 2;
 
-		try {
+		this->m_name = "ground";
 
+		try {
 			auto model = Common::ModelLoaderHelper::getInstance()
 				->getTextureModel(m_modelString, m_textureString);
 
@@ -45,5 +46,9 @@ namespace GameObject {
 		for (auto floorTile : m_floorTiles) {
 			floorTile->render(renderer);
 		}
+	}
+
+	void Ground::handlePhysicsCollision(PhysicsObject* otherObject) {
+
 	}
 }

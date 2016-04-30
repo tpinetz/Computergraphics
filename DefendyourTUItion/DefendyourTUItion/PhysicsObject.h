@@ -11,16 +11,18 @@ namespace GameObject {
 	public:
 		PhysicsObject();
 		~PhysicsObject();
-
-		void setPhysicsPosition(glm::vec3 position);
-
+		
 		virtual void update(double time) = 0;
 		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
+
+		virtual void handlePhysicsCollision(PhysicsObject* otherObject) = 0;
+
+		void setPhysicsPosition(glm::vec3 position);
 
 		inline std::shared_ptr<btRigidBody> getRigidBody() {
 			return m_rigidBody;
 		}
-		
+
 	private:
 		std::shared_ptr<btCollisionShape> m_shape;
 		std::shared_ptr<btDefaultMotionState> m_motionState;

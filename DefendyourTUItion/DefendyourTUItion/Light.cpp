@@ -5,6 +5,7 @@ namespace GameObject {
 
 	Light::Light(glm::vec3 position, GLuint shader, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular)
 	{
+		this->m_name = "light";
 		this->m_shader = shader;
 		this->m_position = position;
 		this->m_ambient = ambient;

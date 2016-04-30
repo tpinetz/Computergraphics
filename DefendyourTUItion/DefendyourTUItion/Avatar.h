@@ -23,6 +23,8 @@ namespace GameObject {
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
 
+		void handlePhysicsCollision(PhysicsObject* physicsObject);
+
 		bool operator==(const Avatar& rhs) {
 			return m_name == rhs.m_name;
 		}

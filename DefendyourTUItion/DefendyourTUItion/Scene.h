@@ -54,7 +54,7 @@ namespace Scene {
 		
 		// Bullet World
 		std::shared_ptr<Physics::PhysicsWorld> m_physicsWorld;
-
+		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 	};
 
 }

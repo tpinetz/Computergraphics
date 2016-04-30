@@ -1,6 +1,7 @@
 #include "Projectile.h"
 
 namespace GameObject{
+	std::string Projectile::m_typeName = "projectile";
 
 	Projectile::Projectile()
 	{
@@ -8,6 +9,7 @@ namespace GameObject{
 
 	Projectile::Projectile(GLuint shader, glm::vec3 position, 
 		glm::vec3 scale, glm::vec3 direction, std::shared_ptr<Renderer::Model> model) {
+		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = scale;
 		this->m_direction = direction;
@@ -51,5 +53,9 @@ namespace GameObject{
 			
 			renderer->stopShader();
 		}
+	}
+
+	void Projectile::handlePhysicsCollision(PhysicsObject* otherObject) {
+		m_active = false;
 	}
 }

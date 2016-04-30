@@ -15,6 +15,8 @@ namespace GameObject {
 
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+
+		void handlePhysicsCollision(PhysicsObject* otherObject);
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
 		GLint m_tileWidth = 75, m_tileHeight = 75;
