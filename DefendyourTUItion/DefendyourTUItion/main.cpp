@@ -14,7 +14,6 @@ int main() {
 		return -1;
 	}
 
-	delete scene;
 
 	return 0;
 }

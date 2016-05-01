@@ -51,8 +51,8 @@ namespace Physics {
 				physicsCallback.objectA = objectA;
 				physicsCallback.objectB = objectB;
 				
-				m_world->contactPairTest(objectA->getRigidBody().get(),
-					objectB->getRigidBody().get(), physicsCallback);
+				m_world->contactPairTest(objectA->getRigidBody(),
+					objectB->getRigidBody(), physicsCallback);
 			}
 		}
 
@@ -60,12 +60,18 @@ namespace Physics {
 
 	PhysicsWorld::~PhysicsWorld()
 	{
+	}
+
+	void PhysicsWorld::cleanUp() {
 		for (auto physicsObject : m_physicsEnemyObjects) {
-			m_world->removeRigidBody(physicsObject->getRigidBody().get());
+			m_world->removeRigidBody(physicsObject->getRigidBody());
 		}
 		for (auto physicsObject : m_projectileObjects) {
-			m_world->removeRigidBody(physicsObject->getRigidBody().get());
+			m_world->removeRigidBody(physicsObject->getRigidBody());
 		}
+
+		m_physicsEnemyObjects.clear();
+		m_projectileObjects.clear();
 	}
 
 	bool PhysicsWorld::initPhysics() {
@@ -107,7 +113,7 @@ namespace Physics {
 				(dynamic_cast<GameObject::Projectile*>(physicObject.get())));
 		}
 		
-		m_world->addRigidBody(physicObject->getRigidBody().get());
+		m_world->addRigidBody(physicObject->getRigidBody());
 	}
 
 }

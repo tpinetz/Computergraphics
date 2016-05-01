@@ -79,6 +79,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_meshShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_meshShader->loadShader("../DefendyourTUItion/MeshShader.vertexshader", 
+			"../DefendyourTUItion/MeshShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		//Input Initialization
 
 		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
@@ -121,17 +128,19 @@ namespace Scene {
 		m_gameObjectManager->addObject(ground);
 		m_physicsWorld->addPhysicsObject(ground);
 
+		ModelLoader mod;
+		mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
 		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
 			new GameObject::Enemy("enemy1", glm::vec3(1, 3, -10), 
-			m_textureShader->getProgramId()));
+			m_meshShader->getProgramId(), mod));
 		m_gameObjectManager->addObject(enemy1);
 		m_physicsWorld->addPhysicsObject(enemy1);
 		m_enemies.push_back(enemy1);
 
 		auto enemy2 = std::shared_ptr<GameObject::Enemy>(
 			new GameObject::Enemy("enemy2", glm::vec3(5, 1, -13),
-			m_textureShader->getProgramId()));
+			m_meshShader->getProgramId(), mod));
 		m_gameObjectManager->addObject(enemy2);
 		m_physicsWorld->addPhysicsObject(enemy2);
 		m_enemies.push_back(enemy2);
@@ -173,6 +182,10 @@ namespace Scene {
 			for (auto newGameObject : m_extraGameObjectManager->getGameObjects()) {
 				m_gameObjectManager->addObject(newGameObject);
 			}
+			if (!m_extraGameObjectManager->getGameObjects().empty()) {
+				m_extraGameObjectManager->getGameObjects().clear();
+			}
+			
 
 			bool won = true;
 			bool lost = false;
@@ -199,6 +212,7 @@ namespace Scene {
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 		
+		m_physicsWorld->cleanUp();
 		m_renderer->stopShader();
 
 		return true;

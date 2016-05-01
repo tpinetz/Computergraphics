@@ -15,7 +15,7 @@ namespace GameObject{
 	{
 	public:
 		static std::string m_typeName;
-		Enemy(std::string name, glm::vec3 position, GLuint shader);
+		Enemy(std::string name, glm::vec3 position, GLuint shader, ModelLoader& mod);
 		~Enemy();
 
 		void update(double time);
@@ -28,10 +28,7 @@ namespace GameObject{
 	private:
 		
 		GLfloat movementSpeed = 3;
-		std::shared_ptr<Renderer::Model> m_model;
 		GLuint m_shader;
-		GLuint m_vertexBuffer;
-		GLuint m_vao;
 		std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
 		ModelLoader mod;
 

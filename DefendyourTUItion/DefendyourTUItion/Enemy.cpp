@@ -7,18 +7,18 @@ namespace GameObject {
 	{
 	}
 
-	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader)
+	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, ModelLoader& mod)
 	{
 		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = glm::vec3(0.2f, 0.2f, 0.2f);
 		this->m_shader = shader;
+		this->mod = mod;
 
-		mod.loadModel(m_modelString.c_str());
 		m_mass = 1;
 
 		this->initPhysics(position, 
-			std::shared_ptr<btCollisionShape>(new btBoxShape(btVector3(1, 1.5, 1))));
+			new btBoxShape(btVector3(1, 1.5, 1)));
 	}
 	
 	

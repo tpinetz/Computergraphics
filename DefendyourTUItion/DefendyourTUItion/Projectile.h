@@ -38,7 +38,7 @@ class Projectile :
 		std::string m_textureString = "../Assets/Textures/ground.jpg";
 
 		bool m_active;
-		GLfloat m_force = 500.f;
+		GLfloat m_force = 5000.f;
 		GLfloat m_lifeTime = 1000.0f;
 	};
 

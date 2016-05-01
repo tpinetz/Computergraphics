@@ -26,6 +26,8 @@ namespace Physics
 
 		void myProcessCallback(btScalar timestep);
 
+		void cleanUp();
+
 	private:
 		std::shared_ptr<btBroadphaseInterface> m_broadphase;
 		std::shared_ptr<btDefaultCollisionConfiguration> m_collisionConfiguration;

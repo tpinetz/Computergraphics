@@ -20,7 +20,7 @@ namespace GameObject {
 				}
 			}
 
-			this->initPhysics(glm::vec3(0, 0, 0), std::shared_ptr<btCollisionShape>(new btStaticPlaneShape(btVector3(0, 1, 0), 0)));
+			this->initPhysics(glm::vec3(0, 0, 0), new btStaticPlaneShape(btVector3(0, 1, 0), 0));
 		}
 		catch (exception e) {
 			std::cerr << "Failed to create ground" << std::endl;
