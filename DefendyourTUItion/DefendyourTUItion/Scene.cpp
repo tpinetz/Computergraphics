@@ -124,15 +124,22 @@ namespace Scene {
 				m_textureShader->getProgramId())));
 
 		
-		auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
+	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
 		m_gameObjectManager->addObject(ground);
 		m_physicsWorld->addPhysicsObject(ground);
+
+		auto podest = std::shared_ptr<GameObject::Podest>(
+			new GameObject::Podest(m_textureShader->getProgramId(),
+			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Floor/Floor.obj", 
+			"../Assets/Textures/paving/paving01b.jpg",
+			"../Assets/Textures/paving/paving01s.jpg")));
+		m_gameObjectManager->addObject(podest);
 
 		ModelLoader mod;
 		mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
 		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy1", glm::vec3(1, 3, -10), 
+			new GameObject::Enemy("enemy1", glm::vec3(1, 1, -10), 
 			m_meshShader->getProgramId(), mod));
 		m_gameObjectManager->addObject(enemy1);
 		m_physicsWorld->addPhysicsObject(enemy1);
@@ -144,6 +151,13 @@ namespace Scene {
 		m_gameObjectManager->addObject(enemy2);
 		m_physicsWorld->addPhysicsObject(enemy2);
 		m_enemies.push_back(enemy2);
+
+		auto enemy3 = std::shared_ptr<GameObject::Enemy>(
+			new GameObject::Enemy("enemy3", glm::vec3(-5, 1, -20),
+			m_meshShader->getProgramId(), mod));
+		m_gameObjectManager->addObject(enemy3);
+		m_physicsWorld->addPhysicsObject(enemy3);
+		m_enemies.push_back(enemy3);
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(

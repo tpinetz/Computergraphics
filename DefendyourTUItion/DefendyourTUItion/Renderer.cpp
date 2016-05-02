@@ -62,16 +62,17 @@ namespace Renderer {
 	}
 
 	void Renderer::activateTextures(std::shared_ptr<Model> model) {
-		for (unsigned int i = 0; i < model->getTextures()->size(); i++){
-			GLuint texture = model->getTextures()->at(i);
+		for (unsigned int i = 0; i < model->getTextures().size(); i++){
+			auto texturePair = model->getTextures()[i];
 			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, texture);
+			glBindTexture(GL_TEXTURE_2D, texturePair.second);
+			glUniform1i(glGetUniformLocation(m_currentProgram, texturePair.first.c_str()), i);
 		}
 	}
 	
 	void Renderer::deactivateTextures(std::shared_ptr<Model> model) {
-		for (unsigned int i = 0; i < model->getTextures()->size(); i++){
-			GLuint texture = model->getTextures()->at(i);
+		for (unsigned int i = 0; i < model->getTextures().size(); i++){
+			auto texturePair = model->getTextures()[i];
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
@@ -94,6 +95,12 @@ namespace Renderer {
 			
 			GLint lightSpecularLoc = glGetUniformLocation(m_currentProgram, "light.specular" );
 			glUniform3f(lightSpecularLoc, light->specular.x, light->specular.y, light->specular.z);
+			
+
+			glUniform1f(glGetUniformLocation(m_currentProgram, "light.constant"), light->constant);
+			glUniform1f(glGetUniformLocation(m_currentProgram, "light.linear"), light->linear);
+			glUniform1f(glGetUniformLocation(m_currentProgram, "light.quadratic"), light->quadratic);
+
 		}
 
 		GLint viewPosLoc = glGetUniformLocation(m_currentProgram, "viewPos");

@@ -13,9 +13,6 @@ namespace Renderer {
 		m_triangles = triangles;
 		m_indices = indices;
 		m_vertexBuffer = vertexBuffer;
-
-		m_textures = std::shared_ptr<std::vector<GLuint>>(new std::vector<GLuint>());
-
 	}
 
 

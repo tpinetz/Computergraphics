@@ -16,7 +16,8 @@ namespace GameObject{
 		m_projectileShader = projectileShader;
 
 		m_projectileModel = Common::ModelLoaderHelper::getInstance()
-			->getTextureModel(m_projectileModelString, m_projectileTextureString);
+			->getTextureModel(m_projectileModelString, m_projectileTextureString, 
+			m_projectileSpecTextureString);
 
 		this->initPhysics(m_position,
 			new btBoxShape(btVector3(1, 1, 1)));

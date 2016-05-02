@@ -36,7 +36,8 @@ namespace GameObject {
 
 		std::shared_ptr<Renderer::Model> m_projectileModel;
 		std::string m_projectileModelString = "../Assets/Model/Floor/Floor.obj";
-		std::string m_projectileTextureString = "../Assets/Textures/ground.jpg";
+		std::string m_projectileTextureString = "../Assets/Textures/ground01b.jpg";
+		std::string m_projectileSpecTextureString = "../Assets/Textures/ground01s.jpg";
 
 		static GLfloat m_modelVertices[];
 		GLuint m_projectileShader;

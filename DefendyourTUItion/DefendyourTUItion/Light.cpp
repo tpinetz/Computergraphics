@@ -17,6 +17,10 @@ namespace GameObject {
 		m_renderData->ambient = ambient;
 		m_renderData->diffuse = diffuse;
 		m_renderData->specular = specular;
+		m_renderData->constant = m_constant;
+		m_renderData->linear = m_linear;
+		m_renderData->quadratic = m_quadratic;
+
 	}
 
 

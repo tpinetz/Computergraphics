@@ -19,7 +19,8 @@ namespace Common {
 		return m_instance;
 	}
 
-	std::shared_ptr<Renderer::Model> ModelLoaderHelper::getTextureModel(std::string modelString, std::string textureString){
+	std::shared_ptr<Renderer::Model> ModelLoaderHelper::getTextureModel(std::string modelString, 
+		std::string bumpTextureString, std::string specularTextureString){
 		std::vector<Vertex> vertices = loadOBJ(modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
 
 		if (vertices.empty()) {
@@ -74,8 +75,9 @@ namespace Common {
 
 		auto model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, vertexBuffer, 12));
 
-		model->addTexture(Common::TextureHelper::getInstance()->getTextureByName(
-			textureString));
+		auto textureHelper = Common::TextureHelper::getInstance();
+		model->addTexture("material.diffuse", textureHelper->getTextureByName(bumpTextureString));
+		model->addTexture("material.specular", textureHelper->getTextureByName(specularTextureString));
 		
 		return model;
 	}

@@ -11,7 +11,7 @@ namespace GameObject {
 
 		try {
 			auto model = Common::ModelLoaderHelper::getInstance()
-				->getTextureModel(m_modelString, m_textureString);
+				->getTextureModel(m_modelString, m_textureString, m_textureSpecString);
 
 			for (GLint i = -fromWidth; i <= fromWidth; i += m_tileWidth) {
 				for (GLint j = -fromHeight; j <= fromHeight; j += m_tileHeight) {

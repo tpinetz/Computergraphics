@@ -24,10 +24,15 @@ namespace Renderer {
 		}
 
 		inline void addTexture(GLuint texture) {
-			m_textures->push_back(texture);
+			addTexture("ourTexture", texture);
 		}
 
-		inline std::shared_ptr<std::vector<GLuint>> getTextures() {
+		inline void addTexture(std::string name, GLuint texture) {
+			m_textures.push_back(std::make_pair(name, texture));
+		}
+
+
+		inline std::vector<std::pair<std::string, GLuint>> getTextures() {
 			return m_textures;
 		}
 
@@ -36,7 +41,7 @@ namespace Renderer {
 		GLuint m_vertexBuffer;
 		int m_triangles;
 		bool m_indices;
-		std::shared_ptr<std::vector<GLuint>> m_textures;
+		std::vector<std::pair<std::string, GLuint>> m_textures;
 	};
 
 }

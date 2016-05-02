@@ -22,5 +22,9 @@ namespace GameObject {
 		glm::vec3 m_specular;
 
 		std::shared_ptr<Renderer::LightRenderingData> m_renderData;
+
+		GLfloat m_constant = 1.0f;
+		GLfloat m_linear = 0.009f;
+		GLfloat m_quadratic = 0.0032f;
 	};
 }
