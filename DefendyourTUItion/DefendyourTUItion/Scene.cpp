@@ -133,7 +133,7 @@ namespace Scene {
 
 		auto podest = std::shared_ptr<GameObject::Podest>(
 			new GameObject::Podest(m_textureShader->getProgramId(),
-			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Floor/Floor.obj", 
+			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/cube.obj", 
 			"../Assets/Textures/paving/paving01b.jpg",
 			"../Assets/Textures/paving/paving01s.jpg")));
 		m_gameObjectManager->addObject(podest);
@@ -162,9 +162,24 @@ namespace Scene {
 		m_physicsWorld->addPhysicsObject(enemy3);
 		m_enemies.push_back(enemy3);
 
+		auto enemy4 = std::shared_ptr<GameObject::Enemy>(
+			new GameObject::Enemy("enemy4", glm::vec3(0, 1, -23),
+			m_meshShader->getProgramId(), mod));
+		m_gameObjectManager->addObject(enemy4);
+		m_physicsWorld->addPhysicsObject(enemy4);
+		m_enemies.push_back(enemy4);
+
+
+		auto enemy5 = std::shared_ptr<GameObject::Enemy>(
+			new GameObject::Enemy("enemy5", glm::vec3(10, 1, -27),
+			m_meshShader->getProgramId(), mod));
+		m_gameObjectManager->addObject(enemy5);
+		m_physicsWorld->addPhysicsObject(enemy5);
+		m_enemies.push_back(enemy5);
+
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
-			glm::vec3(1.0f,1.0f,1.0f),      // Position
+			glm::vec3(1.2f, 1.0f, -3.0f),      // Position
 			shaderHelper->getProgramId(),	// Shader
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color

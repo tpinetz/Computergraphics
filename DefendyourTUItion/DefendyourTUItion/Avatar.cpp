@@ -20,7 +20,7 @@ namespace GameObject{
 			m_projectileSpecTextureString);
 
 		this->initPhysics(m_position,
-			new btBoxShape(btVector3(1, 1, 1)));
+			new btBoxShape(btVector3(1, 1.5, 1)));
 	}
 
 
@@ -34,10 +34,9 @@ namespace GameObject{
 	}
 
 	void Avatar::update(double deltaTime) {
-		m_position = m_camera->getCameraPosition();
 		btTransform trans;
 		getRigidBody()->getMotionState()->getWorldTransform(trans);
-		m_position.y = trans.getOrigin().getY() + 1.f;
+		m_position.y = trans.getOrigin().getY();
 
 		m_camera->setCameraPosition(m_position);
 		m_camera->update(deltaTime);
