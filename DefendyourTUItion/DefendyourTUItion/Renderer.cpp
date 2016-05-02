@@ -79,8 +79,6 @@ namespace Renderer {
 	}
 
 	void Renderer::setLightingRelatedConfiguration() {
-		GLint lightColorLoc = glGetUniformLocation(m_currentProgram, "lightColor");
-		glUniform3f(lightColorLoc, m_lightcolor.x, m_lightcolor.y, m_lightcolor.z);
 
 		for (int i = 0; i < m_lights.size(); i++) {
 			auto light = m_lights[i];

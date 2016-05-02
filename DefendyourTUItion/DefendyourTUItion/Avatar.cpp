@@ -37,7 +37,7 @@ namespace GameObject{
 		m_position = m_camera->getCameraPosition();
 		btTransform trans;
 		getRigidBody()->getMotionState()->getWorldTransform(trans);
-		m_position.y = trans.getOrigin().getY() + 0.5f;
+		m_position.y = trans.getOrigin().getY() + 1.f;
 
 		m_camera->setCameraPosition(m_position);
 		m_camera->update(deltaTime);
@@ -47,7 +47,7 @@ namespace GameObject{
 		if (Input::MouseInputManager::getMouseInputManagerInstance()
 			->isKeyPressed(GLFW_MOUSE_BUTTON_1) && m_bulletCooldown < 0.0f) {
 			std::shared_ptr<Projectile> newProjectile =
-				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_position, 
+				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_camera->getCameraPosition(), 
 				glm::vec3(0.2f, 0.2f, 0.2f), m_camera->getCameraDirection(),
 				m_projectileModel));
 			m_gameObjectManager->addObject(newProjectile);

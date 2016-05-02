@@ -39,10 +39,9 @@ namespace GameObject {
 		std::string m_projectileTextureString = "../Assets/Textures/ground01b.jpg";
 		std::string m_projectileSpecTextureString = "../Assets/Textures/ground01s.jpg";
 
-		static GLfloat m_modelVertices[];
 		GLuint m_projectileShader;
 
-		GLfloat m_bulletCooldownAttribute = 50.0f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x seconds)
+		GLfloat m_bulletCooldownAttribute = 25.0f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x seconds)
 		GLfloat m_bulletCooldown = 0.0f; // How long the weapon still cools down;
 	};
 

@@ -44,6 +44,8 @@ namespace Scene {
 			std::cerr << "Failed to create Window";
 			return false;
 		}
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		
 
 		glfwMakeContextCurrent(this->window);
 		glewExperimental = true;
@@ -124,7 +126,8 @@ namespace Scene {
 				m_textureShader->getProgramId())));
 
 		
-	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 1000, 1000));
+	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
+		233, 233));
 		m_gameObjectManager->addObject(ground);
 		m_physicsWorld->addPhysicsObject(ground);
 
@@ -228,6 +231,7 @@ namespace Scene {
 		
 		m_physicsWorld->cleanUp();
 		m_renderer->stopShader();
+		glfwDestroyWindow(window);
 
 		return true;
 	}

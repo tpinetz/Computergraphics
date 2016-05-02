@@ -68,6 +68,9 @@
     <ClCompile Include="ModelLoaderHelper.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="Podest.cpp">
+      <Filter>GameObject\Podest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -443,6 +446,9 @@
     <ClInclude Include="ModelLoaderHelper.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="Podest.h">
+      <Filter>GameObject\Podest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
@@ -501,6 +507,9 @@
     </Filter>
     <Filter Include="GameObject\Avatar">
       <UniqueIdentifier>{72e75c5c-3bfe-4fa0-ba5d-189df27e1be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Podest">
+      <UniqueIdentifier>{0dad0855-aad9-40e3-9dd6-1ec68fbc59ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

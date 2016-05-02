@@ -19,13 +19,13 @@ namespace GameObject {
 		void handlePhysicsCollision(PhysicsObject* otherObject);
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
-		GLint m_tileWidth = 75, m_tileHeight = 75;
+		GLint m_tileWidth = 25, m_tileHeight = 25;
 		
 
 		// Tile Information
 
 		std::string m_modelString = "../Assets/Model/Floor/Floor.obj";
-		std::string m_textureString = "../Assets/Textures/ground01b.jpg";;
+		std::string m_textureString = "../Assets/Textures/ground01.jpg";;
 		std::string m_textureSpecString = "../Assets/Textures/ground01s.jpg";;
 
 		GLuint m_vertexBuffer;
