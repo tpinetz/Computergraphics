@@ -33,7 +33,7 @@ namespace GameObject {
 				trans.getOrigin().getY(),
 				trans.getOrigin().getZ());
 
-			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
+			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed * (GLfloat)time;
 			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 		}
 	}
