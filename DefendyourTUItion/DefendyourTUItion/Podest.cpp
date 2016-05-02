@@ -7,7 +7,7 @@ namespace GameObject {
 		m_model(model)
 	{
 		m_position = glm::vec3(0, 0, 0);
-		m_scale = glm::vec3(0.2, 0.5, 0.2);
+		m_scale = glm::vec3(0.5, 1, 0.5);
 		m_transform = getTransformMatrix();
 	}
 

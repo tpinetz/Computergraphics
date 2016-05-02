@@ -26,9 +26,10 @@ uniform Material material;
 uniform vec3 viewPos;
 
 uniform Light light; 
+uniform mat4 model;
 
-void main(){
-
+void main(){ 
+	
 	float distance    = length(light.position - FragPos);
 	float attenuation = 1.0f / (light.constant + light.linear * distance + 
     		    light.quadratic * (distance * distance)); 
@@ -51,5 +52,5 @@ void main(){
 	diffuse *= attenuation;
 	specular *= attenuation;
 
-	color = vec4((ambient + diffuse + specular), 1.0f) ;
+	color = vec4((ambient + diffuse +  specular), 1.0f) ;
 }

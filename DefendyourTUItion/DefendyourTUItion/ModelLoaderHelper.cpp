@@ -73,7 +73,7 @@ namespace Common {
 		glBindVertexArray(0);
 
 
-		auto model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, vertexBuffer, 12));
+		auto model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, vertexBuffer, vertices.size()/3));
 
 		auto textureHelper = Common::TextureHelper::getInstance();
 		model->addTexture("material.diffuse", textureHelper->getTextureByName(bumpTextureString));

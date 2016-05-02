@@ -2,14 +2,6 @@
 
 namespace Scene {
 
-	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-	};
-
-
-
 	Scene::Scene()
 		:Scene(1024, 768)
 	{
@@ -55,6 +47,10 @@ namespace Scene {
 		}
 
 		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
+
+		
+		glEnable(GL_CULL_FACE);     // Cull back facing polygons
+		glCullFace(GL_BACK);
 
 		// It is important that the Physics is initialized first.
 		return initPhysics() && initInternalObjects() && addSceneRelevantGameObjects();
@@ -133,7 +129,7 @@ namespace Scene {
 
 		auto podest = std::shared_ptr<GameObject::Podest>(
 			new GameObject::Podest(m_textureShader->getProgramId(),
-			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/cube.obj", 
+			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Podest/Podest.obj", 
 			"../Assets/Textures/paving/paving01b.jpg",
 			"../Assets/Textures/paving/paving01s.jpg")));
 		m_gameObjectManager->addObject(podest);
