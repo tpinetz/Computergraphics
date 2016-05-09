@@ -82,7 +82,7 @@ namespace Physics {
 		m_dispatcher = std::shared_ptr
 			<btCollisionDispatcher>(new btCollisionDispatcher(m_collisionConfiguration.get()));
 
-		//btGImpactCollisionAlgorithm::registerAlgorithm(m_dispatcher.get());
+		btGImpactCollisionAlgorithm::registerAlgorithm(m_dispatcher.get());
 		m_solver = std::shared_ptr
 			<btSequentialImpulseConstraintSolver>(new btSequentialImpulseConstraintSolver);
 

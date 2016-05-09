@@ -27,7 +27,8 @@ namespace GameObject{
 		}
 	private:
 		
-		GLfloat movementSpeed = 2;
+		GLfloat movementSpeed = 0.1;
+		GLfloat m_movementCounter = 100.0f;
 		GLuint m_shader;
 		std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
 		ModelLoader mod;

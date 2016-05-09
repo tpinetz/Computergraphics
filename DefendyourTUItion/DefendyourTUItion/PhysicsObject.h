@@ -8,6 +8,7 @@ namespace GameObject {
 	{
 	protected:
 		void initPhysics(glm::vec3 position, btCollisionShape* shape);
+		void initPhysics(btCollisionShape* shape, btDefaultMotionState* state);
 	public:
 		PhysicsObject();
 		~PhysicsObject();

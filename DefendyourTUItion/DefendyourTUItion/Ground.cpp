@@ -20,7 +20,11 @@ namespace GameObject {
 				}
 			}
 
-			this->initPhysics(glm::vec3(0, 0, 0), new btStaticPlaneShape(btVector3(0, 1, 0), 0));
+			btStaticPlaneShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+			shape->setLocalScaling(btVector3(width, height, 1));
+			btDefaultMotionState* groundMotionState = 
+				new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+			this->initPhysics(shape, groundMotionState);
 		}
 		catch (exception e) {
 			std::cerr << "Failed to create ground" << std::endl;
