@@ -24,11 +24,7 @@ namespace GameObject {
 	
 	void Enemy::update(double time) {
 		if (!m_dead) {
-			
-
-
 			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed *  (GLfloat)time;
-			//std::cout << Common::FormattingHelper::getFormattedVectorString(forceVec) << std::endl;
 			m_position += forceVec;
 			setPhysicsPosition(m_position);
 		}
