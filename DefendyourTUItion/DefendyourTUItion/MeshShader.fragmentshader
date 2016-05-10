@@ -30,32 +30,32 @@ uniform sampler2D texture_normal0;
 uniform vec3 viewPos;
 
 uniform vec3 lightColor;
-uniform Light light; 
+uniform Light pointLight; 
 uniform Material material;
 
 void main(){
 
-	float distance    = length(light.position - FragPos);
-	float attenuation = 1.0f / (light.constant + light.linear * distance + 
-    		    light.quadratic * (distance * distance)); 
+	float distance    = length(pointLight.position - FragPos);
+	float attenuation = 1.0f / (pointLight.constant + pointLight.linear * distance + 
+    		    pointLight.quadratic * (distance * distance)); 
 
-    vec4 ambient = vec4(light.ambient, 1.0f) * texture(texture_diffuse0, TexCoord);
+    vec4 ambient = vec4(pointLight.ambient, 1.0f) * texture(texture_diffuse0, TexCoord);
 
 	vec3 norm = normalize(Normal);
-	vec3 lightDir = normalize(light.position - FragPos);  
+	vec3 lightDir = normalize(pointLight.position - FragPos);  
 
 	vec3 viewDir = normalize(viewPos - FragPos);
 	vec3 reflectDir = reflect(-lightDir, norm);  
 
 	float diff = max(dot(norm, lightDir), 0.0);
-	vec4 diffuse = vec4(light.diffuse,1.0f) * (diff * texture(texture_diffuse0, TexCoord));
+	vec4 diffuse = vec4(pointLight.diffuse,1.0f) * (diff * texture(texture_diffuse0, TexCoord));
 
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec4 specular = vec4(light.specular, 1.0f) * (spec * texture(texture_specular0, TexCoord));  
+	vec4 specular = vec4(pointLight.specular, 1.0f) * (spec * texture(texture_diffuse0, TexCoord));  
 
 	ambient *= attenuation;
 	diffuse *= attenuation;
 	specular *= attenuation;
 
-	color = (ambient + diffuse + specular) * texture(texture_normal0, TexCoord);
+	color = (ambient + diffuse + specular) * texture(texture_diffuse0, TexCoord);
 }

@@ -21,6 +21,13 @@ namespace Renderer {
 		GLfloat quadratic;
 	};
 
+	struct DirectionalLightRenderingData {
+		glm::vec3 direction;
+		glm::vec3 ambient;
+		glm::vec3 diffuse;
+		glm::vec3 specular;
+	};
+
 	class Renderer
 	{
 	private:
@@ -49,6 +56,10 @@ namespace Renderer {
 			m_lights.push_back(light);
 		}
 
+		inline void setDirectionalLight(std::shared_ptr<DirectionalLightRenderingData> dlight) {
+			m_directionalLight = dlight;
+		}
+
 	private:
 		bool m_useLighting = true;
 		GLuint m_currentProgram;
@@ -56,6 +67,7 @@ namespace Renderer {
 		
 		glm::vec3 m_lightcolor = glm::vec3(1.0f, 1.0f, 1.0f);
 		std::vector<std::shared_ptr<LightRenderingData> > m_lights;
+		std::shared_ptr<DirectionalLightRenderingData>  m_directionalLight;
 
 	};
 

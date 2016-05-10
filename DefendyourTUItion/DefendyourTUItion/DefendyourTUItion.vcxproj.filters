@@ -71,6 +71,9 @@
     <ClCompile Include="Podest.cpp">
       <Filter>GameObject\Podest</Filter>
     </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>GameObject\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -448,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="Podest.h">
       <Filter>GameObject\Podest</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>GameObject\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

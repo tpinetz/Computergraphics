@@ -110,6 +110,16 @@ namespace Scene {
 
 		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
 
+		m_sun = std::shared_ptr<GameObject::DirectionalLight>(
+			new GameObject::DirectionalLight(
+			shaderHelper->getProgramId(),
+			glm::vec3(-0.2, -1.0f, -0.3f),
+			glm::vec3(0.05f, 0.05f, 0.05f),
+			glm::vec3(0.4f, 0.4f, 0.4f),
+			glm::vec3(0.5f, 0.5f, 0.5f)
+			));
+		m_gameObjectManager->addObject(m_sun);
+		m_renderer->setDirectionalLight(m_sun->getRenderData());
 		return true;
 	}
 
@@ -182,8 +192,8 @@ namespace Scene {
 			glm::vec3(0.5f, 0.5f, 0.5f)		// Specular Light Color
 			));
 
-		m_gameObjectManager->addObject(light);
 
+		m_gameObjectManager->addObject(light);
 		m_renderer->addLight(light->getRenderData());
 
 		return true;

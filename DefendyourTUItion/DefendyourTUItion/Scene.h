@@ -14,6 +14,7 @@
 #include "Enemy.h"
 #include "Ground.h"
 #include "Podest.h"
+#include "DirectionalLight.h"
 
 namespace Scene {
 
@@ -53,6 +54,7 @@ namespace Scene {
 		std::shared_ptr<Input::MouseInputManager> m_mouseInputManager;
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;
+		std::shared_ptr<GameObject::DirectionalLight> m_sun;
 		
 		// Bullet World
 		Physics::PhysicsWorld* m_physicsWorld;

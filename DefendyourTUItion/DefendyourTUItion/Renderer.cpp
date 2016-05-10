@@ -68,6 +68,7 @@ namespace Renderer {
 			glBindTexture(GL_TEXTURE_2D, texturePair.second);
 			glUniform1i(glGetUniformLocation(m_currentProgram, texturePair.first.c_str()), i);
 		}
+		glUniform1f(glGetUniformLocation(m_currentProgram, "material.shininess"), 32.0f );
 	}
 	
 	void Renderer::deactivateTextures(std::shared_ptr<Model> model) {
@@ -82,24 +83,35 @@ namespace Renderer {
 
 		for (int i = 0; i < m_lights.size(); i++) {
 			auto light = m_lights[i];
-			GLint lightPosLoc = glGetUniformLocation(m_currentProgram, "light.position" );
+			GLint lightPosLoc = glGetUniformLocation(m_currentProgram, "pointLight.position" );
 			glUniform3f(lightPosLoc, light->position.x, light->position.y, light->position.z);
 
-			GLint lightAmbientLoc = glGetUniformLocation(m_currentProgram, "light.ambient" );
+			GLint lightAmbientLoc = glGetUniformLocation(m_currentProgram, "pointLight.ambient" );
 			glUniform3f(lightAmbientLoc, light->ambient.x, light->ambient.y, light->ambient.z);
 
-			GLint lightDiffuseLoc = glGetUniformLocation(m_currentProgram, "light.diffuse");
+			GLint lightDiffuseLoc = glGetUniformLocation(m_currentProgram, "pointLight.diffuse");
 			glUniform3f(lightDiffuseLoc, light->diffuse.x, light->diffuse.y, light->diffuse.z);
 			
-			GLint lightSpecularLoc = glGetUniformLocation(m_currentProgram, "light.specular" );
+			GLint lightSpecularLoc = glGetUniformLocation(m_currentProgram, "pointLight.specular" );
 			glUniform3f(lightSpecularLoc, light->specular.x, light->specular.y, light->specular.z);
 			
 
-			glUniform1f(glGetUniformLocation(m_currentProgram, "light.constant"), light->constant);
-			glUniform1f(glGetUniformLocation(m_currentProgram, "light.linear"), light->linear);
-			glUniform1f(glGetUniformLocation(m_currentProgram, "light.quadratic"), light->quadratic);
+			glUniform1f(glGetUniformLocation(m_currentProgram, "pointLight.constant"), light->constant);
+			glUniform1f(glGetUniformLocation(m_currentProgram, "pointLight.linear"), light->linear);
+			glUniform1f(glGetUniformLocation(m_currentProgram, "pointLight.quadratic"), light->quadratic);
 
 		}
+
+		glUniform3f(glGetUniformLocation(m_currentProgram, "dirLight.direction"),
+			m_directionalLight->direction.x, m_directionalLight->direction.y, m_directionalLight->direction.z);
+		glUniform3f(glGetUniformLocation(m_currentProgram, "dirLight.ambient"),
+			m_directionalLight->ambient.x, m_directionalLight->ambient.y, m_directionalLight->ambient.z);
+		glUniform3f(glGetUniformLocation(m_currentProgram, "dirLight.diffuse"),
+			m_directionalLight->diffuse.x, m_directionalLight->diffuse.y, m_directionalLight->diffuse.z);
+		glUniform3f(glGetUniformLocation(m_currentProgram, "dirLight.specular"),
+			m_directionalLight->specular.x, m_directionalLight->specular.y, m_directionalLight->specular.z);
+
+
 
 		GLint viewPosLoc = glGetUniformLocation(m_currentProgram, "viewPos");
 		glUniform3f(viewPosLoc, m_camera->getCameraPosition().x, m_camera->getCameraPosition().y, m_camera->getCameraPosition().z);
