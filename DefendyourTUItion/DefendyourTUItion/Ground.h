@@ -17,6 +17,10 @@ namespace GameObject {
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
 
 		void handlePhysicsCollision(PhysicsObject* otherObject);
+
+		inline bool isActive() {
+			return true;
+		}
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
 		GLint m_tileWidth = 25, m_tileHeight = 25;

@@ -24,6 +24,8 @@ namespace GameObject {
 			return m_rigidBody;
 		}
 
+		virtual bool isActive() = 0;
+
 	private:
 		btCollisionShape* m_shape;
 		btDefaultMotionState* m_motionState;

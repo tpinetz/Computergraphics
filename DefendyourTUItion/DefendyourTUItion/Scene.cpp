@@ -57,8 +57,8 @@ namespace Scene {
 	}
 
 	bool Scene::initPhysics() {
-		m_physicsWorld = std::shared_ptr<Physics::PhysicsWorld>(new Physics::PhysicsWorld());
-
+		//m_physicsWorld = std::shared_ptr<Physics::PhysicsWorld>(new Physics::PhysicsWorld());
+		m_physicsWorld = new Physics::PhysicsWorld();
 		return m_physicsWorld->initPhysics();
 	}
 
@@ -241,8 +241,10 @@ namespace Scene {
 			glfwWindowShouldClose(this->window) == 0);
 		
 		m_physicsWorld->cleanUp();
+		m_enemies.clear();
 		m_renderer->stopShader();
 		glfwDestroyWindow(window);
+		delete m_physicsWorld;
 
 		return true;
 	}

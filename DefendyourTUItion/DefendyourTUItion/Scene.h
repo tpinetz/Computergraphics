@@ -55,7 +55,7 @@ namespace Scene {
 		std::shared_ptr<Camera::Camera> m_camera;
 		
 		// Bullet World
-		std::shared_ptr<Physics::PhysicsWorld> m_physicsWorld;
+		Physics::PhysicsWorld* m_physicsWorld;
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 	};
 

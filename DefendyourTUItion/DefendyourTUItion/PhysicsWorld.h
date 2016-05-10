@@ -35,8 +35,8 @@ namespace Physics
 		std::shared_ptr<btSequentialImpulseConstraintSolver> m_solver;
 		std::shared_ptr<btDiscreteDynamicsWorld> m_world;
 
-		vector<std::shared_ptr<GameObject::Enemy>> m_physicsEnemyObjects;
-		vector<std::shared_ptr<GameObject::Projectile>> m_projectileObjects;
+		vector<std::shared_ptr<GameObject::PhysicsObject>> m_physicsEnemyObjects;
+		vector<std::shared_ptr<GameObject::PhysicsObject>> m_projectileObjects;
 
 	};
 

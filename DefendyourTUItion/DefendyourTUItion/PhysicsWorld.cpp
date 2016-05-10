@@ -44,8 +44,9 @@ namespace Physics {
 			for (int j = 0; j < m_physicsEnemyObjects.size(); j++) {
 				auto objectB = m_physicsEnemyObjects[j].get();
 
-				if (objectB->isDead()) continue;
 				if (!objectA->isActive()) break;
+				if (!objectB->isActive()) continue;
+
 				btDrawingResult physicsCallback;
 
 				physicsCallback.objectA = objectA;
@@ -99,18 +100,16 @@ namespace Physics {
 	}
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
-		m_world->stepSimulation(deltaTime);
+		m_world->stepSimulation(deltaTime, 7);
 	}
 
 	void PhysicsWorld::addPhysicsObject(std::shared_ptr<GameObject::PhysicsObject> physicObject) {
 		
 		if (physicObject->getName().compare(GameObject::Enemy::m_typeName) == 0) {
-			m_physicsEnemyObjects.push_back(std::shared_ptr<GameObject::Enemy>
-				(dynamic_cast<GameObject::Enemy*>(physicObject.get())));
+			m_physicsEnemyObjects.push_back(physicObject);
 		}
 		else if (physicObject->getName().compare(GameObject::Projectile::m_typeName) == 0) {
-			m_projectileObjects.push_back(std::shared_ptr<GameObject::Projectile>
-				(dynamic_cast<GameObject::Projectile*>(physicObject.get())));
+			m_projectileObjects.push_back(physicObject);
 		}
 		
 		m_world->addRigidBody(physicObject->getRigidBody());

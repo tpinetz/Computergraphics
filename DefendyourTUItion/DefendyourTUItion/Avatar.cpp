@@ -3,7 +3,7 @@
 namespace GameObject{
 
 	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, 
-		std::shared_ptr<Physics::PhysicsWorld> physicsWorld,
+		Physics::PhysicsWorld* physicsWorld,
 		std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader)
 	{
 		m_name = "Avatar";

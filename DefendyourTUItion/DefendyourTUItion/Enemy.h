@@ -25,6 +25,9 @@ namespace GameObject{
 		inline bool isDead() {
 			return m_dead;
 		}
+		inline bool isActive() {
+			return !m_dead;
+		}
 	private:
 		
 		GLfloat movementSpeed = 0.1;

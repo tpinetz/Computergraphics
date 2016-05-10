@@ -17,7 +17,7 @@ namespace GameObject {
 	{
 	public:
 		Avatar(std::shared_ptr<Camera::Camera> camera, 
-			std::shared_ptr<Physics::PhysicsWorld> physicsWorld,
+			Physics::PhysicsWorld* physicsWorld,
 			std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader);
 		~Avatar();
 		void update(double deltaTime);
@@ -28,11 +28,16 @@ namespace GameObject {
 		bool operator==(const Avatar& rhs) {
 			return m_name == rhs.m_name;
 		}
+
+		inline bool isActive() {
+			return true;
+		}
+
 	private:
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
-		std::shared_ptr<Physics::PhysicsWorld> m_physicsWorld;
+		Physics::PhysicsWorld* m_physicsWorld;
 
 		std::shared_ptr<Renderer::Model> m_projectileModel;
 		std::string m_projectileModelString = "../Assets/Model/Floor/Floor.obj";
