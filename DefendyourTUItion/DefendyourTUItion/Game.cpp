@@ -52,13 +52,17 @@ namespace Game {
 	}
 
 	void Game::run() {
+		Scene::Scene* scene;
 		while (1) {
-			Scene::Scene* scene = new Scene::Scene(m_window, m_right, m_top);
+			scene = new Scene::Scene(m_window, m_right, m_top);
 			scene->init("../Assets/level1.txt");
 			if (scene->run()) break;
-				
+			
+			if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_ESCAPE)) break;
+
 			delete scene;
 		}
+		delete scene;
 
 
 	}
