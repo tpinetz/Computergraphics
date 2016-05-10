@@ -24,13 +24,13 @@ namespace Scene {
 		bool initInternalObjects();
 		bool addSceneRelevantGameObjects();
 		bool initPhysics();
+		bool addLevelDependantObjects(std::string levelFileName);
 
 	public:
-		Scene();
-		Scene(float right, float top);
+		Scene(GLFWwindow* window, float right, float top);
 		~Scene();
 
-		bool init();
+		bool init(std::string levelFileName);
 
 		bool run();
 
@@ -50,8 +50,8 @@ namespace Scene {
 		float m_right;
 		
 		// Input Handler Objects
-		std::shared_ptr<Input::KeyboardManager> m_keyboardManager;
-		std::shared_ptr<Input::MouseInputManager> m_mouseInputManager;
+		Input::KeyboardManager* m_keyboardManager;
+		Input::MouseInputManager* m_mouseInputManager;
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<GameObject::DirectionalLight> m_sun;
@@ -59,6 +59,8 @@ namespace Scene {
 		// Bullet World
 		Physics::PhysicsWorld* m_physicsWorld;
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
+
+		ModelLoader mod;
 	};
 
 }

@@ -1,19 +1,16 @@
-#include "Scene.h"
+#include "Game.h"
 
 int main() {
-	Scene::Scene* scene = new Scene::Scene();
+	Game::Game* game = new Game::Game(1024, 768);
 	
 	
-	if (!scene->init()) {
-		std::cerr << "Failed to init Scene.";
+	if (!game->init()) {
+		std::cerr << "Failed to init Game.";
 		return -1;
 	}
+	
+	game->run();
 
-	if (!scene->run()) {
-		std::cerr << "Unexpectatly failed running the game";
-		return -1;
-	}
-
-	delete scene;
+	delete game;
 	return 0;
 }

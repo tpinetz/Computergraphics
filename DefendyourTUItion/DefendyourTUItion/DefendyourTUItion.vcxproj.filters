@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="ShaderHelper.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -74,11 +71,14 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>GameObject\Light</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderHelper.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -455,11 +455,14 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>GameObject\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{5a98fb77-00c4-48f2-b114-30e985cf75a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{378a862f-4e7c-4309-b6e8-24c994809006}</UniqueIdentifier>
     </Filter>
@@ -516,6 +519,12 @@
     </Filter>
     <Filter Include="GameObject\Podest">
       <UniqueIdentifier>{0dad0855-aad9-40e3-9dd6-1ec68fbc59ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{5a98fb77-00c4-48f2-b114-30e985cf75a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene">
+      <UniqueIdentifier>{18a31581-a3a8-4450-9231-a601fc4f7789}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

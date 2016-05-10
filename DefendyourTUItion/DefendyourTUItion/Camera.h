@@ -18,7 +18,7 @@ namespace Camera {
 		void updateCameraVectors();
 
 	public:
-		Camera(std::shared_ptr<Input::KeyboardManager> keyboardManager, float right, float top);
+		Camera(Input::KeyboardManager* keyboardManager, float right, float top);
 		~Camera();
 
 		void update(float deltaTime);
@@ -58,7 +58,7 @@ namespace Camera {
 		GLfloat m_yaw;
 		GLfloat m_pitch;
 
-		std::shared_ptr<Input::KeyboardManager> m_keyboardManager;
+		Input::KeyboardManager* m_keyboardManager;
 	};
 
 

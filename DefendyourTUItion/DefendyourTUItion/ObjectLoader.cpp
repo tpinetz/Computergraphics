@@ -119,5 +119,8 @@ std::vector<Vertex> loadOBJ(const char * path){
 
 	}
 
+	fclose(file);
+	file = NULL;
+	
 	return result;
 }

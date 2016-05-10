@@ -2,58 +2,24 @@
 
 namespace Scene {
 
-	Scene::Scene()
-		:Scene(1024, 768)
-	{
-	}
-
-	Scene::Scene(float right, float top) {
+	Scene::Scene(GLFWwindow* window, float right, float top) {
 		m_right = right;
 		m_top = top;
+		this->window = window;
 	}
 
 
 	Scene::~Scene()
 	{
-		glUseProgram(0);
-		glfwTerminate();
 	}
 
 
-	bool Scene::init() {
-		if (!glfwInit()) {
-			std::cerr << "Test!";
-			return false;
-		}
-
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL 
-
-
-		this->window = glfwCreateWindow(m_right, m_top, "Defend your TUItion", NULL, NULL);
-		if (this->window == NULL) {
-			std::cerr << "Failed to create Window";
-			return false;
-		}
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-		
-
-		glfwMakeContextCurrent(this->window);
-		glewExperimental = true;
-		if (glewInit() != GLEW_OK) {
-			std::cerr << "Failed to initialize.";
-			return false;
-		}
-
-		glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GL_TRUE);
-
-		
-		glEnable(GL_CULL_FACE);     // Cull back facing polygons
-		glCullFace(GL_BACK);
-
+	bool Scene::init(std::string levelFileName) {
 		// It is important that the Physics is initialized first.
-		return initPhysics() && initInternalObjects() && addSceneRelevantGameObjects();
+		return initPhysics() 
+			&& initInternalObjects() 
+			&& addSceneRelevantGameObjects() 
+			&& addLevelDependantObjects(levelFileName);
 	}
 
 	bool Scene::initPhysics() {
@@ -86,9 +52,8 @@ namespace Scene {
 
 		//Input Initialization
 
-		m_keyboardManager = std::shared_ptr<Input::KeyboardManager>(Input::KeyboardManager::getKeyboardManager());
-		m_mouseInputManager = std::shared_ptr<Input::MouseInputManager>
-			(Input::MouseInputManager::getMouseInputManagerInstance());
+		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
+		m_mouseInputManager = Input::MouseInputManager::getMouseInputManagerInstance();
 
 		// Game Object Manager Initialization
 
@@ -144,10 +109,9 @@ namespace Scene {
 			"../Assets/Textures/paving/paving01s.jpg")));
 		m_gameObjectManager->addObject(podest);
 
-		ModelLoader mod;
 		mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
-		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
+/*		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
 			new GameObject::Enemy("enemy1", glm::vec3(1, 1, -10), 
 			m_meshShader->getProgramId(), mod));
 		m_gameObjectManager->addObject(enemy1);
@@ -174,14 +138,14 @@ namespace Scene {
 		m_gameObjectManager->addObject(enemy4);
 		m_physicsWorld->addPhysicsObject(enemy4);
 		m_enemies.push_back(enemy4);
-
+		
 
 		auto enemy5 = std::shared_ptr<GameObject::Enemy>(
 			new GameObject::Enemy("enemy5", glm::vec3(10, 1, -27),
 			m_meshShader->getProgramId(), mod));
 		m_gameObjectManager->addObject(enemy5);
 		m_physicsWorld->addPhysicsObject(enemy5);
-		m_enemies.push_back(enemy5);
+		m_enemies.push_back(enemy5);*/
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
@@ -199,6 +163,53 @@ namespace Scene {
 		return true;
 	}
 
+	bool Scene::addLevelDependantObjects(std::string levelFileName) {
+		printf("Loading Level file %s...\n", levelFileName.c_str());
+
+		FILE * file = fopen(levelFileName.c_str(), "r");
+		if (file == NULL){
+			char cCurrentPath[FILENAME_MAX];
+
+			getcwd(cCurrentPath, sizeof(cCurrentPath));
+
+			printf("Impossible to open %s. Are you in the right directory ? You are in %s. Don't forget to read the FAQ !\n", levelFileName, cCurrentPath);
+			getchar();
+			return false;
+		}
+
+		while (1){
+
+			char lineHeader[128];
+			// read the first word of the line
+			int res = fscanf(file, "%s", lineHeader);
+			if (res == EOF) {
+				break; // EOF = End Of File. Quit the loop.
+			}
+			// else : parse lineHeader
+
+			if (strcmp(lineHeader, "e") == 0){
+				glm::vec3 enemyPosition;
+				fscanf(file, "%f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z);
+				auto enemy = std::shared_ptr<GameObject::Enemy>(
+					new GameObject::Enemy("enemy5", enemyPosition,
+					m_meshShader->getProgramId(), mod));
+				m_gameObjectManager->addObject(enemy);
+				m_physicsWorld->addPhysicsObject(enemy);
+				m_enemies.push_back(enemy);
+			}
+			else{
+				// Probably a comment, eat up the rest of the line
+				char stupidBuffer[1000];
+				fgets(stupidBuffer, 1000, file);
+			}
+
+		}
+
+		fclose(file);
+
+		return true;
+	}
+
 	bool Scene::run() {
 		double time = glfwGetTime();
 
@@ -206,7 +217,7 @@ namespace Scene {
 		m_time = time;
 		m_renderer->setCamera(m_camera);
 		m_renderer->startShader(this->shaderHelper->getProgramId());
-
+		bool won = true;
 		do {
 			glfwPollEvents();
 			m_physicsWorld->runPhysics(deltaTime);
@@ -225,7 +236,7 @@ namespace Scene {
 			}
 			
 
-			bool won = true;
+			won = true;
 			bool lost = false;
 			for (auto enemy : m_enemies) {
 				if (!enemy->isDead()) {
@@ -253,9 +264,8 @@ namespace Scene {
 		m_physicsWorld->cleanUp();
 		m_enemies.clear();
 		m_renderer->stopShader();
-		glfwDestroyWindow(window);
 		delete m_physicsWorld;
 
-		return true;
+		return won;
 	}
 }
