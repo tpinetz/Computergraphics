@@ -17,7 +17,7 @@ namespace GameObject{
 		this->m_model = model;
 
 
-		initPhysics(m_position, new btBoxShape(btVector3(1, 1, 1)));
+		initPhysics(m_position, new btBoxShape(btVector3(scale.x, scale.y, scale.z)));
 
 		glm::vec3 forceVector = m_direction * m_force;
 		getRigidBody()->applyCentralForce(btVector3(forceVector.x, forceVector.y, forceVector.z));
