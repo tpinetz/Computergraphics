@@ -49,21 +49,33 @@ namespace Game {
 
 		glEnable(GL_CULL_FACE);     // Cull back facing polygons
 		glCullFace(GL_BACK);
+
+		FT_Error error = FT_Init_FreeType(&library);
+		if (error) {
+			std::cerr << "Failed to initialize Freetype." << std::endl;
+			return false;
+		}
+
+		return true;
 	}
 
 	void Game::run() {
 		Scene::Scene* scene;
-		while (1) {
+		int level = 1;
+		while (level <= m_maxLevel) {
 			scene = new Scene::Scene(m_window, m_right, m_top);
-			scene->init("../Assets/level1.txt");
-			if (scene->run()) break;
+			scene->init("../Assets/level" + std::to_string(level) + ".txt");
+			if (scene->run()) {
+				level += 1;
+			}
 			
 			if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_ESCAPE)) break;
 
 			delete scene;
 		}
-		delete scene;
-
+		if (scene) {
+			delete scene;
+		}
 
 	}
 
