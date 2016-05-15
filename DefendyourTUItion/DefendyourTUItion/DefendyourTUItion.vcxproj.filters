@@ -77,6 +77,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>GameObject\SkyBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderHelper.h">
@@ -461,6 +464,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>GameObject\SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
@@ -525,6 +531,9 @@
     </Filter>
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{18a31581-a3a8-4450-9231-a601fc4f7789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\SkyBox">
+      <UniqueIdentifier>{a75ef95b-e626-4214-a1b0-ff630778d89e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -41,6 +41,7 @@ namespace Renderer {
 		void startShader(GLuint programID);
 		void stopShader();
 		void setCamera(std::shared_ptr<Camera::Camera> camera);
+		std::shared_ptr<Camera::Camera> getCamera();
 		void beginDrawing(GLFWwindow* window);
 		void endDrawing(GLFWwindow* window);
 

@@ -138,4 +138,9 @@ namespace Renderer {
 	void Renderer::setCamera(std::shared_ptr<Camera::Camera> camera) {
 		m_camera = camera;
 	}
+
+	std::shared_ptr<Camera::Camera> Renderer::getCamera()
+	{
+		return m_camera;
+	}
 }

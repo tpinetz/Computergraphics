@@ -89,6 +89,10 @@ namespace Scene {
 	}
 
 	bool Scene::addSceneRelevantGameObjects() {
+		auto skybox = std::shared_ptr<GameObject::SkyBox>(
+			new GameObject::SkyBox(m_textureShader->getProgramId()));
+		m_gameObjectManager->addObject(skybox);
+
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
 			new GameObject::Avatar(m_camera, 
