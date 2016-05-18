@@ -115,41 +115,13 @@ namespace Scene {
 
 		mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
-/*		auto enemy1 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy1", glm::vec3(1, 1, -10), 
-			m_meshShader->getProgramId(), mod));
-		m_gameObjectManager->addObject(enemy1);
-		m_physicsWorld->addPhysicsObject(enemy1);
-		m_enemies.push_back(enemy1);
+		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
+		treeModel->loadModel("../Assets/Model/Tree1/BroadLeafStraightTrunk.obj");
 
-		auto enemy2 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy2", glm::vec3(5, 1, -13),
-			m_meshShader->getProgramId(), mod));
-		m_gameObjectManager->addObject(enemy2);
-		m_physicsWorld->addPhysicsObject(enemy2);
-		m_enemies.push_back(enemy2);
-
-		auto enemy3 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy3", glm::vec3(-5, 1, -20),
-			m_meshShader->getProgramId(), mod));
-		m_gameObjectManager->addObject(enemy3);
-		m_physicsWorld->addPhysicsObject(enemy3);
-		m_enemies.push_back(enemy3);
-
-		auto enemy4 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy4", glm::vec3(0, 1, -23),
-			m_meshShader->getProgramId(), mod));
-		m_gameObjectManager->addObject(enemy4);
-		m_physicsWorld->addPhysicsObject(enemy4);
-		m_enemies.push_back(enemy4);
-		
-
-		auto enemy5 = std::shared_ptr<GameObject::Enemy>(
-			new GameObject::Enemy("enemy5", glm::vec3(10, 1, -27),
-			m_meshShader->getProgramId(), mod));
-		m_gameObjectManager->addObject(enemy5);
-		m_physicsWorld->addPhysicsObject(enemy5);
-		m_enemies.push_back(enemy5);*/
+		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
+			treeModel, shaderHelper->getProgramId()));
+		m_gameObjectManager->addObject(tree);
+		//m_physicsWorld->addPhysicsObject(tree);
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
@@ -158,6 +130,8 @@ namespace Scene {
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color
 			glm::vec3(0.5f, 0.5f, 0.5f)		// Specular Light Color
+
+
 			));
 
 
@@ -220,9 +194,11 @@ namespace Scene {
 		double deltaTime = time - m_time;
 		m_time = time;
 		m_renderer->setCamera(m_camera);
-		m_renderer->startShader(this->shaderHelper->getProgramId());
 		bool won = true;
 		do {
+			glEnable(GL_CULL_FACE);     // Cull back facing polygons
+			glCullFace(GL_BACK);
+
 			glfwPollEvents();
 			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);

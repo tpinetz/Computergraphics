@@ -45,7 +45,7 @@ namespace Renderer {
 		deactivateTextures(model);
 	}
 
-	void Renderer::drawModel(ModelLoader mod, glm::mat4 transform ) {
+	void Renderer::drawModel(ModelLoader& mod, glm::mat4 transform ) {
 		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
 

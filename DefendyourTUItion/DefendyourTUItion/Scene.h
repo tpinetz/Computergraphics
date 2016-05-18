@@ -16,6 +16,7 @@
 #include "Podest.h"
 #include "DirectionalLight.h"
 #include "SkyBox.h"
+#include "Obstacle.h"
 
 namespace Scene {
 

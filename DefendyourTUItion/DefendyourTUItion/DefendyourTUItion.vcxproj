@@ -175,6 +175,7 @@
     <ClCompile Include="ModelLoaderHelper.cpp" />
     <ClCompile Include="MouseInputManager.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="Podest.cpp" />
@@ -305,6 +306,7 @@
     <ClInclude Include="ModelLoaderHelper.h" />
     <ClInclude Include="MouseInputManager.h" />
     <ClInclude Include="ObjectLoader.hpp" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="PhysicsWorld.h" />
     <ClInclude Include="Podest.h" />

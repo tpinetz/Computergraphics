@@ -46,14 +46,23 @@ namespace Game {
 
 		glfwSetInputMode(this->m_window, GLFW_STICKY_KEYS, GL_TRUE);
 
-
-		glEnable(GL_CULL_FACE);     // Cull back facing polygons
-		glCullFace(GL_BACK);
-
 		FT_Error error = FT_Init_FreeType(&library);
 		if (error) {
 			std::cerr << "Failed to initialize Freetype." << std::endl;
 			return false;
+		}
+
+		FT_Face face;
+
+		error = FT_New_Face(library,
+			"../Asssets/Font/arial.ttf",
+			0,
+			&face);
+
+
+
+		if (error) {
+			std::cerr << "Failed to read arial.ttf" << std::endl;
 		}
 
 		return true;
