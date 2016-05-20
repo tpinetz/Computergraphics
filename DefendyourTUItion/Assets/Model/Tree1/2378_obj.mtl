@@ -1,0 +1,20 @@
+newmtl trunk_col_0_0
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd E:\1a\picea\picea\picea_set\2633\2378_obj_Files\spschors.jpg
+newmtl leaf_col_0_1
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+d 0.000000
+map_Kd E:\1a\picea\picea\picea_set\2633\2378_obj_Files\spar1.tif
+newmtl leaf_col_0_2
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+d 0.000000
+map_Kd E:\1a\picea\picea\picea_set\2633\2378_obj_Files\spar1.tif
+newmtl leaf_col_0_3
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+d 0.000000
+map_Kd E:\1a\picea\picea\picea_set\2633\2378_obj_Files\spar1.tif

@@ -2,14 +2,14 @@
 
 namespace GameObject {
 
-	Obstacle::Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader)
+	Obstacle::Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale)
 		:m_model(model),
 		m_shader(shader)
 	{
-		this->m_position = glm::vec3(1.f, 1.f, -1.f);
-		this->m_scale = glm::vec3(1.f, 1.f, 11.f);
+		this->m_position = position;
+		this->m_scale = scale;
 		
-		initPhysics(m_position, new btBoxShape(btVector3(1.f, 1.f, 1.f)));
+		initPhysics(m_position, new btBoxShape(btVector3(2.0f, 2.0f, 2.0f)));
 		this->m_transform = getTransformMatrix();
 	}
 

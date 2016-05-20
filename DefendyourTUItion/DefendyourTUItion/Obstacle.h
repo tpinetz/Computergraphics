@@ -6,7 +6,7 @@ namespace GameObject {
 		public PhysicsObject
 	{
 	public:
-		Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader);
+		Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale);
 		~Obstacle();
 	
 		void update(double time);

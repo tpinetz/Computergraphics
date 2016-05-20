@@ -116,12 +116,13 @@ namespace Scene {
 		mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
-		treeModel->loadModel("../Assets/Model/Tree1/BroadLeafStraightTrunk.obj");
+		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
 
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
-			treeModel, shaderHelper->getProgramId()));
+			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 
+			glm::vec3(0.5f, 1.0f, 0.5f)));
 		m_gameObjectManager->addObject(tree);
-		//m_physicsWorld->addPhysicsObject(tree);
+		m_physicsWorld->addPhysicsObject(tree);
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
@@ -130,8 +131,6 @@ namespace Scene {
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color
 			glm::vec3(0.5f, 0.5f, 0.5f)		// Specular Light Color
-
-
 			));
 
 
