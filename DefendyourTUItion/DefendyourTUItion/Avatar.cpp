@@ -48,7 +48,7 @@ namespace GameObject{
 			std::shared_ptr<Projectile> newProjectile =
 				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_camera->getCameraPosition(), 
 				glm::vec3(0.4f, 0.4f, 0.4f), m_camera->getCameraDirection(),
-				m_projectileModel));
+				m_projectileModel, m_camera));
 			m_gameObjectManager->addObject(newProjectile);
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
