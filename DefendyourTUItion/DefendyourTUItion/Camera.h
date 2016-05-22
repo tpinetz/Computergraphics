@@ -42,6 +42,11 @@ namespace Camera {
 			return m_projMatrix;
 		}
 
+		
+		inline glm::mat4 getOrthoMatrix() {
+			return m_orthoMatrix;
+		}
+
 		inline glm::vec3 getCameraDirection() {
 			return m_cameraFront;
 		}

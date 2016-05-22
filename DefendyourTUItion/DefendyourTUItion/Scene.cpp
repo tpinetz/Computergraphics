@@ -57,6 +57,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_textShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_textShader->loadShader("../DefendyourTUItion/TextShader.vertexshader",
+			"../DefendyourTUItion/TextShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		//Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -81,6 +88,7 @@ namespace Scene {
 		glfwSetMouseButtonCallback(window, Input::MouseInputManager::mouse_button_callback);
 
 		m_renderer = std::shared_ptr<Renderer::Renderer>(new Renderer::Renderer());
+		m_renderer->init();
 
 		m_sun = std::shared_ptr<GameObject::DirectionalLight>(
 			new GameObject::DirectionalLight(
@@ -206,12 +214,14 @@ namespace Scene {
 		m_renderer->setCamera(m_camera);
 		bool won = true;
 		do {
-			glEnable(GL_CULL_FACE);     // Cull back facing polygons
-			glCullFace(GL_BACK);
+
 
 			glfwPollEvents();
 			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);
+			m_renderer->startShader(m_textShader->getProgramId());
+			m_renderer->drawText("This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+			m_renderer->stopShader();
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);

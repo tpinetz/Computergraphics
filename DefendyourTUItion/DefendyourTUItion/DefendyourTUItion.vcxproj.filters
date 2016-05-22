@@ -792,5 +792,11 @@
     <None Include="ParticleShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="TextShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="TextShader.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

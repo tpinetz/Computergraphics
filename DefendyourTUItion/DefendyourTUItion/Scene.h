@@ -42,6 +42,7 @@ namespace Scene {
 		std::shared_ptr<ShaderHelper> m_textureShader;
 		std::shared_ptr<ShaderHelper> m_meshShader;
 		std::shared_ptr<ShaderHelper> m_particleShader;
+		std::shared_ptr<ShaderHelper> m_textShader;
 		// Used to store current Game Objects while the game is running
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 		// Used to allocate new Game Objects while the game is running
