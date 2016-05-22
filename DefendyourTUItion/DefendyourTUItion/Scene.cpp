@@ -50,6 +50,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_particleShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_particleShader->loadShader("../DefendyourTUItion/ParticleShader.vertexshader",
+			"../DefendyourTUItion/ParticleShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		//Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -92,13 +99,16 @@ namespace Scene {
 		auto skybox = std::shared_ptr<GameObject::SkyBox>(
 			new GameObject::SkyBox(m_textureShader->getProgramId()));
 		m_gameObjectManager->addObject(skybox);
+		
+		m_rockModel = std::shared_ptr<ModelLoader>(new ModelLoader());
+		m_rockModel->loadModel("../Assets/Model/rock/rock.obj");
 
 		m_gameObjectManager->addObject(
 			std::shared_ptr<GameObject::GameObject>(
 			new GameObject::Avatar(m_camera, 
 				m_physicsWorld,
 				m_extraGameObjectManager, 
-				m_textureShader->getProgramId())));
+				m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId())));
 
 		
 	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
@@ -117,6 +127,7 @@ namespace Scene {
 		
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
+
 
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
 			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 

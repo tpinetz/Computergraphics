@@ -61,6 +61,19 @@ namespace Renderer {
 		mod.Draw(m_currentProgram);
 	}
 
+	void Renderer::drawParticles(ModelLoader& mod, glm::mat4 transform, int amount) {
+		if (m_useLighting) {
+			setLightingRelatedConfiguration();
+		}
+
+		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
+		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+
+		mod.DrawInstanced(m_currentProgram, amount);
+	}
+
 	void Renderer::activateTextures(std::shared_ptr<Model> model) {
 		for (unsigned int i = 0; i < model->getTextures().size(); i++){
 			auto texturePair = model->getTextures()[i];

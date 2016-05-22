@@ -9,13 +9,9 @@ namespace GameObject{
 		0.5f, 0.5f, 0.0f,
 	};
 
-	Projectile::Projectile()
-	{
-	}
-
 	Projectile::Projectile(GLuint shader, glm::vec3 position, 
 		glm::vec3 scale, glm::vec3 direction, std::shared_ptr<Renderer::Model> model, 
-		std::shared_ptr<Camera::Camera> camera) {
+		std::shared_ptr<Camera::Camera> camera, std::shared_ptr<ModelLoader> particleModel, GLuint particleShader) {
 		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = scale;
@@ -23,6 +19,8 @@ namespace GameObject{
 		this->m_shader = shader;
 		this->m_model = model;
 		this->m_camera = camera;
+		this->m_particleModel = particleModel;
+		this->m_particleShader = particleShader;
 
 		initPhysics(m_position, new btBoxShape(btVector3(scale.x, scale.y, scale.z)));
 
@@ -32,29 +30,35 @@ namespace GameObject{
 	}
 
 	void Projectile::setUpParticles() {
-		for (int i = 0; i < s_MaxParticles; i++) {
-			Particle& part = m_ParticlesContainer[i];
-			part.pos.x = m_position.x;
-			part.pos.y = m_position.y;
-			part.pos.z = m_position.z;
+		srand(glfwGetTime()); // initialize random seed	
+		GLfloat radius = 7.5f;
+		GLfloat offset = 2.50f;
+		for (GLuint i = 0; i < s_MaxParticles; i++)
+		{
+			Particle& particle = m_particles[i];
+			glm::mat4 model;
+			// 1. Translation: Randomly displace along circle with radius 'radius' in range [-offset, offset]
+			particle.angle = (GLfloat)i / (GLfloat)s_MaxParticles * 360.0f;
+			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+			particle.pos.x = sin(particle.angle) * radius + particle.displacement;
+			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+			particle.pos.y = -2.5f + particle.displacement * 0.4f; // Keep height of asteroid field smaller compared to width of x and z
+			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+			particle.pos.z = cos(particle.angle) * radius + particle.displacement;
+			model = glm::translate(model, glm::vec3(particle.pos.x, particle.pos.y, particle.pos.z));
+
+			// 2. Scale: Scale between 0.05 and 0.25f
+			particle.scale = (rand() % 20) / 100.0f + 0.05;
+			model = glm::scale(model, glm::vec3(particle.scale));
+
+			// 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
+			particle.rotation = (rand() % 360);
+			particle.rotationSpeed = 0.5f;
+			model = glm::rotate(model, particle.rotation, glm::vec3(0.4f, 0.6f, 0.8f));
+
+			// 4. Now add to list of matrices
+			m_particleModels[i] = model;
 		}
-
-
-
-		glGenBuffers(1, &billboard_vertex_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_particleVertexData), m_particleVertexData, GL_STATIC_DRAW);
-
-
-		glGenBuffers(1, &particles_position_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
-		// Initialize with empty (NULL) buffer : it will be updated later, each frame.
-		glBufferData(GL_ARRAY_BUFFER, s_MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
-
-		glGenBuffers(1, &particles_color_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
-		// Initialize with empty (NULL) buffer : it will be updated later, each frame.
-		glBufferData(GL_ARRAY_BUFFER, s_MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
 	}
 
 	Projectile::~Projectile()
@@ -82,55 +86,27 @@ namespace GameObject{
 	}
 
 	void Projectile::updateParticles(float deltaTime) {
-		int m_ParticlesCount = 0;
-		for (int i = 0; i<s_MaxParticles; i++){
+		GLfloat radius = 150.0f;
+		GLfloat offset = 25.0f;
+		for (GLuint i = 0; i < s_MaxParticles; i++)
+		{
+			Particle& particle = m_particles[i];
+			glm::mat4 model;
+			model = glm::translate(model, m_scale + glm::vec3(particle.pos.x +  m_position.x, particle.pos.y + m_position.y, particle.pos.z + m_position.z));
 
-			Particle& p = m_ParticlesContainer[i]; // shortcut
+			// 2. Scale: Scale between 0.05 and 0.25f
+			model = glm::scale(model, glm::vec3(particle.scale));
 
-			if (p.life > 0.0f){
-
-				// Decrease life
-				p.life -= deltaTime;
-				if (p.life > 0.0f){
-
-					// Simulate simple physics : gravity only, no collisions
-					p.speed += glm::vec3(0.0f, -9.81f, 0.0f) * deltaTime * 0.5f;
-					p.pos += p.speed * deltaTime;
-					p.cameradistance = glm::length(p.pos - m_camera->getCameraPosition());
-					//ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
-
-					// Fill the GPU buffer
-					g_particule_position_size_data[4 * m_ParticlesCount + 0] = p.pos.x;
-					g_particule_position_size_data[4 * m_ParticlesCount + 1] = p.pos.y;
-					g_particule_position_size_data[4 * m_ParticlesCount + 2] = p.pos.z;
-
-					g_particule_position_size_data[4 * m_ParticlesCount + 3] = p.size;
-
-					g_particule_color_data[4 * m_ParticlesCount + 0] = p.r;
-					g_particule_color_data[4 * m_ParticlesCount + 1] = p.g;
-					g_particule_color_data[4 * m_ParticlesCount + 2] = p.b;
-					g_particule_color_data[4 * m_ParticlesCount + 3] = p.a;
-
-				}
-				else{
-					// Particles that just died will be put at the end of the buffer in SortParticles();
-					p.cameradistance = -999999.0f;
-				}
-
-				m_ParticlesCount++;
-
+			// 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
+			particle.rotation = (particle.rotation + particle.rotationSpeed * deltaTime) ;
+			if (particle.rotation > 360.0f) {
+				particle.rotation -= 360.0f;
 			}
+			model = glm::rotate(model, particle.rotation, glm::vec3(0.4f, 0.6f, 0.8f));
+
+			// 4. Now add to list of matrices
+			m_particleModels[i] = model;
 		}
-		std::sort(&m_ParticlesContainer[0], &m_ParticlesContainer[s_MaxParticles]);
-
-
-		glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
-		glBufferData(GL_ARRAY_BUFFER, s_MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_ParticlesCount * sizeof(GLfloat)* 4, g_particule_position_size_data);
-
-		glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
-		glBufferData(GL_ARRAY_BUFFER, s_MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_ParticlesCount * sizeof(GLubyte)* 4, g_particule_color_data);
 	}
 	
 
@@ -142,56 +118,44 @@ namespace GameObject{
 			renderer->drawModel(this->m_model, transform);
 			
 			renderer->stopShader();
-			renderParticles();
+			renderParticles(renderer);
 		}
 	}
 
-	void Projectile::renderParticles() {
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
-		glVertexAttribPointer(
-			0, // attribute. No particular reason for 0, but must match the layout in the shader.
-			3, // size
-			GL_FLOAT, // type
-			GL_FALSE, // normalized?
-			0, // stride
-			(void*)0 // array buffer offset
-			);
+	void Projectile::renderParticles(std::shared_ptr<Renderer::Renderer> renderer) {
+		for (size_t i = 0; i < s_MaxParticles; i++) {
+			for (auto& mesh : m_particleModel->getModel()) {
+				GLuint vao = mesh.getVAO();
+				GLuint buffer;
+				glBindVertexArray(vao);
+				glGenBuffers(1, &buffer);
+				glBindBuffer(GL_ARRAY_BUFFER, buffer);
+				glBufferData(GL_ARRAY_BUFFER, s_MaxParticles * sizeof(glm::mat4), &m_particleModels[0], GL_STATIC_DRAW);
+				// Vertex Attributes
+				GLsizei vec4Size = sizeof(glm::vec4);
+				glEnableVertexAttribArray(3);
+				glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)0);
+				glEnableVertexAttribArray(4);
+				glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(vec4Size));
+				glEnableVertexAttribArray(5);
+				glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(2 * vec4Size));
+				glEnableVertexAttribArray(6);
+				glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(3 * vec4Size));
 
-		// 2nd attribute buffer : positions of particles' centers
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
-		glVertexAttribPointer(
-			1, // attribute. No particular reason for 1, but must match the layout in the shader.
-			4, // size : x + y + z + size => 4
-			GL_FLOAT, // type
-			GL_FALSE, // normalized?
-			0, // stride
-			(void*)0 // array buffer offset
-			);
+				glVertexAttribDivisor(3, 1);
+				glVertexAttribDivisor(4, 1);
+				glVertexAttribDivisor(5, 1);
+				glVertexAttribDivisor(6, 1);
 
-		// 3rd attribute buffer : particles' colors
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
-		glVertexAttribPointer(
-			2, // attribute. No particular reason for 1, but must match the layout in the shader.
-			4, // size : r + g + b + a => 4
-			GL_UNSIGNED_BYTE, // type
-			GL_TRUE, // normalized? *** YES, this means that the unsigned char[4] will be accessible with a vec4 (floats) in the shader ***
-			0, // stride
-			(void*)0 // array buffer offset
-			);
+				glBindVertexArray(0);
+			}
 
-		glVertexAttribDivisor(0, 0); // particles vertices : always reuse the same 4 vertices -> 0
-		glVertexAttribDivisor(1, 1); // positions : one per quad (its center) -> 1
-		glVertexAttribDivisor(2, 1); // color : one per quad -> 1
+			renderer->startShader(m_particleShader);
+			renderer->drawParticles(*m_particleModel, m_particleModels[i], s_MaxParticles);
+			renderer->stopShader();
+		}
 
-		// Draw the particules !
-		// This draws many times a small triangle_strip (which looks like a quad).
-		// This is equivalent to :
-		// for(i in m_ParticlesCount) : glDrawArrays(GL_TRIANGLE_STRIP, 0, 4),
-		// but faster.
-		glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, m_ParticlesCount);
+
 	}
 
 	void Projectile::handlePhysicsCollision(PhysicsObject* otherObject) {

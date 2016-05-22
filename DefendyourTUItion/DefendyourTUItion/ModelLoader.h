@@ -75,6 +75,16 @@ public:
 			this->meshes[i].Draw(shader);
 	}
 
+	void DrawInstanced(GLuint shader, int amount) {
+		for (GLuint i = 0; i < this->meshes.size(); i++) {
+			this->meshes[i].DrawInstanced(shader, amount);
+		}
+	}
+
+	inline vector<Mesh>& getModel() {
+		return meshes;
+	}
+
 private:
 	/*  Model Data */
 	vector<Mesh> meshes;

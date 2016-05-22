@@ -396,6 +396,8 @@
     <None Include="glm\gtx\wrap.inl" />
     <None Include="MeshShader.fragmentshader" />
     <None Include="MeshShader.vertexshader" />
+    <None Include="ParticleShader.fragmentshader" />
+    <None Include="ParticleShader.vertexshader" />
     <None Include="TextureShader.fragmentshader" />
     <None Include="TextureShader.vertexshader" />
     <None Include="VertexShader.vertexshader" />

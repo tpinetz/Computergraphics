@@ -30,6 +30,11 @@ public:
 
 	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures);
 	void Draw(GLuint shader);
+	void DrawInstanced(GLuint shader, int amount);
+
+	inline GLuint getVAO() {
+		return VAO;
+	}
 private:
 	/* Render data */
 	GLuint VAO, VBO, EBO;

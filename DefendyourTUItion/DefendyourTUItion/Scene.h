@@ -41,6 +41,7 @@ namespace Scene {
 		std::shared_ptr<ShaderHelper> shaderHelper;
 		std::shared_ptr<ShaderHelper> m_textureShader;
 		std::shared_ptr<ShaderHelper> m_meshShader;
+		std::shared_ptr<ShaderHelper> m_particleShader;
 		// Used to store current Game Objects while the game is running
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 		// Used to allocate new Game Objects while the game is running
@@ -63,6 +64,7 @@ namespace Scene {
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 
 		ModelLoader mod;
+		std::shared_ptr<ModelLoader> m_rockModel;
 	};
 
 }

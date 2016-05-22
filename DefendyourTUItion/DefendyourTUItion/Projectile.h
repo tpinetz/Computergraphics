@@ -10,26 +10,21 @@ class Projectile :
 		public PhysicsObject
 	{
 		struct Particle {
-			glm::vec3 pos, speed;
-			unsigned char r, g, b, a; // Color
-			float size, angle, weight;
-			float life; // Remaining life of the particle. if < 0 : dead and unused.
-			float cameradistance;
-			bool operator<(Particle& that){
-				return this->cameradistance > that.cameradistance;
-			}
+			glm::vec3 pos;
+			GLfloat rotationSpeed, rotation;
+			GLfloat scale;
+			GLfloat angle, displacement;
 		};
 	private:
 		void setUpParticles();
 		void updateParticles(float deltaTime);
-		void renderParticles();
+		void renderParticles(std::shared_ptr<Renderer::Renderer> renderer);
 	public:
 		static std::string m_typeName;
 
-		Projectile();
 		Projectile(GLuint shader, glm::vec3 position, glm::vec3 scale, 
 			glm::vec3 direction, std::shared_ptr<Renderer::Model> model,
-			std::shared_ptr<Camera::Camera> camera);
+			std::shared_ptr<Camera::Camera> camera, std::shared_ptr<ModelLoader> particleModel, GLuint particleShader);
 		~Projectile();
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
@@ -53,8 +48,9 @@ class Projectile :
 		bool m_active;
 		GLfloat m_force = 500.f;
 		GLfloat m_lifeTime = 1000.0f;
-		static const int s_MaxParticles = 10000;
-		Particle m_ParticlesContainer[s_MaxParticles];
+		static const int s_MaxParticles = 70;
+		Particle m_particles[s_MaxParticles];
+		glm::mat4 m_particleModels[s_MaxParticles];
 
 		static GLfloat m_particleVertexData[];
 
@@ -67,6 +63,9 @@ class Projectile :
 		GLfloat g_particule_position_size_data[s_MaxParticles];
 		GLfloat g_particule_color_data[s_MaxParticles];
 		int m_ParticlesCount = 0;
+
+		std::shared_ptr<ModelLoader> m_particleModel;
+		GLuint m_particleShader;
 
 	};
 

@@ -49,6 +49,8 @@ namespace Renderer {
 		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawModel(ModelLoader& mod, glm::mat4 transform);
 
+		void drawParticles(ModelLoader& mod, glm::mat4 transform, int amount);
+
 		inline void setUseLighting(bool useLighting) {
 			m_useLighting = useLighting;
 		}
