@@ -34,6 +34,9 @@ namespace Scene {
 
 		bool init(std::string levelFileName);
 
+		bool runIntro(std::string level);
+		void runOutro(std::string level);
+
 		bool run();
 
 	private:

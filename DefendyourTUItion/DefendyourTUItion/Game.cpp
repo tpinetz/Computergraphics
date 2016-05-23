@@ -62,7 +62,13 @@ namespace Game {
 		while (level <= m_maxLevel) {
 			scene = new Scene::Scene(m_window, m_right, m_top);
 			scene->init("../Assets/level" + std::to_string(level) + ".txt");
+			
+			if (!scene->runIntro(std::to_string(level))) {
+				break;
+			}
+
 			if (scene->run()) {
+				scene->runOutro(std::to_string(level));
 				level += 1;
 			}
 			

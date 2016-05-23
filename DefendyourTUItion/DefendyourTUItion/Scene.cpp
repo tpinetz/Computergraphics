@@ -155,6 +155,7 @@ namespace Scene {
 
 		m_gameObjectManager->addObject(light);
 		m_renderer->addLight(light->getRenderData());
+		m_renderer->setCamera(m_camera);
 
 		return true;
 	}
@@ -206,12 +207,53 @@ namespace Scene {
 		return true;
 	}
 
+	bool Scene::runIntro(std::string level) {
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
+		do {
+			glfwPollEvents();
+
+
+			m_renderer->beginDrawing(this->window);
+			m_renderer->startShader(m_textShader->getProgramId());
+			m_renderer->drawText("Please press space to start" , 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+			m_renderer->drawText("Level: " + level, 340.f, 350.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+			m_renderer->stopShader();
+			m_renderer->endDrawing(this->window);
+
+			if (m_keyboardManager->isKeyPressed(GLFW_KEY_SPACE)) {
+				return true;
+			}
+
+		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) && 
+			glfwWindowShouldClose(this->window) == 0);
+
+		m_physicsWorld->cleanUp();
+		m_enemies.clear();
+		m_renderer->stopShader();
+		delete m_physicsWorld;
+
+		return false;
+	}
+
+	void Scene::runOutro(std::string level) {
+		glfwPollEvents();
+
+
+		m_renderer->beginDrawing(this->window);
+		m_renderer->startShader(m_textShader->getProgramId());
+		m_renderer->drawText("Congrats you successfully beat ", 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+		m_renderer->drawText("Level: " + level, 340.f, 350.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+		m_renderer->stopShader();
+		m_renderer->endDrawing(this->window);
+
+	}
+
 	bool Scene::run() {
 		double time = glfwGetTime();
 
 		double deltaTime = time - m_time;
 		m_time = time;
-		m_renderer->setCamera(m_camera);
 		bool won = true;
 		int numEnemies = 0;
 		do {
