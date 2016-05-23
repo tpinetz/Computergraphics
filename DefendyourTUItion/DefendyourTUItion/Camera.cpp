@@ -11,7 +11,7 @@ namespace Camera {
 		m_mouseSensitivity = 0.4f;
 
 		m_keyboardManager = keyboardManager;
-		m_orthoMatrix = glm::ortho(0.0f, right, 0.0f, top, 0.1f, 100.0f);
+		m_orthoMatrix = glm::ortho(0.0f, right, 0.0f, top);
 		m_projMatrix = glm::perspective(45.0f, right / top, 0.1f, 100.0f);
 
 		m_yaw = YAW;

@@ -35,6 +35,7 @@ namespace Game {
 			return false;
 		}
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		glViewport(0, 0, m_right, m_top);
 
 
 		glfwMakeContextCurrent(this->m_window);
@@ -49,6 +50,7 @@ namespace Game {
 		glCullFace(GL_BACK);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_DEPTH_TEST);
 
 
 		return true;

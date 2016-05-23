@@ -42,7 +42,7 @@ namespace GameObject{
 			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
 			particle.pos.x = sin(particle.angle) * radius + particle.displacement;
 			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
-			particle.pos.y = -2.5f + particle.displacement * 0.4f; // Keep height of asteroid field smaller compared to width of x and z
+			particle.pos.y = -2.5f + particle.displacement ; // Keep height of asteroid field smaller compared to width of x and z
 			particle.displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
 			particle.pos.z = cos(particle.angle) * radius + particle.displacement;
 			model = glm::translate(model, glm::vec3(particle.pos.x, particle.pos.y, particle.pos.z));

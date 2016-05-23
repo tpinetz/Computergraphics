@@ -213,18 +213,25 @@ namespace Scene {
 		m_time = time;
 		m_renderer->setCamera(m_camera);
 		bool won = true;
+		int numEnemies = 0;
 		do {
 
 
 			glfwPollEvents();
+			glDisable(GL_DEPTH_TEST);
+			glDisable(GL_CULL_FACE);
 			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);
-			m_renderer->startShader(m_textShader->getProgramId());
-			m_renderer->drawText("This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-			m_renderer->stopShader();
+
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);
+
+			m_renderer->startShader(m_textShader->getProgramId());
+			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
+			m_renderer->stopShader();
+			glEnable(GL_DEPTH_TEST);
+			glEnable(GL_CULL_FACE);
 
 			m_renderer->endDrawing(this->window);
 
@@ -238,9 +245,11 @@ namespace Scene {
 
 			won = true;
 			bool lost = false;
+			numEnemies = 0;
 			for (auto enemy : m_enemies) {
 				if (!enemy->isDead()) {
 					won = false;
+					numEnemies++;
 				}
 				if (glm::abs(enemy->getPosition().x) < 0.2 &&
 					glm::abs(enemy->getPosition().y) < 0.2 &&
