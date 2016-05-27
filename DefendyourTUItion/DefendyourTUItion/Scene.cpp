@@ -260,20 +260,20 @@ namespace Scene {
 
 
 			glfwPollEvents();
-			glDisable(GL_DEPTH_TEST);
-			glDisable(GL_CULL_FACE);
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+
 			m_physicsWorld->runPhysics(deltaTime);
 			m_renderer->beginDrawing(this->window);
-
+			
 			
 			m_gameObjectManager->update(deltaTime);
 			m_gameObjectManager->render(m_renderer);
+			
 
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
 			m_renderer->stopShader();
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_CULL_FACE);
 
 			m_renderer->endDrawing(this->window);
 

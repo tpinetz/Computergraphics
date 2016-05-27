@@ -49,14 +49,14 @@ vec3 CalcPointLight(vec4 diffuseColor, vec4 specularColor, PointLight light, vec
 
 void main(){
 	vec4 diffuseColor = texture(material[0].texture_diffuse, TexCoords);
-	for(int i = 1; i < 2; i++)
+	for(int i = 1; i < nrDiffuseTextures; i++)
 		diffuseColor =  mix(diffuseColor,texture(material[i].texture_diffuse, TexCoords), 0.5);
 	
 	
 	vec4 specularColor;
 	if(nrSpecularTextures > 0 ) {
 		specularColor = texture(material[0].texture_specular, TexCoords);
-		for(int i = 1; i < 2; i++)
+		for(int i = 1; i < nrSpecularTextures; i++)
 			specularColor +=  texture(material[i].texture_specular, TexCoords);
 
 		specularColor /= nrSpecularTextures;
