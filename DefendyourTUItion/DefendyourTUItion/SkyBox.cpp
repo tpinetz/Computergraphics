@@ -49,7 +49,7 @@ namespace GameObject {
 	SkyBox::SkyBox(GLuint shader)
 		:m_shader(shader)
 	{
-		m_position = glm::vec3(0, -2, 0);
+		m_position = glm::vec3(0, 0, 0);
 		m_scale = glm::vec3(10, 10, 10);
 		m_transform = getTransformMatrix();
 
@@ -62,12 +62,12 @@ namespace GameObject {
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 		glBindVertexArray(0);
 
-		faces.push_back("../Assets/Textures/clouds.jpg");
-		faces.push_back("../Assets/Textures/clouds.jpg");
-		faces.push_back("../Assets/Textures/clouds.jpg");
-		faces.push_back("../Assets/Textures/clouds.jpg");
-		faces.push_back("../Assets/Textures/clouds.jpg");
-		faces.push_back("../Assets/Textures/clouds.jpg");
+		faces.push_back("../Assets/Textures/skybox/right.jpg");
+		faces.push_back("../Assets/Textures/skybox/left.jpg");
+		faces.push_back("../Assets/Textures/skybox/top.jpg");
+		faces.push_back("../Assets/Textures/skybox/bottom.jpg");
+		faces.push_back("../Assets/Textures/skybox/back.jpg");
+		faces.push_back("../Assets/Textures/skybox/front.jpg");
 		cubemapTexture = loadCubemap(faces);
 	}
 
@@ -106,19 +106,21 @@ namespace GameObject {
 	}
 
 	void SkyBox::render(std::shared_ptr<Renderer::Renderer> renderer) {
-		//glDisable(GL_CULL_FACE);
-		//glCullFace(GL_BACK);
-		GLint modelLoc = glGetUniformLocation(m_shader, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(m_transform));
-
-
+		glDisable(GL_CULL_FACE);
+		glDepthMask(GL_FALSE);
+		glUseProgram(m_shader);
+		// Remove any translation component of the view matrix
 		GLint viewLoc = glGetUniformLocation(m_shader, "view");
 		GLint projLoc = glGetUniformLocation(m_shader, "projection");
+		GLint scaleLoc = glGetUniformLocation(m_shader, "scale");
+		glUniform3fv(scaleLoc, 1, &m_scale[0]);
 		std::shared_ptr<Camera::Camera> m_camera = renderer->getCamera();
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
+		glm::mat4 view = glm::mat4(glm::mat3(m_camera->getViewMatrix()));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 
 		glBindVertexArray(skyboxVAO);
+
 		glActiveTexture(GL_TEXTURE0);
 		glUniform1i(glGetUniformLocation(m_shader, "skybox"), 0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
@@ -126,7 +128,7 @@ namespace GameObject {
 		glBindVertexArray(0);
 		glDepthMask(GL_TRUE);
 
-		//glEnable(GL_CULL_FACE);     
-		//glCullFace(GL_BACK);
+		glUseProgram(0);
+		glEnable(GL_CULL_FACE);
 	}
 }

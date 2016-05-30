@@ -398,6 +398,8 @@
     <None Include="MeshShader.vertexshader" />
     <None Include="ParticleShader.fragmentshader" />
     <None Include="ParticleShader.vertexshader" />
+    <None Include="SkyBoxShader.fragmentshader" />
+    <None Include="SkyBoxShader.vertexshader" />
     <None Include="TextShader.fragmentshader" />
     <None Include="TextShader.vertexshader" />
     <None Include="TextureShader.fragmentshader" />

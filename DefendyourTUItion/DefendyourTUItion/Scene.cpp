@@ -43,6 +43,12 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_skyboxShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_skyboxShader->loadShader("../DefendyourTUItion/SkyboxShader.vertexshader", "../DefendyourTUItion/SkyboxShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		this->m_meshShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
 		if (!this->m_meshShader->loadShader("../DefendyourTUItion/MeshShader.vertexshader", 
 			"../DefendyourTUItion/MeshShader.fragmentshader")) {
@@ -105,7 +111,7 @@ namespace Scene {
 
 	bool Scene::addSceneRelevantGameObjects() {
 		auto skybox = std::shared_ptr<GameObject::SkyBox>(
-			new GameObject::SkyBox(m_textureShader->getProgramId()));
+			new GameObject::SkyBox(m_skyboxShader->getProgramId()));
 		m_gameObjectManager->addObject(skybox);
 		
 		m_rockModel = std::shared_ptr<ModelLoader>(new ModelLoader());

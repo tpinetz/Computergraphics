@@ -798,5 +798,11 @@
     <None Include="TextShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="SkyBoxShader.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SkyBoxShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
