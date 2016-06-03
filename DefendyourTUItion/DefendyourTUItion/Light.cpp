@@ -36,4 +36,8 @@ namespace GameObject {
 
 	}
 
+	void Light::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+
+	}
+
 }

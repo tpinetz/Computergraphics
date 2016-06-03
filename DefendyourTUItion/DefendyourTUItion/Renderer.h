@@ -44,6 +44,8 @@ namespace Renderer {
 		void deactivateTextures(std::shared_ptr<Model> model);
 		void setLightingRelatedConfiguration();
 		bool setupFreeType();
+		void setupShadows();
+		void setupCamera();
 	public:
 		Renderer();
 		~Renderer();
@@ -59,7 +61,9 @@ namespace Renderer {
 
 		void drawModel(std::shared_ptr<Model> model);
 		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform);
+		void drawShadow(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawModel(ModelLoader& mod, glm::mat4 transform);
+		void drawShadow(ModelLoader& model, glm::mat4 transform);
 
 		void drawParticles(ModelLoader& mod, glm::mat4 transform, int amount);
 

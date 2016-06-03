@@ -43,4 +43,8 @@ namespace GameObject {
 			renderer->stopShader();
 		}
 	}
+
+	void Enemy::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+
+	}
 }

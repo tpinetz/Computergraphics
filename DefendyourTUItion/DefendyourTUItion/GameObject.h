@@ -16,6 +16,8 @@ namespace GameObject {
 
 		virtual void update(double time) = 0;
 		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
+		virtual void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) = 0;
+
 
 		std::string getName();
 		bool operator==(GameObject& rhs) {

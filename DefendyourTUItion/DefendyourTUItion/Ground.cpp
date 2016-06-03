@@ -52,6 +52,13 @@ namespace GameObject {
 		}
 	}
 
+
+	void Ground::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		for (auto floorTile : m_floorTiles) {
+			floorTile->renderShadows(renderer, shader);
+		}
+	}
+
 	void Ground::handlePhysicsCollision(PhysicsObject* otherObject) {
 
 	}

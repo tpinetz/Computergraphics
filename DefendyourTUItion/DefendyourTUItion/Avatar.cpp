@@ -61,4 +61,8 @@ namespace GameObject{
 	void Avatar::render(std::shared_ptr<Renderer::Renderer> renderer) {
 
 	}
+
+	void Avatar::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+
+	}
 }

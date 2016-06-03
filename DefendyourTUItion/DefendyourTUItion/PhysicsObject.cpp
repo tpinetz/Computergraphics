@@ -15,10 +15,6 @@ namespace GameObject {
 	}
 
 	void PhysicsObject::setPhysicsPosition(glm::vec3 position) {
-//		btTransform trans;
-//		m_rigidBody->getMotionState()->getWorldTransform(trans);
-//		trans.setOrigin(btVector3(position.x, position.y, position.z));
-
 		btTransform transform = m_rigidBody->getCenterOfMassTransform();
 		transform.setOrigin(btVector3(position.x, position.y, position.z));
 		m_rigidBody->setCenterOfMassTransform(transform);

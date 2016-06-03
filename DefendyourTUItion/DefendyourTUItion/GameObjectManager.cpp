@@ -37,4 +37,11 @@ namespace GameObjectManager {
 			gameObject->render(renderer);
 		}
 	}
+
+
+	void GameObjectManager::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		for (auto gameObject : this->m_gameObjectList) {
+			gameObject->renderShadows(renderer, shader);
+		}
+	}
 }

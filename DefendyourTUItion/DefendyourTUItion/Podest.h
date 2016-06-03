@@ -12,6 +12,8 @@ namespace GameObject {
 
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
+
 	
 	private:
 		GLuint m_shader;

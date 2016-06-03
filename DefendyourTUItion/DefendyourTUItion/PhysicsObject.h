@@ -15,6 +15,8 @@ namespace GameObject {
 
 		virtual void update(double time) = 0;
 		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
+		virtual void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) = 0;
+
 
 		virtual void handlePhysicsCollision(PhysicsObject* otherObject) = 0;
 
@@ -25,6 +27,7 @@ namespace GameObject {
 		}
 
 		virtual bool isActive() = 0;
+
 
 	private:
 		btCollisionShape* m_shape;

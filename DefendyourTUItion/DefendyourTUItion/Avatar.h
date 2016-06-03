@@ -23,6 +23,7 @@ namespace GameObject {
 		~Avatar();
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		void handlePhysicsCollision(PhysicsObject* physicsObject);
 

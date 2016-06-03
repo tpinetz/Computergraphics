@@ -122,6 +122,10 @@ namespace GameObject{
 		}
 	}
 
+	void Projectile::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		//TODO: render shadows
+	}
+
 	void Projectile::renderParticles(std::shared_ptr<Renderer::Renderer> renderer) {
 		for (size_t i = 0; i < s_MaxParticles; i++) {
 			for (auto& mesh : m_particleModel->getModel()) {

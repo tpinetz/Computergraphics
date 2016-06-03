@@ -11,6 +11,8 @@ namespace GameObject {
 
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
+
 
 		inline std::shared_ptr<Renderer::LightRenderingData> getRenderData() {
 			return m_renderData;

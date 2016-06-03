@@ -18,6 +18,7 @@ namespace GameObject {
 		~Floor();
 		void update(double time);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 	private:
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<btCollisionShape> m_groundShape;

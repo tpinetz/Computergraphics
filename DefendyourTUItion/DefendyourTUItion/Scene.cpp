@@ -64,6 +64,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_shadowShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_shadowShader->loadShader("../DefendyourTUItion/ShadowShader.vertexshader",
+			"../DefendyourTUItion/ShadowShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		//Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -145,7 +152,7 @@ namespace Scene {
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
-			glm::vec3(1.2f, 1.0f, -3.0f),      // Position
+			glm::vec3(-2, 4.0f, -1.0f),      // Position
 			shaderHelper->getProgramId(),	// Shader
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color
@@ -227,7 +234,8 @@ namespace Scene {
 
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) && 
 			glfwWindowShouldClose(this->window) == 0);
-
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 		m_physicsWorld->cleanUp();
 		m_enemies.clear();
 		m_renderer->stopShader();
@@ -268,8 +276,8 @@ namespace Scene {
 			
 			
 			m_gameObjectManager->update(deltaTime);
+			//m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
 			m_gameObjectManager->render(m_renderer);
-			
 
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));

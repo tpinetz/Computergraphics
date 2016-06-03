@@ -25,4 +25,5 @@ namespace GameObject {
 	std::string GameObject::getName() {
 		return this->m_name;
 	}
+
 }

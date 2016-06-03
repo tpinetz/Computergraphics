@@ -95,14 +95,32 @@ namespace Renderer {
 		drawModel(model, transform);
 	}
 
+	void Renderer::setupCamera() {
+
+
+
+		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
+		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
+		
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+
+		GLfloat near_plane = 1.0f, far_plane = 17.5f;
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+
+		glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, -5.0f, 5.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(lightView));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(lightProjection));
+	}
+
 	void Renderer::drawModel(std::shared_ptr<Model> model, glm::mat4 transform) {
 		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
 		
-		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
-		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+		setupCamera();
 
 		if (m_useLighting) {
 			setLightingRelatedConfiguration();
@@ -131,10 +149,7 @@ namespace Renderer {
 			setLightingRelatedConfiguration();
 		}
 
-		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
-		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+		setupCamera();
 		
 		mod.Draw(m_currentProgram);
 	}
@@ -144,10 +159,7 @@ namespace Renderer {
 			setLightingRelatedConfiguration();
 		}
 
-		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
-		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+		setupCamera();
 
 		mod.DrawInstanced(m_currentProgram, amount);
 	}
@@ -251,8 +263,44 @@ namespace Renderer {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+
+	void Renderer::drawShadow(std::shared_ptr<Model> model, glm::mat4 transform) {
+		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
+		setupShadows();
+
+		glBindVertexArray(model->getVAO());
+
+		if (model->getHasIndices()) {
+			glDrawElements(GL_TRIANGLES, model->getTriangleCount() * 3, GL_UNSIGNED_INT, (GLvoid*)0);
+		}
+		else {
+			glDrawArrays(GL_TRIANGLES, 0, model->getTriangleCount() * 3);		//You need to change it with diffrent objects, i guess it should be vertices size
+		}
+
+		glBindVertexArray(0);
+	}
+
+	void Renderer::drawShadow(ModelLoader& model, glm::mat4 transform) {
+		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
+		setupShadows();
+		
+		model.Draw(m_currentProgram);
+	}
+
+	void Renderer::setupShadows() {
+		GLfloat near_plane = 1.0f, far_plane = 7.5f;
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+
+		glm::mat4 lightView = glm::lookAt(m_lights[0]->position,
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
+	}
+
 	void Renderer::beginDrawing(GLFWwindow* window) {
-		glClearColor(0.f, 0.f, 0.f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT );
 	}
 

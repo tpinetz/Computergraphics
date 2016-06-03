@@ -33,6 +33,11 @@ namespace GameObject {
 		renderer->stopShader();
 	}
 
+	void Obstacle::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		// TODO: Render shadows.
+	}
+
+
 	void Obstacle::handlePhysicsCollision(PhysicsObject* otherObject) {
 
 	}
