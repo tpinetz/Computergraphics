@@ -13,4 +13,5 @@ namespace Common {
 		return "(" + std::to_string(vector.x) + "," + std::to_string(vector.y) 
 			+ "," + std::to_string(vector.z) + ")";
 	}
+
 }

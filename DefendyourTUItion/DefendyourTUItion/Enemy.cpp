@@ -15,15 +15,17 @@ namespace GameObject {
 		this->m_shader = shader;
 		this->mod = mod;
 
-		m_mass = 1;
-
+		m_mass = 10;
 		this->initPhysics(position, 
-			new btBoxShape(btVector3(1.5, 3, 1.5)));
+			new btBoxShape(btVector3(1.5, 2, 1.5)));
 	}
 	
 	
 	void Enemy::update(double time) {
 		if (!m_dead) {
+			btTransform& trans = getRigidBody()->getWorldTransform();
+			m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
+
 			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed *  (GLfloat)time;
 			m_position += forceVec;
 			setPhysicsPosition(m_position);

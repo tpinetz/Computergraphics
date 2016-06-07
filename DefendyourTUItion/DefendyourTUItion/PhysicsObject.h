@@ -7,8 +7,8 @@ namespace GameObject {
 		public GameObject
 	{
 	protected:
-		void initPhysics(glm::vec3 position, btCollisionShape* shape);
-		void initPhysics(btCollisionShape* shape, btDefaultMotionState* state);
+		void initPhysics(glm::vec3 position, btCollisionShape* shape, bool ground = false);
+		void initPhysics(btCollisionShape* shape, btDefaultMotionState* state, bool ground = false);
 	public:
 		PhysicsObject();
 		~PhysicsObject();
@@ -37,6 +37,7 @@ namespace GameObject {
 	protected:
 		btScalar m_mass = 1;
 		btVector3 m_fallInertia;
+		
 	};
 
 }

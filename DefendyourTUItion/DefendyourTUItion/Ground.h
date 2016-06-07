@@ -4,6 +4,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "PhysicsWorld.h"
 #include "ModelLoaderHelper.h"
+#include "FormattingHelper.h"
 
 namespace GameObject {
 	class Ground

@@ -93,14 +93,14 @@ namespace Physics {
 			m_solver.get(), 
 			m_collisionConfiguration.get()));
 
-		m_world->setGravity(btVector3(0, -10, 0));
+		m_world->setGravity(btVector3(0, -5, 0));
 		m_world->setInternalTickCallback(PhysicsWorld::myTickCallback, static_cast<void *>(this), true);
 
 		return true;
 	}
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
-		m_world->stepSimulation(deltaTime, 7);
+		m_world->stepSimulation(btScalar(deltaTime), 7);
 	}
 
 	void PhysicsWorld::addPhysicsObject(std::shared_ptr<GameObject::PhysicsObject> physicObject) {

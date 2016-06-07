@@ -19,12 +19,14 @@ namespace GameObject {
 						new Floor(shader, m_tileWidth, m_tileHeight, glm::vec3(i, 0, j), model)));
 				}
 			}
-
-			btStaticPlaneShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-			shape->setLocalScaling(btVector3(width, height, 1));
+			btTransform groundTransform;
+			groundTransform.setIdentity();
+			groundTransform.setOrigin(btVector3(0.0f, -1.0f, 0.0f));
+			btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), -1);
+			m_mass = 0;
 			btDefaultMotionState* groundMotionState = 
-				new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-			this->initPhysics(shape, groundMotionState);
+				new btDefaultMotionState(groundTransform);
+			this->initPhysics(shape, groundMotionState, true);
 		}
 		catch (exception e) {
 			std::cerr << "Failed to create ground" << std::endl;
@@ -44,6 +46,10 @@ namespace GameObject {
 		for (auto floorTile : m_floorTiles) {
 			floorTile->update(time);
 		}
+
+		btVector3& vector = getRigidBody()->getWorldTransform().getOrigin();
+//			std::cout << "PhysicsPosition Ground: " << "(" + std::to_string(vector.x()) + "," + std::to_string(vector.y())
+//			+ "," + std::to_string(vector.z()) + ")" << std::endl;  
 	}
 	
 	void Ground::render(std::shared_ptr<Renderer::Renderer> renderer) {
