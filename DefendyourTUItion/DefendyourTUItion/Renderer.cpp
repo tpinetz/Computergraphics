@@ -3,7 +3,6 @@
 namespace Renderer {
 	Renderer::Renderer()
 	{
-		setupFreeType();
 	}
 
 
@@ -12,7 +11,32 @@ namespace Renderer {
 	}
 
 	bool Renderer::init() {
-		return setupFreeType();
+		return initDepthMap() && setupFreeType();
+	}
+
+	bool Renderer::initDepthMap() {
+		glGenFramebuffers(1, &m_depthMapFBO);
+
+		glGenTextures(1, &m_depthMap);
+		glBindTexture(GL_TEXTURE_2D, m_depthMap);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+			m_shadow_width, m_shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+		GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthMap, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
+		return true;
 	}
 
 	bool Renderer::setupFreeType() {
@@ -92,28 +116,32 @@ namespace Renderer {
 	void Renderer::drawModel(std::shared_ptr<Model> model) {
 		glm::mat4 transform;
 		transform= glm::translate(transform, glm::vec3(0, 0, 0));
+
 		drawModel(model, transform);
+		
 	}
 
 	void Renderer::setupCamera() {
-
-
-
 		GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
 		GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
 		
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 
-		GLfloat near_plane = 1.0f, far_plane = 17.5f;
+/*		GLfloat near_plane = 1.0f, far_plane = 100.5f;
 		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 
-		glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, -5.0f, 5.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
+		// Tried that out myself
+		glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 15.0f, 50.0f),
+			glm::vec3(3.0f, 5.0f, 0.0f),
 			glm::vec3(0.0f, 1.0f, 0.0f));
 
+		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
+
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(lightView));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(lightProjection));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(lightProjection));*/
+
 	}
 
 	void Renderer::drawModel(std::shared_ptr<Model> model, glm::mat4 transform) {
@@ -125,7 +153,10 @@ namespace Renderer {
 		if (m_useLighting) {
 			setLightingRelatedConfiguration();
 		}
-
+		if (m_useShadows) {
+			setupShadows();
+			activateShadow();
+		}
 		activateTextures(model);
 
 		glBindVertexArray(model->getVAO());
@@ -138,7 +169,11 @@ namespace Renderer {
 		}
 
 		glBindVertexArray(0);
+		if (m_useShadows) {
+			deactivateShadow();
+		}
 		deactivateTextures(model);
+	
 	}
 
 	void Renderer::drawModel(ModelLoader& mod, glm::mat4 transform ) {
@@ -149,37 +184,84 @@ namespace Renderer {
 			setLightingRelatedConfiguration();
 		}
 
+		if (m_useShadows) {
+			setupShadows();
+			activateShadow();
+		}
 		setupCamera();
-		
 		mod.Draw(m_currentProgram);
+		if (m_useShadows) {
+			deactivateShadow();
+		}
 	}
 
-	void Renderer::drawParticles(ModelLoader& mod, glm::mat4 transform, int amount) {
+	void Renderer::drawParticles(ModelLoader& mod, int amount) {
 		if (m_useLighting) {
 			setLightingRelatedConfiguration();
 		}
 
 		setupCamera();
-
 		mod.DrawInstanced(m_currentProgram, amount);
 	}
 
 	void Renderer::activateTextures(std::shared_ptr<Model> model) {
 		for (unsigned int i = 0; i < model->getTextures().size(); i++){
-			auto texturePair = model->getTextures()[i];
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, texturePair.second);
-			glUniform1i(glGetUniformLocation(m_currentProgram, texturePair.first.c_str()), i);
+			glActiveTexture(GL_TEXTURE0 + i + 1);
+			glBindTexture(GL_TEXTURE_2D, model->getTextures()[i].second);
+			glUniform1i(glGetUniformLocation(m_currentProgram, model->getTextures()[i].first.c_str()), i + 1);
 		}
 		glUniform1f(glGetUniformLocation(m_currentProgram, "material.shininess"), 32.0f );
 	}
 	
 	void Renderer::deactivateTextures(std::shared_ptr<Model> model) {
 		for (unsigned int i = 0; i < model->getTextures().size(); i++){
-			auto texturePair = model->getTextures()[i];
-			glActiveTexture(GL_TEXTURE0 + i);
+			glActiveTexture(GL_TEXTURE0 + i + 1);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
+	}
+
+	void Renderer::activateShadow() {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_depthMap);
+		glUniform1i(glGetUniformLocation(m_currentProgram, "shadowMap"), 0);		
+	}
+
+	void Renderer::deactivateShadow() {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void Renderer::debugDepthMap(GLuint shader) {
+		startShader(shader);
+		activateShadow();
+		static GLuint quadVAO = 0;
+		static GLuint quadVBO = 0;
+
+		if (quadVAO == 0)
+		{
+			GLfloat quadVertices[] = {
+				// Positions        // Texture Coords
+				-1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+				1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+				1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			};
+			// Setup plane VAO
+			glGenVertexArrays(1, &quadVAO);
+			glGenBuffers(1, &quadVBO);
+			glBindVertexArray(quadVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		}
+		glBindVertexArray(quadVAO);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
+		deactivateShadow();
+		stopShader();
 	}
 
 	void Renderer::setLightingRelatedConfiguration() {
@@ -263,6 +345,13 @@ namespace Renderer {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	void Renderer::preShadowDraw() {
+		glViewport(0, 0, m_shadow_width, m_shadow_height);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glCullFace(GL_FRONT);
+	}
+
 
 	void Renderer::drawShadow(std::shared_ptr<Model> model, glm::mat4 transform) {
 		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
@@ -280,28 +369,35 @@ namespace Renderer {
 		glBindVertexArray(0);
 	}
 
+	void Renderer::postShadowDraw() {
+		glCullFace(GL_BACK);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
 	void Renderer::drawShadow(ModelLoader& model, glm::mat4 transform) {
 		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
 		setupShadows();
 		
-		model.Draw(m_currentProgram);
+		model.DrawShadow(m_currentProgram);
 	}
 
 	void Renderer::setupShadows() {
-		GLfloat near_plane = 1.0f, far_plane = 7.5f;
+		GLfloat near_plane = 1.0f, far_plane = 100.5f;
 		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 
+		// Tried that out myself
 		glm::mat4 lightView = glm::lookAt(m_lights[0]->position,
-			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(3.0f, 5.0f, 0.0f),
 			glm::vec3(0.0f, 1.0f, 0.0f));
 
 		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
 	}
 
-	void Renderer::beginDrawing(GLFWwindow* window) {
+	void Renderer::beginDrawing(GLFWwindow* window, GLuint width, GLuint height) {
+		glViewport(0, 0, width, height);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT );
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Renderer::endDrawing(GLFWwindow* window) {

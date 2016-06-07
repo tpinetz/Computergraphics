@@ -11,10 +11,10 @@ namespace GameObject {
 
 		try {
 			auto model = Common::ModelLoaderHelper::getInstance()
-				->getTextureModel(m_modelString, m_textureString, m_textureSpecString);
+				->getTextureModel(m_modelString, m_colorTextureString, m_textureString, m_textureSpecString);
 
-			for (GLint i = -fromWidth; i <= fromWidth; i += m_tileWidth) {
-				for (GLint j = -fromHeight; j <= fromHeight; j += m_tileHeight) {
+			for (GLint i = -fromWidth; i <= fromWidth; i += 2*m_tileWidth) {
+				for (GLint j = -fromHeight; j <= fromHeight; j += 2*m_tileHeight) {
 					m_floorTiles.push_back(std::shared_ptr<Floor>(
 						new Floor(shader, m_tileWidth, m_tileHeight, glm::vec3(i, 0, j), model)));
 				}

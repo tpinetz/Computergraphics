@@ -27,8 +27,8 @@ namespace GameObject {
 	}
 
 	void Podest::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
-		renderer->startShader(m_shader);
-		renderer->drawShadow(m_model, m_transform);
-		renderer->stopShader();
+	//	renderer->startShader(shader);
+	//	renderer->drawShadow(m_model, m_transform);
+	//	renderer->stopShader();
 	}
 }

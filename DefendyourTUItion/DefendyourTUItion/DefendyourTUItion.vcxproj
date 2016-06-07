@@ -319,6 +319,8 @@
     <ClInclude Include="TextureHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DepthMapTest.fragmentshader" />
+    <None Include="DepthMapTest.vertexshader" />
     <None Include="fragmentShader.fragmentshader" />
     <None Include="glm\gtc\bitfield.inl" />
     <None Include="glm\gtc\color_space.inl" />

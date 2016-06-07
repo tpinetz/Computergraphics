@@ -106,7 +106,7 @@ namespace GameObject {
 	}
 
 	void SkyBox::render(std::shared_ptr<Renderer::Renderer> renderer) {
-		//glDisable(GL_CULL_FACE);
+/*		//glDisable(GL_CULL_FACE);
 		//glCullFace(GL_BACK);
 		glDisable(GL_DEPTH_TEST);
 		GLint modelLoc = glGetUniformLocation(m_shader, "model");
@@ -128,7 +128,7 @@ namespace GameObject {
 		glDepthMask(GL_TRUE);
 		//glEnable(GL_DEPTH_TEST);
 		//glEnable(GL_CULL_FACE);     
-		//glCullFace(GL_BACK);
+		//glCullFace(GL_BACK);*/
 	}
 
 	void SkyBox::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

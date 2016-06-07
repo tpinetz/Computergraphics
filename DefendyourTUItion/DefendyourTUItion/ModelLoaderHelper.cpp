@@ -20,7 +20,7 @@ namespace Common {
 	}
 
 	std::shared_ptr<Renderer::Model> ModelLoaderHelper::getTextureModel(std::string modelString, 
-		std::string bumpTextureString, std::string specularTextureString){
+		std::string colorTextureString, std::string bumpTextureString, std::string specularTextureString){
 		std::vector<Vertex> vertices = loadOBJ(modelString.c_str());		//"monkey.obj", "cube.obj","cat.obj"
 
 		if (vertices.empty()) {
@@ -76,6 +76,7 @@ namespace Common {
 		auto model = std::shared_ptr<Renderer::Model>(new Renderer::Model(vao, vertexBuffer, vertices.size()/3));
 
 		auto textureHelper = Common::TextureHelper::getInstance();
+		model->addTexture("material.color", textureHelper->getTextureByName(colorTextureString));
 		model->addTexture("material.diffuse", textureHelper->getTextureByName(bumpTextureString));
 		model->addTexture("material.specular", textureHelper->getTextureByName(specularTextureString));
 		

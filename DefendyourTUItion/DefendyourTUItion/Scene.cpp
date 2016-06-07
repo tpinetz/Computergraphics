@@ -71,6 +71,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_depthTestShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_depthTestShader->loadShader("../DefendyourTUItion/DepthMapTest.vertexshader",
+			"../DefendyourTUItion/DepthMapTest.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		//Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -101,7 +108,7 @@ namespace Scene {
 			new GameObject::DirectionalLight(
 			shaderHelper->getProgramId(),
 			glm::vec3(-0.2, -1.0f, -0.3f),
-			glm::vec3(0.05f, 0.05f, 0.05f),
+			glm::vec3(0.15f, 0.15f, 0.15f),
 			glm::vec3(0.4f, 0.4f, 0.4f),
 			glm::vec3(0.5f, 0.5f, 0.5f)
 			));
@@ -134,6 +141,7 @@ namespace Scene {
 		auto podest = std::shared_ptr<GameObject::Podest>(
 			new GameObject::Podest(m_textureShader->getProgramId(),
 			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Podest/Podest.obj", 
+			"../Assets/Textures/paving/paving01.jpg",
 			"../Assets/Textures/paving/paving01b.jpg",
 			"../Assets/Textures/paving/paving01s.jpg")));
 		m_gameObjectManager->addObject(podest);
@@ -152,7 +160,7 @@ namespace Scene {
 
 		std::shared_ptr<GameObject::Light> light = std::shared_ptr<GameObject::Light>(
 			new GameObject::Light(
-			glm::vec3(-2, 4.0f, -1.0f),      // Position
+			glm::vec3(0.0f, 15.0f, 50.0f),      // Position
 			shaderHelper->getProgramId(),	// Shader
 			glm::vec3(0.2f,0.2f,0.2f),		// Ambient Light Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	// Diffuse Light Color
@@ -221,7 +229,7 @@ namespace Scene {
 			glfwPollEvents();
 
 
-			m_renderer->beginDrawing(this->window);
+			m_renderer->beginDrawing(this->window, m_right, m_top);
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("Please press space to start" , 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
 			m_renderer->drawText("Level: " + level, 340.f, 350.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
@@ -244,13 +252,18 @@ namespace Scene {
 		return false;
 	}
 
-	void Scene::runOutro(std::string level) {
+	void Scene::runOutro(std::string level, bool won) {
 		glfwPollEvents();
 
 
-		m_renderer->beginDrawing(this->window);
+		m_renderer->beginDrawing(this->window, m_right, m_top);
 		m_renderer->startShader(m_textShader->getProgramId());
-		m_renderer->drawText("Congrats you successfully beat ", 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+		if (won) {
+			m_renderer->drawText("Congrats you successfully beat ", 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+		}
+		else {
+			m_renderer->drawText("Unfortunately you lost at", 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
+		}
 		m_renderer->drawText("Level: " + level, 340.f, 350.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
 		m_renderer->stopShader();
 		m_renderer->endDrawing(this->window);
@@ -270,18 +283,24 @@ namespace Scene {
 			glfwPollEvents();
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
+			glEnable(GL_DEPTH_TEST);
 
 			m_physicsWorld->runPhysics(deltaTime);
-			m_renderer->beginDrawing(this->window);
 			
 			
 			m_gameObjectManager->update(deltaTime);
-			//m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
+			m_renderer->preShadowDraw();
+			m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
+			m_renderer->postShadowDraw();
+			
+			m_renderer->beginDrawing(this->window, m_right, m_top);
 			m_gameObjectManager->render(m_renderer);
 
-			m_renderer->startShader(m_textShader->getProgramId());
-			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
-			m_renderer->stopShader();
+//			m_renderer->startShader(m_textShader->getProgramId());
+//			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
+//			m_renderer->stopShader();
+
+//			m_renderer->debugDepthMap(m_depthTestShader->getProgramId());
 
 			m_renderer->endDrawing(this->window);
 

@@ -8,6 +8,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "ModelLoader.h"
 #include "ft2build.h"
+#include "TextureHelper.h"
 #include FT_FREETYPE_H
 
 namespace Renderer {
@@ -40,12 +41,15 @@ namespace Renderer {
 	class Renderer
 	{
 	private:
+		bool initDepthMap();
 		void activateTextures(std::shared_ptr<Model> model);
 		void deactivateTextures(std::shared_ptr<Model> model);
 		void setLightingRelatedConfiguration();
 		bool setupFreeType();
 		void setupShadows();
 		void setupCamera();
+		void activateShadow();
+		void deactivateShadow();
 	public:
 		Renderer();
 		~Renderer();
@@ -56,16 +60,18 @@ namespace Renderer {
 		void stopShader();
 		void setCamera(std::shared_ptr<Camera::Camera> camera);
 		std::shared_ptr<Camera::Camera> getCamera();
-		void beginDrawing(GLFWwindow* window);
+		void beginDrawing(GLFWwindow* window, GLuint width, GLuint height);
 		void endDrawing(GLFWwindow* window);
 
 		void drawModel(std::shared_ptr<Model> model);
 		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawShadow(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawModel(ModelLoader& mod, glm::mat4 transform);
+		void preShadowDraw();
 		void drawShadow(ModelLoader& model, glm::mat4 transform);
-
-		void drawParticles(ModelLoader& mod, glm::mat4 transform, int amount);
+		void postShadowDraw();
+		void debugDepthMap(GLuint shader);
+		void drawParticles(ModelLoader& mod, int amount);
 
 		void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 
@@ -83,6 +89,7 @@ namespace Renderer {
 
 	private:
 		bool m_useLighting = true;
+		bool m_useShadows = true;
 		GLuint m_currentProgram;
 		std::shared_ptr<Camera::Camera> m_camera;
 		
@@ -98,6 +105,10 @@ namespace Renderer {
 		GLuint m_textVBO;
 		std::map<GLchar, Character> m_Characters;
 
+		//Shadow Mapping
+		GLuint m_shadow_width = 1024, m_shadow_height = 1024;
+		GLuint m_depthMapFBO;
+		GLuint m_depthMap;
 	};
 
 }

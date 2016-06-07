@@ -34,7 +34,13 @@ namespace GameObject {
 	}
 
 	void Obstacle::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
-		// TODO: Render shadows.
+		if (!m_active) {
+			return;
+		}
+
+		renderer->startShader(shader);
+		renderer->drawShadow(*m_model, m_transform);
+		renderer->stopShader();
 	}
 
 

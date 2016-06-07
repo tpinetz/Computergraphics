@@ -35,7 +35,7 @@ namespace Scene {
 		bool init(std::string levelFileName);
 
 		bool runIntro(std::string level);
-		void runOutro(std::string level);
+		void runOutro(std::string level, bool won);
 
 		bool run();
 
@@ -47,6 +47,7 @@ namespace Scene {
 		std::shared_ptr<ShaderHelper> m_particleShader;
 		std::shared_ptr<ShaderHelper> m_textShader;
 		std::shared_ptr<ShaderHelper> m_shadowShader;
+		std::shared_ptr<ShaderHelper> m_depthTestShader;
 		// Used to store current Game Objects while the game is running
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 		// Used to allocate new Game Objects while the game is running

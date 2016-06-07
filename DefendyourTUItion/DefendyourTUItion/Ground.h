@@ -31,8 +31,9 @@ namespace GameObject {
 		// Tile Information
 
 		std::string m_modelString = "../Assets/Model/Floor/Floor.obj";
-		std::string m_textureString = "../Assets/Textures/ground01b.jpg";;
-		std::string m_textureSpecString = "../Assets/Textures/ground01s.jpg";;
+		std::string m_colorTextureString = "../Assets/Textures/ground01.jpg";
+		std::string m_textureString = "../Assets/Textures/ground01b.jpg";
+		std::string m_textureSpecString = "../Assets/Textures/ground01s.jpg";
 
 		GLuint m_vertexBuffer;
 		GLuint m_textureBuffer;

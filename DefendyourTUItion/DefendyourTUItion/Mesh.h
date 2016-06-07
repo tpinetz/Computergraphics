@@ -23,6 +23,9 @@ struct Texture {
 };
 
 class Mesh {
+private:
+	void setupTextures(GLuint shader);
+	void deactivateTextures();
 public:
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
@@ -31,6 +34,7 @@ public:
 	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures);
 	void Draw(GLuint shader);
 	void DrawInstanced(GLuint shader, int amount);
+	void DrawShadow(GLuint shader);
 
 	inline GLuint getVAO() {
 		return VAO;

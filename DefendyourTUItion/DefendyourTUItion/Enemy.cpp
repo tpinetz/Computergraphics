@@ -45,6 +45,11 @@ namespace GameObject {
 	}
 
 	void Enemy::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
-
+		if (!m_dead) {
+			glm::mat4 transform = getTransformMatrix();
+			renderer->startShader(shader);
+			renderer->drawShadow(mod, transform);
+			renderer->stopShader();
+		}
 	}
 }
