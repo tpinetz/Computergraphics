@@ -319,6 +319,8 @@
     <ClInclude Include="TextureHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DepthMapTest.fragmentshader" />
+    <None Include="DepthMapTest.vertexshader" />
     <None Include="fragmentShader.fragmentshader" />
     <None Include="glm\gtc\bitfield.inl" />
     <None Include="glm\gtc\color_space.inl" />
@@ -400,6 +402,8 @@
     <None Include="ParticleShader.vertexshader" />
     <None Include="SkyBoxShader.fragmentshader" />
     <None Include="SkyBoxShader.vertexshader" />
+    <None Include="ShadowShader.fragmentshader" />
+    <None Include="ShadowShader.vertexshader" />
     <None Include="TextShader.fragmentshader" />
     <None Include="TextShader.vertexshader" />
     <None Include="TextureShader.fragmentshader" />

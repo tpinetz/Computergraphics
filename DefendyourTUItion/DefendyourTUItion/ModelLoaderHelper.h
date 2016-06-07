@@ -16,7 +16,7 @@ namespace Common {
 		static std::shared_ptr<ModelLoaderHelper> getInstance();
 
 		std::shared_ptr<Renderer::Model> getTextureModel(std::string modelString, 
-			std::string bumpTextureString, std::string specularTextureString);
+			std::string colorTextureString, std::string bumpTextureString, std::string specularTextureString);
 	private:
 		static std::shared_ptr<ModelLoaderHelper> m_instance;
 

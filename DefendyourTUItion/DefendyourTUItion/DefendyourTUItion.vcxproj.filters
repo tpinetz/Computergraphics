@@ -802,6 +802,18 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="SkyBoxShader.fragmentshader">
+	  <Filter>Shaders</Filter>
+	</None>
+    <None Include="ShadowShader.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ShadowShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="DepthMapTest.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="DepthMapTest.vertexshader">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

@@ -86,6 +86,10 @@ namespace GameObject{
 	}
 
 	void Projectile::updateParticles(float deltaTime) {
+		if (!m_active) {
+			return;
+		}
+
 		GLfloat radius = 150.0f;
 		GLfloat offset = 25.0f;
 		for (GLuint i = 0; i < s_MaxParticles; i++)
@@ -122,8 +126,11 @@ namespace GameObject{
 		}
 	}
 
+	void Projectile::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		//TODO: render shadows
+	}
+
 	void Projectile::renderParticles(std::shared_ptr<Renderer::Renderer> renderer) {
-		for (size_t i = 0; i < s_MaxParticles; i++) {
 			for (auto& mesh : m_particleModel->getModel()) {
 				GLuint vao = mesh.getVAO();
 				GLuint buffer;
@@ -151,11 +158,8 @@ namespace GameObject{
 			}
 
 			renderer->startShader(m_particleShader);
-			renderer->drawParticles(*m_particleModel, m_particleModels[i], s_MaxParticles);
+			renderer->drawParticles(*m_particleModel, s_MaxParticles);
 			renderer->stopShader();
-		}
-
-
 	}
 
 	void Projectile::handlePhysicsCollision(PhysicsObject* otherObject) {

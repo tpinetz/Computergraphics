@@ -33,4 +33,8 @@ namespace GameObject {
 
 	}
 
+	void DirectionalLight::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+
+	}
+
 }

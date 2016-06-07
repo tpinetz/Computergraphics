@@ -81,6 +81,11 @@ public:
 		}
 	}
 
+	void DrawShadow(GLuint shader) {
+		for (GLuint i = 0; i < this->meshes.size(); i++)
+			this->meshes[i].DrawShadow(shader);
+	}
+
 	inline vector<Mesh>& getModel() {
 		return meshes;
 	}

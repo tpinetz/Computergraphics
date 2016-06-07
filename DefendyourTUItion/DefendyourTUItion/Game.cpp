@@ -57,7 +57,7 @@ namespace Game {
 	}
 
 	void Game::run() {
-		Scene::Scene* scene;
+		Scene::Scene* scene = 0;
 		int level = 1;
 		while (level <= m_maxLevel) {
 			scene = new Scene::Scene(m_window, m_right, m_top);
@@ -66,15 +66,14 @@ namespace Game {
 			if (!scene->runIntro(std::to_string(level))) {
 				break;
 			}
-
-			if (scene->run()) {
-				scene->runOutro(std::to_string(level));
-				level += 1;
-			}
+			bool won = scene->run();
+			scene->runOutro(std::to_string(level), won);
+			level += won;
 			
 			if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_ESCAPE)) break;
 
 			delete scene;
+			scene = 0;
 		}
 		if (scene) {
 			delete scene;

@@ -109,7 +109,13 @@ namespace GameObject {
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);
 		glUseProgram(m_shader);
-		// Remove any translation component of the view matrix
+		
+		//glDisable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
+		glDisable(GL_DEPTH_TEST);
+		GLint modelLoc = glGetUniformLocation(m_shader, "model");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(m_transform));
+
 		GLint viewLoc = glGetUniformLocation(m_shader, "view");
 		GLint projLoc = glGetUniformLocation(m_shader, "projection");
 		GLint scaleLoc = glGetUniformLocation(m_shader, "scale");
@@ -130,5 +136,13 @@ namespace GameObject {
 
 		glUseProgram(0);
 		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);     
+		glCullFace(GL_BACK);
 	}
+
+	void SkyBox::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
+		// TODO: not sure if the skybox should throw shadows.
+	}
+
 }

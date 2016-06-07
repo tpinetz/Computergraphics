@@ -23,6 +23,7 @@ namespace GameObject {
 		~Avatar();
 		void update(double deltaTime);
 		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		void handlePhysicsCollision(PhysicsObject* physicsObject);
 
@@ -42,6 +43,7 @@ namespace GameObject {
 
 		std::shared_ptr<Renderer::Model> m_projectileModel;
 		std::string m_projectileModelString = "../Assets/Model/Floor/Floor.obj";
+		std::string m_projectileColorString = "../Assets/Textures/ground01.jpg";
 		std::string m_projectileTextureString = "../Assets/Textures/ground01b.jpg";
 		std::string m_projectileSpecTextureString = "../Assets/Textures/ground01s.jpg";
 
