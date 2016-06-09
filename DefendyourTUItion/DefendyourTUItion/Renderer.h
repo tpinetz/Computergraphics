@@ -7,6 +7,7 @@
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "ModelLoader.h"
+#include "DynamicModelLoader.h"
 #include "ft2build.h"
 #include "TextureHelper.h"
 #include FT_FREETYPE_H
@@ -67,8 +68,10 @@ namespace Renderer {
 		void drawModel(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawShadow(std::shared_ptr<Model> model, glm::mat4 transform);
 		void drawModel(ModelLoader& mod, glm::mat4 transform);
+		void drawModel(DynamicModelLoader& mod, glm::mat4 transform);
 		void preShadowDraw();
 		void drawShadow(ModelLoader& model, glm::mat4 transform);
+		void drawShadow(DynamicModelLoader& model, glm::mat4 transform);
 		void postShadowDraw();
 		void debugDepthMap(GLuint shader);
 		void drawParticles(ModelLoader& mod, int amount);

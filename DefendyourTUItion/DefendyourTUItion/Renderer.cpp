@@ -176,6 +176,31 @@ namespace Renderer {
 	
 	}
 
+	void Renderer::drawModel(DynamicModelLoader& mod, glm::mat4 transform) {
+		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
+		if (m_useLighting) {
+			setLightingRelatedConfiguration();
+		}
+
+		//GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
+		//GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
+		//glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
+		//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
+		if (m_useShadows) {
+			setupShadows();
+			activateShadow();
+		}
+		setupCamera();
+		glFrontFace(GL_CW);
+		mod.Draw(m_currentProgram);
+		glFrontFace(GL_CCW);
+		if (m_useShadows) {
+			deactivateShadow();
+		}
+	}
+
 	void Renderer::drawModel(ModelLoader& mod, glm::mat4 transform ) {
 		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
@@ -379,6 +404,13 @@ namespace Renderer {
 		setupShadows();
 		
 		model.DrawShadow(m_currentProgram);
+	}
+
+	void Renderer::drawShadow(DynamicModelLoader& model, glm::mat4 transform) {
+		/*glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
+		setupShadows();
+
+		model.DrawShadow(m_currentProgram);*/
 	}
 
 	void Renderer::setupShadows() {

@@ -17,6 +17,7 @@
 #include "DirectionalLight.h"
 #include "SkyBox.h"
 #include "Obstacle.h"
+#include "DynamicModelLoader.h"
 
 namespace Scene {
 
@@ -70,7 +71,8 @@ namespace Scene {
 		Physics::PhysicsWorld* m_physicsWorld;
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 
-		ModelLoader mod;
+		DynamicModelLoader mod;
+		//ModelLoader mod;
 		std::shared_ptr<ModelLoader> m_rockModel;
 
 		bool frameTime = false;

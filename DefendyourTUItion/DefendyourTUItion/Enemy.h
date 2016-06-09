@@ -1,9 +1,10 @@
 #pragma once
 #include "Model.h"
 #include "Renderer.h"
-#include "ObjectLoader.hpp"
+//#include "ObjectLoader.hpp"
 #include "TextureHelper.h"
-#include "ModelLoader.h"
+#include "DynamicModelLoader.h"
+//#include "ModelLoader.h"
 #include "FormattingHelper.h"
 #include "PhysicsObject.h"
 
@@ -15,7 +16,7 @@ namespace GameObject{
 	{
 	public:
 		static std::string m_typeName;
-		Enemy(std::string name, glm::vec3 position, GLuint shader, ModelLoader& mod);
+		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod);
 		~Enemy();
 
 		void update(double time);
@@ -30,11 +31,16 @@ namespace GameObject{
 			return !m_dead;
 		}
 	private:
-		
 		GLfloat movementSpeed = 1.f;
+		enum state{ ENEMY_WALKING, ENEMY_BEGIN_DYING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
+		GLfloat m_interVelocity, m_interpolvalue; //velocity and actual value of interpolation
+		GLuint m_frame1, m_frame2; //frames to be displayed
+		GLuint m_startWalk, m_endWalk; //start and end frames for walking
+		GLuint m_startDead, m_endDead;  //start and end frames for dead
+
 		GLuint m_shader;
-		std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
-		ModelLoader mod;
+		//std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
+		DynamicModelLoader mod;
 
 		bool m_dead = false;
 	};

@@ -160,6 +160,7 @@
     <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="DynamicModelLoader.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FormattingHelper.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="DynamicModelLoader.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FormattingHelper.h" />
