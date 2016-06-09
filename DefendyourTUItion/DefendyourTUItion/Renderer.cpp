@@ -407,10 +407,10 @@ namespace Renderer {
 	}
 
 	void Renderer::drawShadow(DynamicModelLoader& model, glm::mat4 transform) {
-		/*glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
+		glUniformMatrix4fv(glGetUniformLocation(m_currentProgram, "model"), 1, GL_FALSE, glm::value_ptr(transform));
 		setupShadows();
 
-		model.DrawShadow(m_currentProgram);*/
+		model.DrawShadow(m_currentProgram);
 	}
 
 	void Renderer::setupShadows() {

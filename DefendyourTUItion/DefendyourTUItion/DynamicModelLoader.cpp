@@ -432,9 +432,44 @@ void DynamicModelLoader::Draw(GLuint shader)
 	glDisableVertexAttribArray(TEXTURE_COORD_LOCATION);*/
 }
 
-void DrawShadow(GLuint shader) {
-	/*for (GLuint i = 0; i < this->meshes.size(); i++)
-		this->meshes[i].DrawShadow(shader);*/
+void DynamicModelLoader::DrawShadow(GLuint shader) {
+	// Bind appropriate textures
+	GLuint diffuseNr = 0;
+	GLuint specularNr = 0;
+	for (GLuint i = 0; i < 1; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i); // Active proper texture unit before binding
+		// Retrieve texture number (the N in diffuse_textureN)
+		std::stringstream ss;
+		std::string number;
+		std::string name = "texture_diffuse";
+		if (name == "texture_diffuse")
+			ss << diffuseNr++; // Transfer GLuint to stream
+		else if (name == "texture_specular")
+			ss << specularNr++; // Transfer GLuint to stream
+		number = ss.str();
+		// Now set the sampler to the correct texture unit
+		glUniform1i(glGetUniformLocation(shader, ("material[" + number + "]." + name).c_str()), i);
+		// And finally bind the texture
+		glBindTexture(GL_TEXTURE_2D, m_textureId);
+	}
+
+	// Also set each mesh's shininess property to a default value (if you want you could extend this to another mesh property and possibly change this value)
+	glUniform1f(glGetUniformLocation(shader, "material[0].shininess"), 16.0f);
+	glUniform1i(glGetUniformLocation(shader, "nrDiffuseTextures"), diffuseNr);
+	glUniform1i(glGetUniformLocation(shader, "nrDiffuseTextures"), specularNr);
+
+	// Draw mesh
+	glBindVertexArray(m_iVao);
+	glDrawArrays(GL_TRIANGLES, 0, m_vVertex.size());
+	glBindVertexArray(0);
+
+	// Always good practice to set everything back to defaults once configured.
+	for (GLuint i = 0; i < 1; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 /**
