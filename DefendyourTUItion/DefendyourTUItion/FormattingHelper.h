@@ -1,5 +1,6 @@
 #pragma once
-#include "MainHeaders.h"
+#include <string>
+#include "glm\glm.hpp"
 
 namespace Common {
 	class FormattingHelper {

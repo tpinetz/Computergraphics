@@ -22,7 +22,7 @@ namespace GameObject{
 		this->m_particleModel = particleModel;
 		this->m_particleShader = particleShader;
 
-		initPhysics(m_position, new btBoxShape(btVector3(scale.x, scale.y, scale.z)));
+		initPhysics(m_position, new btBoxShape(btVector3(2*scale.x, 2*scale.y, 2*scale.z)));
 
 		glm::vec3 forceVector = m_direction * m_force;
 		getRigidBody()->applyCentralForce(btVector3(forceVector.x, forceVector.y, forceVector.z));
@@ -77,6 +77,7 @@ namespace GameObject{
 				trans.getOrigin().getZ());
 
 			updateParticles(time);
+			std::cout << "Projectile Time: " << m_lifeTime << " Position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 
 			if (m_lifeTime <= 0) {
 				m_active = false;
@@ -163,6 +164,7 @@ namespace GameObject{
 	}
 
 	void Projectile::handlePhysicsCollision(PhysicsObject* otherObject) {
+		std::cout << "Made Contact" << std::endl;
 		m_active = false;
 	}
 }

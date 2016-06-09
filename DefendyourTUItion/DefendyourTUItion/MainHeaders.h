@@ -12,3 +12,4 @@
 #include <map>
 #include <set>
 #include "glm\glm.hpp"
+#include "FormattingHelper.h"

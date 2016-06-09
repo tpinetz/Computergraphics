@@ -37,7 +37,6 @@ namespace GameObject {
 			m_shape->calculateLocalInertia(m_mass, m_fallInertia);
 		}
 		
-
 		btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(
 			m_mass,
 			state,
