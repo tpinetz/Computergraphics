@@ -101,6 +101,26 @@ namespace Physics {
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
 		m_world->stepSimulation(btScalar(deltaTime), 7);
+
+		vector < std::shared_ptr<GameObject::PhysicsObject>> inactiveObjects;
+
+		for (auto projectile : m_projectileObjects) {
+			if (!projectile->isActive()) {
+				inactiveObjects.push_back(projectile);
+			}
+		}
+		for (auto enemy : m_physicsEnemyObjects) {
+			if (!enemy->isActive()) {
+				inactiveObjects.push_back(enemy);
+			}
+		}
+
+		for (auto inactiveObject : inactiveObjects) {
+			auto it = std::find(m_projectileObjects.begin(), m_projectileObjects.end(), inactiveObject);
+			if (it != m_projectileObjects.end()) m_projectileObjects.erase(it);
+			else m_physicsEnemyObjects.erase(std::find(m_physicsEnemyObjects.begin(), m_physicsEnemyObjects.end(), inactiveObject));
+			m_world->removeRigidBody(inactiveObject->getRigidBody());
+		}
 	}
 
 	void PhysicsWorld::addPhysicsObject(std::shared_ptr<GameObject::PhysicsObject> physicObject) {

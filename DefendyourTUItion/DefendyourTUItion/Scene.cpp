@@ -130,14 +130,13 @@ namespace Scene {
 		
 		m_rockModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		m_rockModel->loadModel("../Assets/Model/rock/rock.obj");
-
-		m_gameObjectManager->addObject(
-			std::shared_ptr<GameObject::GameObject>(
-			new GameObject::Avatar(m_camera, 
-				m_physicsWorld,
-				m_extraGameObjectManager, 
-				m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId())));
-
+		auto avatar = std::shared_ptr<GameObject::PhysicsObject>(
+			new GameObject::Avatar(m_camera,
+			m_physicsWorld,
+			m_extraGameObjectManager,
+			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId()));
+		m_gameObjectManager->addObject(avatar);
+		m_physicsWorld->addPhysicsObject(avatar);
 		
 	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
 		233, 233));
@@ -283,17 +282,23 @@ namespace Scene {
 		m_time = time;
 		bool won = true;
 		int numEnemies = 0;
+		int nbFrames = 0;
+		int frames = 0;
+		double lastTime = 1.0f;
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glEnable(GL_DEPTH_TEST);
+
 		do {
-
-
 			glfwPollEvents();
-			glEnable(GL_CULL_FACE);
-			glCullFace(GL_BACK);
-			glEnable(GL_DEPTH_TEST);
+			time = glfwGetTime();
+			deltaTime = time - m_time;
+			m_time = time;
 
+			
 			m_physicsWorld->runPhysics(deltaTime);
 			
-			
+			changeSettings(deltaTime);
 			m_gameObjectManager->update(deltaTime);
 			m_renderer->preShadowDraw();
 			m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
@@ -302,9 +307,14 @@ namespace Scene {
 			m_renderer->beginDrawing(this->window, m_right, m_top);
 			m_gameObjectManager->render(m_renderer);
 
-//			m_renderer->startShader(m_textShader->getProgramId());
-//			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
-//			m_renderer->stopShader();
+			m_renderer->startShader(m_textShader->getProgramId());
+			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
+			if (frameTime) {
+				std::string frameString = std::to_string(1.0f / deltaTime);
+				cout << frameString << std::endl;
+				m_renderer->drawText(frameString + " FPS", 0.0f, m_top - 48.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+			}
+			m_renderer->stopShader();
 
 //			m_renderer->debugDepthMap(m_depthTestShader->getProgramId());
 
@@ -342,6 +352,8 @@ namespace Scene {
 				break;
 			}
 
+			
+
 		} while (!m_keyboardManager->isKeyPressed(GLFW_KEY_ESCAPE) &&
 			glfwWindowShouldClose(this->window) == 0);
 		
@@ -351,5 +363,16 @@ namespace Scene {
 		delete m_physicsWorld;
 
 		return won;
+	}
+
+	void Scene::changeSettings(float deltaTime) {
+		static float fTimer = 0.0f;
+
+		fTimer -= deltaTime;
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F2) && fTimer < 0.0f) {
+			frameTime = !frameTime;
+			std::cout << "Frametime is turned " << (frameTime ? "on" : "off") << std::endl;
+			fTimer = 0.1f;
+		}
 	}
 }

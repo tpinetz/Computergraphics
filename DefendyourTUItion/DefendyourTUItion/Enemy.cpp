@@ -17,18 +17,20 @@ namespace GameObject {
 
 		m_mass = 10;
 		this->initPhysics(position, 
-			new btBoxShape(btVector3(1.5, 2, 1.5)));
+			new btBoxShape(btVector3(1.5, 2, 1)));
 	}
 	
 	
 	void Enemy::update(double time) {
 		if (!m_dead) {
-			btTransform& trans = getRigidBody()->getWorldTransform();
+			btTransform trans = getRigidBody()->getCenterOfMassTransform();
 			m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
+			//std::cout << "Enemy game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 
 			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed *  (GLfloat)time;
 			m_position += forceVec;
 			setPhysicsPosition(m_position);
+			//std::cout << "Enemy Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 		}
 	}
 

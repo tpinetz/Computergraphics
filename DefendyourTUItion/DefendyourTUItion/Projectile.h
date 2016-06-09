@@ -47,8 +47,8 @@ class Projectile :
 		std::string m_textureString = "../Assets/Textures/ground.jpg";
 
 		bool m_active;
-		GLfloat m_force = 400.f;
-		GLfloat m_lifeTime = 1000.0f;
+		GLfloat m_force = 4000.f;
+		GLfloat m_lifeTime = 1.0f;
 		static const int s_MaxParticles = 70;
 		Particle m_particles[s_MaxParticles];
 		glm::mat4 m_particleModels[s_MaxParticles];

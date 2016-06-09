@@ -27,7 +27,7 @@ namespace Scene {
 		bool addSceneRelevantGameObjects();
 		bool initPhysics();
 		bool addLevelDependantObjects(std::string levelFileName);
-
+		void changeSettings(float deltaTime); // Handle the F Keys as described by the LVA.
 	public:
 		Scene(GLFWwindow* window, float right, float top);
 		~Scene();
@@ -72,6 +72,8 @@ namespace Scene {
 
 		ModelLoader mod;
 		std::shared_ptr<ModelLoader> m_rockModel;
+
+		bool frameTime = false;
 	};
 
 }

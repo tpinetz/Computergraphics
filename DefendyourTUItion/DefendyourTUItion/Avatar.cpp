@@ -11,6 +11,7 @@ namespace GameObject{
 		m_camera = camera;
 		m_position = m_camera->getCameraPosition();
 		m_scale = glm::vec3(0.0f, 0.0f, 0.0f);
+		m_mass = 10.0f;
 		m_gameObjectManager = gameObjectManager;
 		m_particleModel = particleModel;
 		m_particleShader = particleShader;
@@ -24,7 +25,7 @@ namespace GameObject{
 			m_projectileSpecTextureString);
 
 		this->initPhysics(m_position,
-			new btBoxShape(btVector3(1, 1.5, 1)));
+			new btBoxShape(btVector3(1, 4, 1)));
 	}
 
 
@@ -38,13 +39,15 @@ namespace GameObject{
 	}
 
 	void Avatar::update(double deltaTime) {
-		btTransform trans;
-		getRigidBody()->getMotionState()->getWorldTransform(trans);
-		m_position.y = trans.getOrigin().getY();
+		btTransform trans = getRigidBody()->getCenterOfMassTransform();
+		m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
 
 		m_camera->setCameraPosition(m_position);
 		m_camera->update(deltaTime);
 		m_position = m_camera->getCameraPosition();
+		setPhysicsPosition(m_position);
+		//std::cout << "Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
+		//std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
 		m_bulletCooldown -= deltaTime;
 		if (Input::MouseInputManager::getMouseInputManagerInstance()
@@ -56,6 +59,9 @@ namespace GameObject{
 			m_gameObjectManager->addObject(newProjectile);
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
+		}
+		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE)) {
+			
 		}
 	}
 
