@@ -83,6 +83,9 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>GameObject\Obstacles</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicModelLoader.cpp">
+      <Filter>ObjectLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderHelper.h">
@@ -473,6 +476,9 @@
     <ClInclude Include="Obstacle.h">
       <Filter>GameObject\Obstacles</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicModelLoader.h">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
@@ -802,8 +808,8 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="SkyBoxShader.fragmentshader">
-	  <Filter>Shaders</Filter>
-	</None>
+      <Filter>Shaders</Filter>
+    </None>
     <None Include="ShadowShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
