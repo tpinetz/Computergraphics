@@ -1,10 +1,8 @@
 #pragma once
 #include "Model.h"
 #include "Renderer.h"
-//#include "ObjectLoader.hpp"
 #include "TextureHelper.h"
 #include "DynamicModelLoader.h"
-//#include "ModelLoader.h"
 #include "FormattingHelper.h"
 #include "PhysicsObject.h"
 
@@ -39,7 +37,6 @@ namespace GameObject{
 		GLuint m_startDead, m_endDead;  //start and end frames for dead
 
 		GLuint m_shader;
-		//std::string m_modelString = "../Assets/Model/nanosuit/nanosuit.obj";
 		DynamicModelLoader mod;
 
 		bool m_dead = false;

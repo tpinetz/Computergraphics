@@ -1,9 +1,3 @@
-// $Id: $
-//
-// Author: Francisco Sans franjaviersans@gmail.com
-//
-// Complete history on bottom of file
-
 #define FILE_REVISION "$Revision: $"
 
 

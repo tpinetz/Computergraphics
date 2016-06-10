@@ -1,9 +1,3 @@
-// $Id: $
-//
-// Author: Francisco Sans franjaviersans@gmail.com
-//
-// Complete history on bottom of file
-
 #ifndef DynamicObject_H
 #define DynamicObject_H
 

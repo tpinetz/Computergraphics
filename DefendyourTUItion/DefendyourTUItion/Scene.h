@@ -72,7 +72,6 @@ namespace Scene {
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 
 		DynamicModelLoader mod;
-		//ModelLoader mod;
 		std::shared_ptr<ModelLoader> m_rockModel;
 
 		bool frameTime = false;

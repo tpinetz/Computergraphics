@@ -11,7 +11,6 @@ namespace GameObject {
 	{
 		this->m_name = m_typeName;
 		this->m_position = position;
-		//this->m_scale = glm::vec3(0.2f, 0.2f, 0.2f);
 		this->m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		this->m_shader = shader;
 		this->mod = mod;
@@ -117,24 +116,20 @@ namespace GameObject {
 
 
 	void Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
-		//if (!m_dead) {
 			glm::mat4 transform = getTransformMatrix();
 			mod.UpdateVAO(m_frame1, m_frame2, m_interpolvalue);
 
 			renderer->startShader(m_shader);
 			renderer->drawModel(mod, transform);
 			renderer->stopShader();
-		//}
 	}
 
 	void Enemy::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
-		//if (!m_dead) {
 			glm::mat4 transform = getTransformMatrix();
 			mod.UpdateVAO(m_frame1, m_frame2, m_interpolvalue);
 
 			renderer->startShader(shader);
 			renderer->drawShadow(mod, transform);
 			renderer->stopShader();
-		//}
 	}
 }

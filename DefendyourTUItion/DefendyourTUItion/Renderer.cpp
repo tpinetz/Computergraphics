@@ -183,11 +183,6 @@ namespace Renderer {
 		if (m_useLighting) {
 			setLightingRelatedConfiguration();
 		}
-
-		//GLint viewLoc = glGetUniformLocation(m_currentProgram, "view");
-		//GLint projLoc = glGetUniformLocation(m_currentProgram, "projection");
-		//glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getViewMatrix()));
-		//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_camera->getProjectionMatrix()));
 		if (m_useShadows) {
 			setupShadows();
 			activateShadow();

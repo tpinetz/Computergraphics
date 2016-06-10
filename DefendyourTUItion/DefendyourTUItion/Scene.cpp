@@ -159,8 +159,6 @@ namespace Scene {
 			glm::scale(glm::mat4(1.0f), glm::vec3(0.011637)) *										//make it unitary
 			glm::translate(glm::mat4(1.0f), glm::vec3(7.24348, 1.70471, -40.0434));					//center object
 		mod.LoadModel("../Assets/Model/warrior/warrior.md2", trans);
-
-		//mod.loadModel("../Assets/Model/nanosuit/nanosuit.obj");
 		
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
