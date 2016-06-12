@@ -75,6 +75,7 @@ namespace Scene {
 		std::shared_ptr<ModelLoader> m_rockModel;
 
 		bool frameTime = false;
+		bool wireframeMode = false;
 	};
 
 }

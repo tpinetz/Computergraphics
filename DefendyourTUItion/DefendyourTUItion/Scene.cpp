@@ -381,5 +381,17 @@ namespace Scene {
 			std::cout << "Frametime is turned " << (frameTime ? "on" : "off") << std::endl;
 			fTimer = 0.1f;
 		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F3) && fTimer < 0.0f) {
+			if (!wireframeMode) {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			}
+			else {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+			wireframeMode = !wireframeMode;
+			std::cout << "Wireframe mode is turned " << (wireframeMode ? "on" : "off") << std::endl;
+			fTimer = 0.1f;
+		}
 	}
 }
