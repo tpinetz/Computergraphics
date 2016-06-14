@@ -229,6 +229,8 @@ namespace Renderer {
 		for (unsigned int i = 0; i < model->getTextures().size(); i++){
 			glActiveTexture(GL_TEXTURE0 + i + 1);
 			glBindTexture(GL_TEXTURE_2D, model->getTextures()[i].second);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Common::TextureHelper::getInstance()->getTextureSamplingQuality());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Common::TextureHelper::getInstance()->getTextureSamplingQuality());
 			glUniform1i(glGetUniformLocation(m_currentProgram, model->getTextures()[i].first.c_str()), i + 1);
 		}
 		glUniform1f(glGetUniformLocation(m_currentProgram, "material.shininess"), 32.0f );

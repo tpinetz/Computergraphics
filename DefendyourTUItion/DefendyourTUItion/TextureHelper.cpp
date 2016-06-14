@@ -5,6 +5,8 @@ namespace Common {
 
 	TextureHelper::TextureHelper()
 	{
+		m_samplingQuality[0] = GL_NEAREST;
+		m_samplingQuality[1] = GL_LINEAR;
 	}
 
 

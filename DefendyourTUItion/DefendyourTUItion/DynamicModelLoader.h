@@ -16,6 +16,7 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <vector>
+#include "TextureHelper.h"
 
 
 /**

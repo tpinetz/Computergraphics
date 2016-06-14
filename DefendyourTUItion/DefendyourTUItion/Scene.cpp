@@ -399,6 +399,14 @@ namespace Scene {
 			fTimer = 0.1f;
 		}
 
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F4) && fTimer < 0.0f) {
+			Common::TextureHelper::getInstance()->nextSamplingQuality();
+			fTimer = 0.1f;
+
+			std::cout << "Changing Texture Sampling Quality!" << std::endl;
+		}
+
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F9) && fTimer < 0.0f) {
 			if (!transparentMode) {
 				m_podest->setAlpha(0.3f);
@@ -408,6 +416,7 @@ namespace Scene {
 			}
 
 			transparentMode = !transparentMode;
+			std::cout << "Transparent mode is turned " << (transparentMode ? "on" : "off") << std::endl;
 			fTimer = 0.1f;
 		}
 	}

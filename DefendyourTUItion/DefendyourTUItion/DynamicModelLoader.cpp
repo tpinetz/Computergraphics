@@ -446,6 +446,8 @@ void DynamicModelLoader::DrawShadow(GLuint shader) {
 		glUniform1i(glGetUniformLocation(shader, ("material[" + number + "]." + name).c_str()), i);
 		// And finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, m_textureId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Common::TextureHelper::getInstance()->getTextureSamplingQuality());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Common::TextureHelper::getInstance()->getTextureSamplingQuality());
 	}
 
 	// Also set each mesh's shininess property to a default value (if you want you could extend this to another mesh property and possibly change this value)
