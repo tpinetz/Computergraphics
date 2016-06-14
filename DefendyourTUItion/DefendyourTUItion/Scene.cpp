@@ -380,11 +380,13 @@ namespace Scene {
 	void Scene::changeSettings(float deltaTime) {
 		static float fTimer = 0.0f;
 
+		float cd = 0.3f;
+
 		fTimer -= deltaTime;
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F2) && fTimer < 0.0f) {
 			frameTime = !frameTime;
 			std::cout << "Frametime is turned " << (frameTime ? "on" : "off") << std::endl;
-			fTimer = 0.1f;
+			fTimer = cd;
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F3) && fTimer < 0.0f) {
@@ -396,15 +398,22 @@ namespace Scene {
 			}
 			wireframeMode = !wireframeMode;
 			std::cout << "Wireframe mode is turned " << (wireframeMode ? "on" : "off") << std::endl;
-			fTimer = 0.1f;
+			fTimer = cd;
 		}
 
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F4) && fTimer < 0.0f) {
 			Common::TextureHelper::getInstance()->nextSamplingQuality();
-			fTimer = 0.1f;
+			fTimer = cd;
 
 			std::cout << "Changing Texture Sampling Quality!" << std::endl;
+		}
+
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F5) && fTimer < 0.0f) {
+			Common::TextureHelper::getInstance()->nextMipMapQuality();
+			fTimer = cd;
+			std::cout << "Changing Texture Mip Mapping Quality!" << std::endl;
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F9) && fTimer < 0.0f) {
@@ -417,7 +426,7 @@ namespace Scene {
 
 			transparentMode = !transparentMode;
 			std::cout << "Transparent mode is turned " << (transparentMode ? "on" : "off") << std::endl;
-			fTimer = 0.1f;
+			fTimer = cd;
 		}
 	}
 }

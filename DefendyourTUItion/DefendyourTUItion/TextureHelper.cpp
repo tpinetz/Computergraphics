@@ -7,6 +7,8 @@ namespace Common {
 	{
 		m_samplingQuality[0] = GL_NEAREST;
 		m_samplingQuality[1] = GL_LINEAR;
+		m_samplingQuality[2] = GL_NEAREST_MIPMAP_NEAREST;
+		m_samplingQuality[3] = GL_LINEAR_MIPMAP_NEAREST;
 	}
 
 
@@ -57,6 +59,7 @@ namespace Common {
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)textura);
+			glGenerateMipmap(GL_TEXTURE_2D);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 			GLenum huboError = glGetError();
