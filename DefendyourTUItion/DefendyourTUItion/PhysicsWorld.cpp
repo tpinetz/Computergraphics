@@ -1,5 +1,4 @@
 #include "PhysicsWorld.h"
-#include "BulletCollision\CollisionDispatch\btCollisionWorld.h"
 
 namespace Physics {
 

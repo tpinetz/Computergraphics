@@ -79,6 +79,7 @@ namespace Scene {
 		bool frameTime = false;
 		bool wireframeMode = false;
 		bool transparentMode = false;
+		bool gravity = true;
 	};
 
 }

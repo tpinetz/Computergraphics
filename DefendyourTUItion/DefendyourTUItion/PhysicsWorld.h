@@ -1,6 +1,10 @@
 #pragma once
+#include "MainHeaders.h"
 #include "btBulletDynamicsCommon.h"
+#include "BulletCollision\CollisionDispatch\btCollisionWorld.h"
 #include "BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h"
+#include "LinearMath\btVector3.h"
+#include "glm\vec3.hpp"
 #include "Enemy.h"
 #include "Projectile.h"
 #include "PhysicsObject.h"
@@ -25,6 +29,9 @@ namespace Physics
 		}
 
 		void myProcessCallback(btScalar timestep);
+		inline void setGravity(btVector3& gravity) {
+			m_world->setGravity(gravity);
+		}
 
 		void cleanUp();
 

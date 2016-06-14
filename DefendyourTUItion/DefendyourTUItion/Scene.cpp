@@ -416,6 +416,18 @@ namespace Scene {
 			std::cout << "Changing Texture Mip Mapping Quality!" << std::endl;
 		}
 
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F6) && fTimer < 0.0f) {
+			btVector3 gravity;
+			if (!gravity) {
+				gravity = btVector3(0.0f, -5.0f, 0.0f);
+			}
+			else {
+				gravity = btVector3(0.0f, 0.0f, 0.0f);
+			}
+			m_physicsWorld->setGravity(gravity);
+			fTimer = 0.1f;
+		}
+
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F9) && fTimer < 0.0f) {
 			if (!transparentMode) {
 				m_podest->setAlpha(0.3f);

@@ -17,7 +17,7 @@ namespace GameObjectManager {
 
 
 	void GameObjectManager::addObjectFront(std::shared_ptr<GameObject::GameObject> gameObject) {
-		this->m_gameObjectList.insert(this->m_gameObjectList.begin(), gameObject);
+		this->m_gameObjectList.insert(this->m_gameObjectList.end()-1, gameObject);
 	}
 
 	void GameObjectManager::removeObject(GameObject::GameObject& gameObject) {
