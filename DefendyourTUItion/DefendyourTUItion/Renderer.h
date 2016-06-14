@@ -90,6 +90,10 @@ namespace Renderer {
 			m_directionalLight = dlight;
 		}
 
+		inline void setAlpha(GLfloat alpha) {
+			m_alpha = alpha;
+		}
+
 	private:
 		bool m_useLighting = true;
 		bool m_useShadows = true;
@@ -112,6 +116,9 @@ namespace Renderer {
 		GLuint m_shadow_width = 1024, m_shadow_height = 1024;
 		GLuint m_depthMapFBO;
 		GLuint m_depthMap;
+
+		// Transparent Stuff
+		GLfloat m_alpha = 1.0f;
 	};
 
 }

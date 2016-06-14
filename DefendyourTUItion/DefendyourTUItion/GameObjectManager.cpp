@@ -15,6 +15,11 @@ namespace GameObjectManager {
 		this->m_gameObjectList.push_back(gameObject);
 	}
 
+
+	void GameObjectManager::addObjectFront(std::shared_ptr<GameObject::GameObject> gameObject) {
+		this->m_gameObjectList.insert(this->m_gameObjectList.begin(), gameObject);
+	}
+
 	void GameObjectManager::removeObject(GameObject::GameObject& gameObject) {
 		for (auto it = m_gameObjectList.begin(); it != m_gameObjectList.end(); it++) {
 			if (*(it->get()) == gameObject) {

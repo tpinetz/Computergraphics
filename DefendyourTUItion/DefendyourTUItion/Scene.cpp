@@ -16,10 +16,11 @@ namespace Scene {
 
 	bool Scene::init(std::string levelFileName) {
 		// It is important that the Physics is initialized first.
-		return initPhysics() 
-			&& initInternalObjects() 
-			&& addSceneRelevantGameObjects() 
-			&& addLevelDependantObjects(levelFileName);
+		return initPhysics()
+			&& initInternalObjects()
+			&& addSceneRelevantGameObjects()
+			&& addLevelDependantObjects(levelFileName)
+			&& addTransparentGameObjects();
 	}
 
 	bool Scene::initPhysics() {
@@ -143,15 +144,6 @@ namespace Scene {
 		m_gameObjectManager->addObject(ground);
 		m_physicsWorld->addPhysicsObject(ground);
 
-		auto podest = std::shared_ptr<GameObject::Podest>(
-			new GameObject::Podest(m_textureShader->getProgramId(),
-			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Podest/Podest.obj", 
-			"../Assets/Textures/paving/paving01.jpg",
-			"../Assets/Textures/paving/paving01b.jpg",
-			"../Assets/Textures/paving/paving01s.jpg")));
-		m_gameObjectManager->addObject(podest);
-
-
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
 			glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *
@@ -234,6 +226,17 @@ namespace Scene {
 		return true;
 	}
 
+	bool Scene::addTransparentGameObjects() {
+		m_podest = std::shared_ptr<GameObject::Podest>(
+			new GameObject::Podest(m_textureShader->getProgramId(),
+			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Podest/Podest.obj",
+			"../Assets/Textures/paving/paving01.jpg",
+			"../Assets/Textures/paving/paving01b.jpg",
+			"../Assets/Textures/paving/paving01s.jpg")));
+		m_gameObjectManager->addObject(m_podest);
+		return true;
+	}
+
 	bool Scene::runIntro(std::string level) {
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_CULL_FACE);
@@ -263,6 +266,8 @@ namespace Scene {
 
 		return false;
 	}
+
+
 
 	void Scene::runOutro(std::string level, bool won) {
 		glfwPollEvents();
@@ -328,7 +333,7 @@ namespace Scene {
 			m_renderer->endDrawing(this->window);
 
 			for (auto newGameObject : m_extraGameObjectManager->getGameObjects()) {
-				m_gameObjectManager->addObject(newGameObject);
+				m_gameObjectManager->addObjectFront(newGameObject);
 			}
 			if (!m_extraGameObjectManager->getGameObjects().empty()) {
 				m_extraGameObjectManager->getGameObjects().clear();
@@ -391,6 +396,18 @@ namespace Scene {
 			}
 			wireframeMode = !wireframeMode;
 			std::cout << "Wireframe mode is turned " << (wireframeMode ? "on" : "off") << std::endl;
+			fTimer = 0.1f;
+		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F9) && fTimer < 0.0f) {
+			if (!transparentMode) {
+				m_podest->setAlpha(0.3f);
+			}
+			else {
+				m_podest->setAlpha(1.0f);
+			}
+
+			transparentMode = !transparentMode;
 			fTimer = 0.1f;
 		}
 	}

@@ -26,6 +26,7 @@ namespace Scene {
 	private:
 		bool initInternalObjects();
 		bool addSceneRelevantGameObjects();
+		bool addTransparentGameObjects();
 		bool initPhysics();
 		bool addLevelDependantObjects(std::string levelFileName);
 		void changeSettings(float deltaTime); // Handle the F Keys as described by the LVA.
@@ -66,6 +67,7 @@ namespace Scene {
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<GameObject::DirectionalLight> m_sun;
+		std::shared_ptr<GameObject::Podest> m_podest;
 		
 		// Bullet World
 		Physics::PhysicsWorld* m_physicsWorld;
@@ -76,6 +78,7 @@ namespace Scene {
 
 		bool frameTime = false;
 		bool wireframeMode = false;
+		bool transparentMode = false;
 	};
 
 }

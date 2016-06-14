@@ -147,6 +147,7 @@ namespace Renderer {
 	void Renderer::drawModel(std::shared_ptr<Model> model, glm::mat4 transform) {
 		GLint modelLoc = glGetUniformLocation(m_currentProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(transform));
+		glUniform1f(glGetUniformLocation(m_currentProgram, "alpha"), m_alpha);
 		
 		setupCamera();
 

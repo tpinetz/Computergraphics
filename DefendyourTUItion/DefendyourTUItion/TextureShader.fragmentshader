@@ -39,6 +39,7 @@ uniform vec3 viewPos;
 uniform DirLight dirLight;
 uniform PointLight pointLight;
 uniform Material material;
+uniform float alpha;
 
 // Function prototypes
 vec3 CalcDirLight(float shadow, DirLight light, vec3 normal, vec3 viewDir);
@@ -64,7 +65,7 @@ void main()
     // Phase 2: Point lights
     result += 1.5*CalcPointLight(shadow, pointLight, norm, FragPos, viewDir);    
     
-    color = vec4(result, 1.0f);
+    color = vec4(result, alpha);
 }
 
 float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir)

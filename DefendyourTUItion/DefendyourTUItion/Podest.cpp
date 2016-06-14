@@ -21,9 +21,18 @@ namespace GameObject {
 	}
 
 	void Podest::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		if (m_alpha < 1.0f) {
+			glDisable(GL_CULL_FACE);
+		}
+		renderer->setAlpha(m_alpha);
 		renderer->startShader(m_shader);
 		renderer->drawModel(m_model, m_transform);
 		renderer->stopShader();
+		renderer->setAlpha(1.0f);
+
+		if (m_alpha < 1.0f) {
+			glEnable(GL_CULL_FACE);
+		}
 	}
 
 	void Podest::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
