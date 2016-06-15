@@ -44,13 +44,12 @@ namespace GameObject {
 	
 	void Enemy::update(double time) {
 		if (!m_dead) {
-			btTransform trans = getRigidBody()->getCenterOfMassTransform();
+			btTransform trans = getRigidBody()->getWorldTransform();
 			m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
 			//std::cout << "Enemy game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 
-			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;// *(GLfloat)time;
-			//m_position += forceVec;
-			//setPhysicsPosition(m_position);
+			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
+
 			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 		}
 

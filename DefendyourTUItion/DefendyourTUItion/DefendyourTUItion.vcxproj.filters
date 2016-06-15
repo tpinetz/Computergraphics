@@ -86,6 +86,9 @@
     <ClCompile Include="DynamicModelLoader.cpp">
       <Filter>ObjectLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Frustum.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderHelper.h">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="DynamicModelLoader.h">
       <Filter>ObjectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Frustum.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

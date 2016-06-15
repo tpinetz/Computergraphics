@@ -74,6 +74,9 @@ namespace Scene {
 		Physics::PhysicsWorld* m_physicsWorld;
 		vector < std::shared_ptr<GameObject::Enemy>> m_enemies;
 
+		// View Frustum Culling
+		std::shared_ptr<Renderer::Frustum> m_frustum;
+
 		DynamicModelLoader mod;
 		std::shared_ptr<ModelLoader> m_rockModel;
 

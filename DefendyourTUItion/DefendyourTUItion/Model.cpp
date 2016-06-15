@@ -21,5 +21,4 @@ namespace Renderer {
 		glDeleteBuffers(1, &m_vertexBuffer);
 		glDeleteVertexArrays(1, &m_vao);
 	}
-
 }

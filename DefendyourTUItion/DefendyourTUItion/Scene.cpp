@@ -85,10 +85,13 @@ namespace Scene {
 			return false;
 		}
 
-		//Input Initialization
+		// Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
 		m_mouseInputManager = Input::MouseInputManager::getMouseInputManagerInstance();
+
+		// Frustum
+		m_frustum = std::shared_ptr<Renderer::Frustum>(new Renderer::Frustum());
 
 		// Game Object Manager Initialization
 
@@ -231,7 +234,7 @@ namespace Scene {
 			Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Podest/Podest.obj",
 			"../Assets/Textures/paving/paving01.jpg",
 			"../Assets/Textures/paving/paving01b.jpg",
-			"../Assets/Textures/paving/paving01s.jpg")));
+			"../Assets/Textures/paving/paving01s.jpg"), m_frustum));
 		m_gameObjectManager->addObject(m_podest);
 		return true;
 	}
@@ -241,8 +244,8 @@ namespace Scene {
 		glDisable(GL_CULL_FACE);
 		do {
 			glfwPollEvents();
-
-
+			
+			m_frustum->updateViewProjMatrix(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 			m_renderer->beginDrawing(this->window, m_right, m_top);
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("Please press space to start" , 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));

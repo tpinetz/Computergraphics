@@ -164,6 +164,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FormattingHelper.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FormattingHelper.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
