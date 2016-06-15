@@ -4,7 +4,7 @@
 namespace Camera {
 
 	Camera::Camera(Input::KeyboardManager* keyboardManager, float right, float top) 	{
-		m_cameraPos = glm::vec3(0.0f, 1.5f, -1.0f);
+		m_cameraPos = glm::vec3(0.0f, 1.5f, -2.0f);
 		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_cameraSpeed = 10.f;
@@ -43,6 +43,26 @@ namespace Camera {
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_D)) {
 			m_cameraPos += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * m_cameraSpeed * deltaTime;
 		}
+	}
+
+	glm::vec3 Camera::getDirectionVec() {
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_W)) {
+			return m_cameraFront;
+		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_S)) {
+			return (-m_cameraFront);
+		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_A)) {
+			return -glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
+		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_D)) {
+			return glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
+		}
+
+		return glm::vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset) {

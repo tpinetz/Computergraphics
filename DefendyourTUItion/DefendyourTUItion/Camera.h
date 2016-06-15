@@ -22,6 +22,7 @@ namespace Camera {
 		~Camera();
 
 		void update(float deltaTime);
+		glm::vec3 getDirectionVec();
 		void ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset);
 
 		inline glm::vec3 getCameraPosition() {
@@ -30,6 +31,10 @@ namespace Camera {
 
 		inline void setCameraPosition(glm::vec3 position) {
 			m_cameraPos = position;
+		}
+
+		inline glm::vec3 getCameraFront() {
+			return m_cameraFront;
 		}
 
 		inline glm::mat4 getViewMatrix() {

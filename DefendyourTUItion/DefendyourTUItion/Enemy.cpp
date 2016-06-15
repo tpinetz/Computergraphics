@@ -24,7 +24,7 @@ namespace GameObject {
 
 		m_mass = 10;
 		this->initPhysics(position, 
-			new btBoxShape(btVector3(1.5, 4, 1)));
+			new btBoxShape(btVector3(1.5, 1.8, 1)));
 
 
 		m_startWalk = 1;
@@ -48,10 +48,10 @@ namespace GameObject {
 			m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
 			//std::cout << "Enemy game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 
-			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed *  (GLfloat)time;
-			m_position += forceVec;
-			setPhysicsPosition(m_position);
-
+			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;// *(GLfloat)time;
+			//m_position += forceVec;
+			//setPhysicsPosition(m_position);
+			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 		}
 
 

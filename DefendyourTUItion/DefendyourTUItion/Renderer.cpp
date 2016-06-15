@@ -372,6 +372,7 @@ namespace Renderer {
 		glViewport(0, 0, m_shadow_width, m_shadow_height);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_CULL_FACE);
 		glCullFace(GL_FRONT);
 	}
 
@@ -413,7 +414,7 @@ namespace Renderer {
 
 	void Renderer::setupShadows() {
 		GLfloat near_plane = 1.0f, far_plane = 100.5f;
-		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		glm::mat4 lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, near_plane, far_plane);
 
 		// Tried that out myself
 		glm::mat4 lightView = glm::lookAt(m_lights[0]->position,

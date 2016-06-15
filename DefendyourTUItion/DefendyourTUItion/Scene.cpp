@@ -131,13 +131,12 @@ namespace Scene {
 		
 		m_rockModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		m_rockModel->loadModel("../Assets/Model/rock/rock.obj");
-		auto avatar = std::shared_ptr<GameObject::PhysicsObject>(
+		m_avatar = std::shared_ptr<GameObject::Avatar>(
 			new GameObject::Avatar(m_camera,
 			m_physicsWorld,
 			m_extraGameObjectManager,
 			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId()));
-		m_gameObjectManager->addObject(avatar);
-		m_physicsWorld->addPhysicsObject(avatar);
+		m_physicsWorld->addPhysicsObject(m_avatar);
 		
 	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
 		233, 233));
@@ -297,11 +296,11 @@ namespace Scene {
 		int nbFrames = 0;
 		int frames = 0;
 		double lastTime = 1.0f;
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glEnable(GL_DEPTH_TEST);
 
 		do {
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+			glEnable(GL_DEPTH_TEST);
 			glfwPollEvents();
 			time = glfwGetTime();
 			deltaTime = time - m_time;
@@ -311,6 +310,7 @@ namespace Scene {
 			m_physicsWorld->runPhysics(deltaTime);
 			
 			changeSettings(deltaTime);
+			m_avatar->update(deltaTime); // I am updating the avatar first because of the camera
 			m_gameObjectManager->update(deltaTime);
 			m_renderer->preShadowDraw();
 			m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
@@ -327,8 +327,8 @@ namespace Scene {
 				m_renderer->drawText(frameString + " FPS", 0.0f, m_top - 48.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 			}
 			m_renderer->stopShader();
-
-//			m_renderer->debugDepthMap(m_depthTestShader->getProgramId());
+			
+			//m_renderer->debugDepthMap(m_depthTestShader->getProgramId());
 
 			m_renderer->endDrawing(this->window);
 
@@ -348,9 +348,8 @@ namespace Scene {
 					won = false;
 					numEnemies++;
 				}
-				if (glm::abs(enemy->getPosition().x) < 0.2 &&
-					glm::abs(enemy->getPosition().y) < 0.2 &&
-					glm::abs(enemy->getPosition().z) < 0.2) {
+				if (glm::abs(enemy->getPosition().x) < 1.0f &&
+					glm::abs(enemy->getPosition().z) < 1.0f) {
 					lost = true;
 				}
 			}
@@ -418,13 +417,15 @@ namespace Scene {
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F6) && fTimer < 0.0f) {
 			btVector3 gravity;
-			if (!gravity) {
-				gravity = btVector3(0.0f, -5.0f, 0.0f);
+			if (!gravityMode) {
+				gravity = btVector3(0.0f, -10.0f, 0.0f);
 			}
 			else {
 				gravity = btVector3(0.0f, 0.0f, 0.0f);
 			}
 			m_physicsWorld->setGravity(gravity);
+			gravityMode = !gravityMode;
+			std::cout << "Gravity is turned " << (gravityMode ? "on" : "off") << std::endl;
 			fTimer = 0.1f;
 		}
 

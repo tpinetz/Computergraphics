@@ -21,7 +21,7 @@ namespace GameObject {
 			}
 			btTransform groundTransform;
 			groundTransform.setIdentity();
-			groundTransform.setOrigin(btVector3(0.0f, -1.0f, 0.0f));
+			groundTransform.setOrigin(btVector3(0.0f, 1.0f, 0.0f));
 			btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), -1);
 			m_mass = 0;
 			btDefaultMotionState* groundMotionState = 

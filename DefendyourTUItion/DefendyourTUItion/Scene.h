@@ -67,6 +67,7 @@ namespace Scene {
 		std::shared_ptr<Renderer::Renderer> m_renderer;
 		std::shared_ptr<Camera::Camera> m_camera;
 		std::shared_ptr<GameObject::DirectionalLight> m_sun;
+		std::shared_ptr<GameObject::Avatar> m_avatar;
 		std::shared_ptr<GameObject::Podest> m_podest;
 		
 		// Bullet World
@@ -79,7 +80,7 @@ namespace Scene {
 		bool frameTime = false;
 		bool wireframeMode = false;
 		bool transparentMode = false;
-		bool gravity = true;
+		bool gravityMode = true;
 	};
 
 }

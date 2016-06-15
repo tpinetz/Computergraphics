@@ -25,7 +25,7 @@ namespace GameObject{
 			m_projectileSpecTextureString);
 
 		this->initPhysics(m_position,
-			new btBoxShape(btVector3(1, 4, 1)));
+			new btBoxShape(btVector3(1, 1, 1)));
 	}
 
 
@@ -39,14 +39,14 @@ namespace GameObject{
 	}
 
 	void Avatar::update(double deltaTime) {
-		btTransform trans = getRigidBody()->getCenterOfMassTransform();
-		m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
-
+		btTransform trans = getRigidBody()->getWorldTransform();
+		m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y() + 1.5f, trans.getOrigin().z());
 		m_camera->setCameraPosition(m_position);
-		m_camera->update(deltaTime);
-		m_position = m_camera->getCameraPosition();
-		setPhysicsPosition(m_position);
-		//std::cout << "Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
+
+		glm::vec3 temp = m_camera->getDirectionVec();
+		btVector3 force = btVector3(temp.x, temp.y, temp.z);
+		getRigidBody()->setLinearVelocity(10.0f * force);
+		//std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 		//std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
 		m_bulletCooldown -= deltaTime;
