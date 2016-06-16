@@ -10,7 +10,7 @@ namespace GameObject {
 		~Light();
 
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 

@@ -5,7 +5,7 @@ namespace GameObject{
 	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, 
 		Physics::PhysicsWorld* physicsWorld,
 		std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader,
-		std::shared_ptr<ModelLoader> particleModel, GLuint particleShader)
+		std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum)
 	{
 		m_name = "Avatar";
 		m_camera = camera;
@@ -23,6 +23,7 @@ namespace GameObject{
 			->getTextureModel(m_projectileModelString, m_projectileColorString,
 			m_projectileTextureString,
 			m_projectileSpecTextureString);
+		m_frustum = frustum;
 
 		this->initPhysics(m_position,
 			new btBoxShape(btVector3(1, 1, 1)));
@@ -55,7 +56,7 @@ namespace GameObject{
 			std::shared_ptr<Projectile> newProjectile =
 				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_camera->getCameraPosition(), 
 				glm::vec3(0.4f, 0.4f, 0.4f), m_camera->getCameraDirection(),
-				m_projectileModel, m_camera, m_particleModel, m_particleShader));
+				m_projectileModel, m_particleModel, m_particleShader, m_frustum));
 			m_gameObjectManager->addObject(newProjectile);
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
@@ -65,8 +66,8 @@ namespace GameObject{
 		}
 	}
 
-	void Avatar::render(std::shared_ptr<Renderer::Renderer> renderer) {
-
+	int Avatar::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		return 0;
 	}
 
 	void Avatar::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

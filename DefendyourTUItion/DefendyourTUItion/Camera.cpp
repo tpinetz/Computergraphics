@@ -46,23 +46,24 @@ namespace Camera {
 	}
 
 	glm::vec3 Camera::getDirectionVec() {
+		glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_W)) {
-			return m_cameraFront;
+			direction += m_cameraFront;
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_S)) {
-			return (-m_cameraFront);
+			direction -= (m_cameraFront);
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_A)) {
-			return -glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
+			direction -= glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_D)) {
-			return glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
+			direction += glm::normalize(glm::cross(m_cameraFront, m_cameraUp));
 		}
 
-		return glm::vec3(0.0f, 0.0f, 0.0f);
+		return direction;
 	}
 
 	void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset) {

@@ -138,11 +138,11 @@ namespace Scene {
 			new GameObject::Avatar(m_camera,
 			m_physicsWorld,
 			m_extraGameObjectManager,
-			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId()));
+			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum));
 		m_physicsWorld->addPhysicsObject(m_avatar);
 		
 	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
-		233, 233));
+		233, 233, m_frustum));
 		m_gameObjectManager->addObject(ground);
 		m_physicsWorld->addPhysicsObject(ground);
 
@@ -160,7 +160,7 @@ namespace Scene {
 
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
 			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 
-			glm::vec3(0.5f, 1.0f, 0.5f)));
+			glm::vec3(0.5f, 1.0f, 0.5f), m_frustum));
 		m_gameObjectManager->addObject(tree);
 		m_physicsWorld->addPhysicsObject(tree);
 
@@ -210,7 +210,7 @@ namespace Scene {
 				fscanf(file, "%f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z);
 				auto enemy = std::shared_ptr<GameObject::Enemy>(
 					new GameObject::Enemy("enemy5", enemyPosition,
-					m_meshShader->getProgramId(), mod));
+					m_meshShader->getProgramId(), mod, m_frustum));
 				m_gameObjectManager->addObject(enemy);
 				m_physicsWorld->addPhysicsObject(enemy);
 				m_enemies.push_back(enemy);
@@ -245,7 +245,6 @@ namespace Scene {
 		do {
 			glfwPollEvents();
 			
-			m_frustum->updateViewProjMatrix(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 			m_renderer->beginDrawing(this->window, m_right, m_top);
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("Please press space to start" , 250.f, 400.f, 1.f, glm::vec3(0.5, 0.5f, 0.5f));
@@ -314,13 +313,15 @@ namespace Scene {
 			
 			changeSettings(deltaTime);
 			m_avatar->update(deltaTime); // I am updating the avatar first because of the camera
+			m_frustum->updateViewProjMatrix(m_camera->getViewMatrix(), m_camera->getProjectionMatrix());
 			m_gameObjectManager->update(deltaTime);
 			m_renderer->preShadowDraw();
 			m_gameObjectManager->renderShadows(m_renderer, m_shadowShader->getProgramId());
 			m_renderer->postShadowDraw();
 			
 			m_renderer->beginDrawing(this->window, m_right, m_top);
-			m_gameObjectManager->render(m_renderer);
+			int renderedObjects = m_gameObjectManager->render(m_renderer);
+			std::cout << "Rendering  " << renderedObjects << " Objects on Screen." << std::endl;
 
 			m_renderer->startShader(m_textShader->getProgramId());
 			m_renderer->drawText("There are " + std::to_string(numEnemies) + " Enemies left", 0.5f, 0.5f, 1.0f, glm::vec3(0.0, 0.0f, 0.0f));
@@ -429,7 +430,12 @@ namespace Scene {
 			m_physicsWorld->setGravity(gravity);
 			gravityMode = !gravityMode;
 			std::cout << "Gravity is turned " << (gravityMode ? "on" : "off") << std::endl;
-			fTimer = 0.1f;
+			fTimer = cd;
+		}
+
+		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F8) && fTimer < 0.0f) {
+			m_frustum->toggle();
+			fTimer = cd;
 		}
 
 		if (m_keyboardManager->isKeyPressed(GLFW_KEY_F9) && fTimer < 0.0f) {

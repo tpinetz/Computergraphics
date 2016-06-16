@@ -13,7 +13,7 @@ namespace GameObject {
 
 		GLuint loadCubemap(vector<const GLchar*> faces);
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 

@@ -4,6 +4,7 @@
 #include "LinearMath\btVector3.h"
 #include "glm\vec3.hpp"
 #include "Renderer.h"
+#include "Frustum.h"
 
 namespace GameObject {
 	class GameObject
@@ -15,7 +16,7 @@ namespace GameObject {
 		virtual ~GameObject();
 
 		virtual void update(double time) = 0;
-		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
+		virtual int render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
 		virtual void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) = 0;
 
 

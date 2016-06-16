@@ -2,7 +2,7 @@
 
 namespace GameObject {
 
-	Ground::Ground(GLuint shader, GLint width, GLint height)
+	Ground::Ground(GLuint shader, GLint width, GLint height, std::shared_ptr<Renderer::Frustum> frustum)
 	{
 		GLint fromWidth = width / 2;
 		GLint fromHeight = height / 2;
@@ -16,7 +16,7 @@ namespace GameObject {
 			for (GLint i = -fromWidth; i <= fromWidth; i += 2*m_tileWidth) {
 				for (GLint j = -fromHeight; j <= fromHeight; j += 2*m_tileHeight) {
 					m_floorTiles.push_back(std::shared_ptr<Floor>(
-						new Floor(shader, m_tileWidth, m_tileHeight, glm::vec3(i, 0, j), model)));
+						new Floor(shader, m_tileWidth, m_tileHeight, glm::vec3(i, 0, j), model, frustum)));
 				}
 			}
 			btTransform groundTransform;
@@ -52,10 +52,12 @@ namespace GameObject {
 //			+ "," + std::to_string(vector.z()) + ")" << std::endl;  
 	}
 	
-	void Ground::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int Ground::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		int result = 0;
 		for (auto floorTile : m_floorTiles) {
-			floorTile->render(renderer);
+			result += floorTile->render(renderer);
 		}
+		return result;
 	}
 
 

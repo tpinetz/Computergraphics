@@ -19,10 +19,10 @@ namespace GameObject {
 		Avatar(std::shared_ptr<Camera::Camera> camera, 
 			Physics::PhysicsWorld* physicsWorld,
 			std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader, 
-			std::shared_ptr<ModelLoader> particleModel, GLuint particleShader);
+			std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum);
 		~Avatar();
 		void update(double deltaTime);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		void handlePhysicsCollision(PhysicsObject* physicsObject);
@@ -53,6 +53,7 @@ namespace GameObject {
 		GLfloat m_bulletCooldownAttribute = .4f; // How long it takes for the weapon to cool down ( e.g. I can fire ever x milliseconds)
 		GLfloat m_bulletCooldown = 0.0f; // How long the weapon still cools down;
 		std::shared_ptr<ModelLoader> m_particleModel;
+		std::shared_ptr<Renderer::Frustum> m_frustum;
 
 	};
 

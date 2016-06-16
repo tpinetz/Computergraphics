@@ -37,10 +37,12 @@ namespace GameObjectManager {
 		}
 	}
 
-	void GameObjectManager::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int GameObjectManager::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		int result = 0;
 		for (auto gameObject : this->m_gameObjectList) {
-			gameObject->render(renderer);
+			result += gameObject->render(renderer);
 		}
+		return result;
 	}
 
 

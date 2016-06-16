@@ -24,10 +24,10 @@ class Projectile :
 
 		Projectile(GLuint shader, glm::vec3 position, glm::vec3 scale, 
 			glm::vec3 direction, std::shared_ptr<Renderer::Model> model,
-			std::shared_ptr<Camera::Camera> camera, std::shared_ptr<ModelLoader> particleModel, GLuint particleShader);
+			std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum);
 		~Projectile();
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		void handlePhysicsCollision(PhysicsObject* otherObject);
@@ -41,7 +41,6 @@ class Projectile :
 		glm::vec3 m_direction;
 		GLuint m_shader;
 		std::shared_ptr<Renderer::Model> m_model;
-		std::shared_ptr<Camera::Camera> m_camera;
 
 		std::string m_modelString = "../Assets/Model/Floor/Floor.obj";
 		std::string m_textureString = "../Assets/Textures/ground.jpg";
@@ -67,6 +66,8 @@ class Projectile :
 
 		std::shared_ptr<ModelLoader> m_particleModel;
 		GLuint m_particleShader;
+
+		std::shared_ptr<Renderer::Frustum> m_frustum;
 
 	};
 

@@ -7,13 +7,14 @@ namespace GameObject {
 	{
 	}
 
-	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod)
+	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, std::shared_ptr<Renderer::Frustum> frustum)
 	{
 		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		this->m_shader = shader;
 		this->mod = mod;
+		this->m_frustum = frustum;
 
 		//rotate the enemy to face the objective 
 		glm::vec3 pos = -glm::vec3(position.x, position.y, position.z);
@@ -114,13 +115,21 @@ namespace GameObject {
 	}
 
 
-	void Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
 			glm::mat4 transform = getTransformMatrix();
+			m_frustum->updateFrustum(transform);
+			glm::vec3 frustumVec = m_scale;
+			frustumVec.y *= 8.f;
+			if (!m_frustum->CubeInFrustum(0.0f, 0.0f, 0.0f, 3.0f)) {
+				return 0;
+			}
 			mod.UpdateVAO(m_frame1, m_frame2, m_interpolvalue);
 
 			renderer->startShader(m_shader);
 			renderer->drawModel(mod, transform);
 			renderer->stopShader();
+
+			return 1;
 	}
 
 	void Enemy::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

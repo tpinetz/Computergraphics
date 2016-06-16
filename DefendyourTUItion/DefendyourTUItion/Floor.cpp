@@ -2,10 +2,11 @@
 
 namespace GameObject {
 
-	Floor::Floor(GLuint shader, GLfloat width, GLfloat height, glm::vec3 position, std::shared_ptr<Renderer::Model> model) {
+	Floor::Floor(GLuint shader, GLfloat width, GLfloat height, glm::vec3 position, std::shared_ptr<Renderer::Model> model, std::shared_ptr<Renderer::Frustum> frustum) {
 		this->m_name = "Floor";
 		this->m_shader = shader;
 		this->m_model = model;
+		this->m_frustum = frustum;
 
 		m_position = position;
 		m_scale = glm::vec3(width, 0.1, height);
@@ -21,13 +22,19 @@ namespace GameObject {
 
 	}
 
-	void Floor::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int Floor::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		m_frustum->updateFrustum(m_transform);
+		if (!m_frustum->CubeInFrustum(0.0f, 0.0f, 0.0f, 1.0f)) {
+			return 0;
+		}
 				
 		renderer->startShader(m_shader);
 
 		renderer->drawModel(m_model, m_transform);
 
 		renderer->stopShader();
+
+		return 1;
 
 	}
 	

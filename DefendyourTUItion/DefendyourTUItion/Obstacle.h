@@ -6,11 +6,12 @@ namespace GameObject {
 		public PhysicsObject
 	{
 	public:
-		Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale);
+		Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale,
+			std::shared_ptr<Renderer::Frustum> frustum);
 		~Obstacle();
 	
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer) ;
+		int render(std::shared_ptr<Renderer::Renderer> renderer) ;
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		void handlePhysicsCollision(PhysicsObject* otherObject);
@@ -21,6 +22,7 @@ namespace GameObject {
 
 	private:
 		std::shared_ptr<ModelLoader> m_model;
+		std::shared_ptr<Renderer::Frustum> m_frustum;
 		GLuint m_shader;
 		bool m_active = true;
 		glm::mat4 m_transform;

@@ -11,16 +11,16 @@ namespace GameObject{
 
 	Projectile::Projectile(GLuint shader, glm::vec3 position, 
 		glm::vec3 scale, glm::vec3 direction, std::shared_ptr<Renderer::Model> model, 
-		std::shared_ptr<Camera::Camera> camera, std::shared_ptr<ModelLoader> particleModel, GLuint particleShader) {
+		std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum) {
 		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = scale;
 		this->m_direction = direction;
 		this->m_shader = shader;
 		this->m_model = model;
-		this->m_camera = camera;
 		this->m_particleModel = particleModel;
 		this->m_particleShader = particleShader;
+		this->m_frustum = frustum;
 
 		initPhysics(m_position +  2.0f * glm::normalize(direction), new btBoxShape(btVector3(2*scale.x, 2*scale.y, 2*scale.z)));
 
@@ -115,16 +115,22 @@ namespace GameObject{
 	}
 	
 
-	void Projectile::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int Projectile::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		if (m_active) {
 			glm::mat4 transform = getTransformMatrix();
+			m_frustum->updateFrustum(transform);
+			if (!m_frustum->CubeInFrustum(0.f,0.f,0.f, 4.0f)) {
+				return 0;
+			}
 			renderer->startShader(m_shader);
 
 			renderer->drawModel(this->m_model, transform);
 			
 			renderer->stopShader();
 			renderParticles(renderer);
+			return 1 + s_MaxParticles;
 		}
+		return 0;
 	}
 
 	void Projectile::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

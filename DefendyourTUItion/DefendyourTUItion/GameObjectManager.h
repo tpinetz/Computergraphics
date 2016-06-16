@@ -15,7 +15,7 @@ namespace GameObjectManager
 		void removeObject(GameObject::GameObject& gameObject);
 	
 		void update(double deltaTime);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		inline std::vector<std::shared_ptr<GameObject::GameObject>>& getGameObjects() {

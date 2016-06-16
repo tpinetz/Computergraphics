@@ -14,11 +14,11 @@ namespace GameObject{
 	{
 	public:
 		static std::string m_typeName;
-		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod);
+		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, std::shared_ptr<Renderer::Frustum> frustum);
 		~Enemy();
 
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) ;
 
 		void handlePhysicsCollision(PhysicsObject* otherObject);
@@ -29,7 +29,7 @@ namespace GameObject{
 			return !m_dead;
 		}
 	private:
-		GLfloat movementSpeed = 1.f;
+		GLfloat movementSpeed = 0.5f;
 		enum state{ ENEMY_WALKING, ENEMY_BEGIN_DYING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
 		GLfloat m_interVelocity, m_interpolvalue; //velocity and actual value of interpolation
 		GLuint m_frame1, m_frame2; //frames to be displayed
@@ -40,6 +40,7 @@ namespace GameObject{
 		DynamicModelLoader mod;
 
 		bool m_dead = false;
+		std::shared_ptr<Renderer::Frustum> m_frustum;
 	};
 }
 

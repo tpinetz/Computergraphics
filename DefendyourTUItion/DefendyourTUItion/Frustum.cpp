@@ -13,13 +13,13 @@ namespace Renderer {
 	}
 
 	void Frustum::updateViewProjMatrix(glm::mat4& view, glm::mat4& projection) {
-		m_view = view;
-		m_proj = projection;
+		m_view = &view;
+		m_proj = &projection;
 	}
 
 	void Frustum::updateFrustum(glm::mat4& model) {
-		float*  proj = glm::value_ptr(m_proj);
-		glm::mat4 modlview = model * m_view;
+		float*  proj = glm::value_ptr(*m_proj);
+		glm::mat4 modlview =  (*m_view) * model;
 		float*  modl = glm::value_ptr(modlview);
 		float   clip[16];
 		float   t;
@@ -124,10 +124,43 @@ namespace Renderer {
 	}
 
 	bool Frustum::pointInFrustum(float x, float y, float z) {
-		
+		if (!activated) {
+			return true;
+		}
 		for (int p = 0; p < 6; p++) {
 			if (frustum[p][0] * x + frustum[p][1] * y + frustum[p][2] * z + frustum[p][3] <= 0)
 				return false;
+		}
+		return true;
+	}
+
+
+	bool Frustum::CubeInFrustum(float x, float y, float z, float size)
+	{
+		if (!activated) {
+			return true;
+		}
+		int p;
+
+		for (p = 0; p < 6; p++)
+		{
+			if (frustum[p][0] * (x - size) + frustum[p][1] * (y - size) + frustum[p][2] * (z - size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x + size) + frustum[p][1] * (y - size) + frustum[p][2] * (z - size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x - size) + frustum[p][1] * (y + size) + frustum[p][2] * (z - size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x + size) + frustum[p][1] * (y + size) + frustum[p][2] * (z - size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x - size) + frustum[p][1] * (y - size) + frustum[p][2] * (z + size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x + size) + frustum[p][1] * (y - size) + frustum[p][2] * (z + size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x - size) + frustum[p][1] * (y + size) + frustum[p][2] * (z + size) + frustum[p][3] > 0)
+				continue;
+			if (frustum[p][0] * (x + size) + frustum[p][1] * (y + size) + frustum[p][2] * (z + size) + frustum[p][3] > 0)
+				continue;
+			return false;
 		}
 		return true;
 	}

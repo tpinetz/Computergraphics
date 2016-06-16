@@ -2,9 +2,11 @@
 
 namespace GameObject {
 
-	Obstacle::Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale)
+	Obstacle::Obstacle(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale,
+		std::shared_ptr<Renderer::Frustum> frustum)
 		:m_model(model),
-		m_shader(shader)
+		m_shader(shader),
+		m_frustum(frustum)
 	{
 		this->m_position = position;
 		this->m_scale = scale;
@@ -23,14 +25,17 @@ namespace GameObject {
 
 	}
 
-	void Obstacle::render(std::shared_ptr<Renderer::Renderer> renderer) {
-		if (!m_active) {
-			return;
+	int Obstacle::render(std::shared_ptr<Renderer::Renderer> renderer) {
+		m_frustum->updateFrustum(m_transform);
+		if (!m_active || !m_frustum->CubeInFrustum(0.0f, 0.0f,0.0f , 5.0f)) {
+			return 0;
 		}
 
 		renderer->startShader(m_shader);
 		renderer->drawModel(*m_model, m_transform);
 		renderer->stopShader();
+
+		return 1;
 	}
 
 	void Obstacle::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

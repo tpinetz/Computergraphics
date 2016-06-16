@@ -11,11 +11,11 @@ namespace GameObject {
 		: public PhysicsObject
 	{
 	public:
-		Ground(GLuint shader, GLint width, GLint height);
+		Ground(GLuint shader, GLint width, GLint height, std::shared_ptr<Renderer::Frustum> frustum);
 		~Ground();
 
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 

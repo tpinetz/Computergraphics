@@ -14,14 +14,15 @@ namespace GameObject {
 
 	public:
 		Floor(GLuint shader, GLfloat width, GLfloat height, 
-			glm::vec3 position, std::shared_ptr<Renderer::Model> model);
+			glm::vec3 position, std::shared_ptr<Renderer::Model> model, std::shared_ptr<Renderer::Frustum> frustum);
 		~Floor();
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 	private:
 		std::shared_ptr<Renderer::Model> m_model;
 		std::shared_ptr<btCollisionShape> m_groundShape;
+		std::shared_ptr<Renderer::Frustum> m_frustum;
 		GLuint m_shader;
 		glm::mat4 m_transform;
 

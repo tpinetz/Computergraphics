@@ -21,16 +21,13 @@ namespace GameObject {
 
 	}
 
-	void Podest::render(std::shared_ptr<Renderer::Renderer> renderer) {
+	int Podest::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		m_frustum->updateFrustum(m_transform);
 
-		if (m_frustum->pointInFrustum(0.0f, 0.0f, 0.0f)) {
-			std::cout << "Point is in Frustum" << std::endl;
+		if (!m_frustum->CubeInFrustum(m_position.x, m_position.y, m_position.z, 4.0f)) {
+			return 0;
 		}
-		else {
-			std::cout << "Point not in Frustum" << std::endl;
-		}
-
+	
 		if (m_alpha < 1.0f) {
 			glDisable(GL_CULL_FACE);
 		}
@@ -43,6 +40,7 @@ namespace GameObject {
 		if (m_alpha < 1.0f) {
 			glEnable(GL_CULL_FACE);
 		}
+		return 1;
 	}
 
 	void Podest::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {

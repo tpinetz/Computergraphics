@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "Frustum.h"
 namespace GameObject {
 
 	class Podest :
@@ -11,7 +10,7 @@ namespace GameObject {
 		~Podest();
 
 		void update(double time);
-		void render(std::shared_ptr<Renderer::Renderer> renderer);
+		int render(std::shared_ptr<Renderer::Renderer> renderer);
 		void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader);
 
 		inline void setAlpha(GLfloat alpha) {

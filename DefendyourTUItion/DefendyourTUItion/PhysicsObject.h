@@ -14,7 +14,7 @@ namespace GameObject {
 		~PhysicsObject();
 
 		virtual void update(double time) = 0;
-		virtual void render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
+		virtual int render(std::shared_ptr<Renderer::Renderer> renderer) = 0;
 		virtual void renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) = 0;
 
 
