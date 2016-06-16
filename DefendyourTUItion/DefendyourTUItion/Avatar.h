@@ -8,6 +8,7 @@
 #include "Projectile.h"
 #include "ModelLoaderHelper.h"
 #include "PhysicsWorld.h"
+#include "Ground.h"
 
 namespace GameObject {
 
@@ -19,7 +20,7 @@ namespace GameObject {
 		Avatar(std::shared_ptr<Camera::Camera> camera, 
 			Physics::PhysicsWorld* physicsWorld,
 			std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader, 
-			std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum);
+			std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum, std::shared_ptr<Ground> ground);
 		~Avatar();
 		void update(double deltaTime);
 		int render(std::shared_ptr<Renderer::Renderer> renderer);
@@ -54,6 +55,15 @@ namespace GameObject {
 		GLfloat m_bulletCooldown = 0.0f; // How long the weapon still cools down;
 		std::shared_ptr<ModelLoader> m_particleModel;
 		std::shared_ptr<Renderer::Frustum> m_frustum;
+		std::shared_ptr<Ground> m_ground;
+		GLfloat m_movementspeed = 10.0f;
+
+		// Jump data
+
+		GLfloat m_jumpTime = 2.0f;
+		GLfloat m_currentJumpTime = 0.0f;
+		GLfloat m_jumpAcceleration = 3.0f;
+		bool m_jumping = false;
 
 	};
 

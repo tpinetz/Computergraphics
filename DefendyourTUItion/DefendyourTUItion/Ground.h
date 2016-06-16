@@ -24,6 +24,8 @@ namespace GameObject {
 		inline bool isActive() {
 			return true;
 		}
+
+		GLuint getheightOnCoordinates(GLuint x, GLuint y);
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
 		GLint m_tileWidth = 25, m_tileHeight = 25;

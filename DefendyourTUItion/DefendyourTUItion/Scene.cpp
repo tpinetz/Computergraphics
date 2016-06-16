@@ -134,18 +134,18 @@ namespace Scene {
 		
 		m_rockModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		m_rockModel->loadModel("../Assets/Model/rock/rock.obj");
+
+		auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(),
+			233, 233, m_frustum));
+		m_gameObjectManager->addObject(ground);
+		m_physicsWorld->addPhysicsObject(ground);
+
 		m_avatar = std::shared_ptr<GameObject::Avatar>(
 			new GameObject::Avatar(m_camera,
 			m_physicsWorld,
 			m_extraGameObjectManager,
-			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum));
-		m_physicsWorld->addPhysicsObject(m_avatar);
-		
-	auto ground = std::shared_ptr<GameObject::Ground>(new GameObject::Ground(m_textureShader->getProgramId(), 
-		233, 233, m_frustum));
-		m_gameObjectManager->addObject(ground);
-		m_physicsWorld->addPhysicsObject(ground);
-
+			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum, ground));
+	
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
 			glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *

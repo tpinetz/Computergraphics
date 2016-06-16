@@ -5,7 +5,7 @@ namespace GameObject{
 	Avatar::Avatar(std::shared_ptr<Camera::Camera> camera, 
 		Physics::PhysicsWorld* physicsWorld,
 		std::shared_ptr<GameObjectManager::GameObjectManager> gameObjectManager, GLuint projectileShader,
-		std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum)
+		std::shared_ptr<ModelLoader> particleModel, GLuint particleShader, std::shared_ptr<Renderer::Frustum> frustum, std::shared_ptr<Ground> ground)
 	{
 		m_name = "Avatar";
 		m_camera = camera;
@@ -15,6 +15,7 @@ namespace GameObject{
 		m_gameObjectManager = gameObjectManager;
 		m_particleModel = particleModel;
 		m_particleShader = particleShader;
+		m_ground = ground;
 
 		m_physicsWorld = physicsWorld;
 		m_projectileShader = projectileShader;
@@ -25,8 +26,8 @@ namespace GameObject{
 			m_projectileSpecTextureString);
 		m_frustum = frustum;
 
-		this->initPhysics(m_position,
-			new btBoxShape(btVector3(1, 1, 1)));
+	//	this->initPhysics(m_position,
+		//	new btBoxShape(btVector3(1, 1, 1)));
 	}
 
 
@@ -40,13 +41,28 @@ namespace GameObject{
 	}
 
 	void Avatar::update(double deltaTime) {
-		btTransform trans = getRigidBody()->getWorldTransform();
-		m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y() + 1.5f, trans.getOrigin().z());
-		m_camera->setCameraPosition(m_position);
+		//btTransform trans = getRigidBody()->getWorldTransform();
+		//m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y() + 1.5f, trans.getOrigin().z());
 
 		glm::vec3 temp = m_camera->getDirectionVec();
-		btVector3 force = btVector3(temp.x, temp.y, temp.z);
-		getRigidBody()->setLinearVelocity(10.0f * force);
+		glm::vec3 force = temp * (float)deltaTime * m_movementspeed;
+		m_position += force;
+		if (!m_jumping) {
+			m_position.y = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
+		}
+		else {
+			m_currentJumpTime += deltaTime;
+			if (m_currentJumpTime > m_jumpTime) {
+				m_jumping = false;
+			}
+			GLfloat height = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
+			height += m_jumpAcceleration * std::min(m_currentJumpTime, m_jumpTime / 2) - m_jumpAcceleration* std::max(m_currentJumpTime - m_jumpTime / 2, 0.0f);
+			std::cout << "Height: " << height << std::endl;
+			m_position.y = height;
+		}
+		m_camera->setCameraPosition(m_position);
+		
+
 		//std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 		//std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
@@ -61,8 +77,9 @@ namespace GameObject{
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
 		}
-		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE)) {
-			
+		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping) {
+			m_jumping = true;
+			m_currentJumpTime = 0.0f;
 		}
 	}
 

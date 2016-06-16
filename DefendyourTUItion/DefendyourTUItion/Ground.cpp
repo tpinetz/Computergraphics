@@ -51,6 +51,11 @@ namespace GameObject {
 //			std::cout << "PhysicsPosition Ground: " << "(" + std::to_string(vector.x()) + "," + std::to_string(vector.y())
 //			+ "," + std::to_string(vector.z()) + ")" << std::endl;  
 	}
+
+
+	GLuint Ground::getheightOnCoordinates(GLuint x, GLuint y) {
+		return 0;
+	}
 	
 	int Ground::render(std::shared_ptr<Renderer::Renderer> renderer) {
 		int result = 0;
