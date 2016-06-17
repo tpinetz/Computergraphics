@@ -11,7 +11,6 @@ namespace GameObject{
 		m_camera = camera;
 		m_position = m_camera->getCameraPosition();
 		m_scale = glm::vec3(0.0f, 0.0f, 0.0f);
-		m_mass = 10.0f;
 		m_gameObjectManager = gameObjectManager;
 		m_particleModel = particleModel;
 		m_particleShader = particleShader;
@@ -25,9 +24,6 @@ namespace GameObject{
 			m_projectileTextureString,
 			m_projectileSpecTextureString);
 		m_frustum = frustum;
-
-	//	this->initPhysics(m_position,
-		//	new btBoxShape(btVector3(1, 1, 1)));
 	}
 
 

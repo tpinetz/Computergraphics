@@ -29,7 +29,7 @@ namespace GameObject{
 			return !m_dead;
 		}
 	private:
-		GLfloat movementSpeed = 0.5f;
+		GLfloat movementSpeed = 2.5f;
 		enum state{ ENEMY_WALKING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
 		GLfloat m_velocityWalk, m_velocityDead, m_interVelocity; //velocity and actual value of interpolation
 		GLdouble m_dTime, m_TimeInTicks;

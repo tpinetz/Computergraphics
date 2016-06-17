@@ -14,7 +14,7 @@ namespace GameObject {
 
 
 	class Avatar :
-		public PhysicsObject
+		public GameObject
 	{
 	public:
 		Avatar(std::shared_ptr<Camera::Camera> camera, 
