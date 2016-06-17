@@ -89,6 +89,9 @@
     <ClCompile Include="Frustum.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicMesh.cpp">
+      <Filter>ObjectLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderHelper.h">
@@ -485,6 +488,9 @@
     <ClInclude Include="Frustum.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicMesh.h">
+      <Filter>ObjectLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
@@ -826,6 +832,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="DepthMapTest.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="DynamicMeshShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="DynamicMeshShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

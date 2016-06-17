@@ -85,6 +85,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_dynamicMeshShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_dynamicMeshShader->loadShader("../DefendyourTUItion/DynamicMeshShader.vertexshader",
+			"../DefendyourTUItion/DynamicMeshShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		// Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -146,13 +153,20 @@ namespace Scene {
 			m_extraGameObjectManager,
 			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum, ground));
 	
+		//glm::mat4 trans =
+		//	glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
+		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *
+		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(-1.0f, 0.0f, 0.0f)) *		//rotate
+		//	glm::scale(glm::mat4(1.0f), glm::vec3(0.011637)) *										//make it unitary
+		//	glm::translate(glm::mat4(1.0f), glm::vec3(7.24348, 1.70471, -40.0434));					//center object
+		//mod.LoadModel("../Assets/Model/warrior/warrior.md2", trans);
+		
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
-			glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *
-			glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(-1.0f, 0.0f, 0.0f)) *		//rotate
-			glm::scale(glm::mat4(1.0f), glm::vec3(0.011637)) *										//make it unitary
-			glm::translate(glm::mat4(1.0f), glm::vec3(7.24348, 1.70471, -40.0434));					//center object
-		mod.LoadModel("../Assets/Model/warrior/warrior.md2", trans);
+			//glm::rotate(180.0f * 3.14159f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *					//rotate
+			glm::scale(glm::vec3(0.104358f)) *														//make it unitary
+			glm::translate(glm::mat4(), glm::vec3(0.0f, -4.79826f, 0.51798));						//center object
+		mod.LoadModel("../Assets/Model/ninja/ninja.b3d", trans);
 		
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
@@ -210,7 +224,7 @@ namespace Scene {
 				fscanf(file, "%f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z);
 				auto enemy = std::shared_ptr<GameObject::Enemy>(
 					new GameObject::Enemy("enemy5", enemyPosition,
-					m_meshShader->getProgramId(), mod, m_frustum));
+					m_dynamicMeshShader->getProgramId(), mod, m_frustum));
 				m_gameObjectManager->addObject(enemy);
 				m_physicsWorld->addPhysicsObject(enemy);
 				m_enemies.push_back(enemy);

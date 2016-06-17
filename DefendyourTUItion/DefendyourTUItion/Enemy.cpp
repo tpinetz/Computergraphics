@@ -28,18 +28,18 @@ namespace GameObject {
 			new btBoxShape(btVector3(1.5, 1.8, 1)));
 
 
-		m_startWalk = 1;
-		m_endWalk = 8;
-		m_startDead = 17;
-		m_endDead = 26;
-		m_interVelocity = 2.f;
+		m_startWalk = 1.0;
+		m_endWalk = 13.6;
+		m_startDead = 166;
+		m_endDead = 173;
+		m_velocityWalk = 0.5f;
+		m_velocityDead = 0.5f;
+		m_interVelocity = m_velocityWalk;
+		m_dTime = 0;
 
 
 		//Begin walking
 		m_actualState = ENEMY_WALKING;
-		m_frame1 = m_startWalk;
-		m_frame2 = m_frame1 + 1;
-		m_interpolvalue = 0;
 	}
 	
 	
@@ -54,68 +54,49 @@ namespace GameObject {
 			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 		}
 
+		m_dTime += time * m_interVelocity;
 
-		if (m_interpolvalue <= 0.0f)
-			m_interpolvalue = 0.0f;
+		m_TimeInTicks = m_dTime * mod.getTicksPerSecond();
 
-		m_interpolvalue += time * m_interVelocity;
 
-		if (m_interpolvalue >= 1.0f)
+		switch (m_actualState)
 		{
-			switch (m_actualState)
-			{
-			case ENEMY_WALKING:
-				/* Move to next frame */
-				m_interpolvalue = 0.0f;
-				m_frame1++;
-				m_frame2++;
+		case ENEMY_WALKING:
+			/* Move to next frame */
 
-				if (m_frame2 > m_endWalk) m_frame2 = m_startWalk;
-				if (m_frame1 > m_endWalk) m_frame1 = m_startWalk;
-				break;
-			case ENEMY_BEGIN_DYING:
-				//Begin dying is ended. Now do the interpolation of dying
-				m_actualState = ENEMY_DYING;
-				m_frame1 = m_startDead;
-				m_frame2 = m_frame1 + 1;
-				m_interpolvalue = 0;
-
-				break;
-			case ENEMY_DYING:
+			if (m_TimeInTicks > m_endWalk) m_dTime = m_startWalk / mod.getTicksPerSecond();
+			if (m_TimeInTicks < m_startWalk) m_dTime = m_startWalk / mod.getTicksPerSecond();
+			break;
+		case ENEMY_DYING:
+			if (m_TimeInTicks > m_endDead){
 				//keep in last frame. Stay dead
-				m_interpolvalue = 0.0f;
-				m_frame1++;
-				m_frame2++;
-
-				if (m_frame2 > m_endDead){
-					m_actualState = ENEMY_DEAD;
-
-					m_frame2 = m_frame1 = m_endDead;
-				}
-
-
-				break;
-			case ENEMY_DEAD:
-				m_interpolvalue = 0.0f;
-				break;
-			default:
-				break;
+				m_actualState = ENEMY_DEAD;
+				if (m_TimeInTicks > m_endDead) m_dTime = m_endDead / mod.getTicksPerSecond();
 			}
 
+
+			break;
+		case ENEMY_DEAD:
+			if (m_TimeInTicks > m_endDead) m_dTime = m_endDead / mod.getTicksPerSecond();
+			break;
+		default:
+			break;
 		}
+		
 	}
 
 	void Enemy::handlePhysicsCollision(PhysicsObject* otherObject) {
 		m_dead = true;
 
-		m_interpolvalue = 0;
-		m_frame2 = m_startDead;
+		m_dTime = m_startDead / mod.getTicksPerSecond(); //begin dead animation
+		m_interVelocity = m_velocityDead;
 
-		m_actualState = ENEMY_BEGIN_DYING;
+		m_actualState = ENEMY_DYING;
 	}
 
 
 	int Enemy::render(std::shared_ptr<Renderer::Renderer> renderer) {
+			glDisable(GL_CULL_FACE);
 			glm::mat4 transform = getTransformMatrix();
 			m_frustum->updateFrustum(transform);
 			glm::vec3 frustumVec = m_scale;
@@ -123,19 +104,30 @@ namespace GameObject {
 			if (!m_frustum->CubeInFrustum(0.0f, 0.0f, 0.0f, 3.0f)) {
 				return 0;
 			}
-			mod.UpdateVAO(m_frame1, m_frame2, m_interpolvalue);
+			//Animate object for the given time
+			mod.Animate(m_dTime);
 
 			renderer->startShader(m_shader);
+
+			// pass bone information transformation to shader
+			GLuint count = 0;
+			std::vector<glm::mat4> arr = mod.getBonesMatrix(count);
+
+			GLint loc = glGetUniformLocation(m_shader, "gBones");
+			glUniformMatrix4fv(loc, count, GL_FALSE, &(arr.data()[0][0][0]));
+
 			renderer->drawModel(mod, transform);
 			renderer->stopShader();
-
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
 			return 1;
 	}
 
 	void Enemy::renderShadows(std::shared_ptr<Renderer::Renderer> renderer, GLuint shader) {
 			glm::mat4 transform = getTransformMatrix();
-			mod.UpdateVAO(m_frame1, m_frame2, m_interpolvalue);
 
+			//Animate object for the given time
+			mod.Animate(m_dTime);
 			renderer->startShader(shader);
 			renderer->drawShadow(mod, transform);
 			renderer->stopShader();

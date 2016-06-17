@@ -160,6 +160,7 @@
     <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="DynamicMesh.cpp" />
     <ClCompile Include="DynamicModelLoader.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="DynamicMesh.h" />
     <ClInclude Include="DynamicModelLoader.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
@@ -325,6 +327,8 @@
   <ItemGroup>
     <None Include="DepthMapTest.fragmentshader" />
     <None Include="DepthMapTest.vertexshader" />
+    <None Include="DynamicMeshShader.fragmentshader" />
+    <None Include="DynamicMeshShader.vertexshader" />
     <None Include="fragmentShader.fragmentshader" />
     <None Include="glm\gtc\bitfield.inl" />
     <None Include="glm\gtc\color_space.inl" />

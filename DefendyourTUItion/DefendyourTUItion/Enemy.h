@@ -30,11 +30,11 @@ namespace GameObject{
 		}
 	private:
 		GLfloat movementSpeed = 0.5f;
-		enum state{ ENEMY_WALKING, ENEMY_BEGIN_DYING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
-		GLfloat m_interVelocity, m_interpolvalue; //velocity and actual value of interpolation
-		GLuint m_frame1, m_frame2; //frames to be displayed
-		GLuint m_startWalk, m_endWalk; //start and end frames for walking
-		GLuint m_startDead, m_endDead;  //start and end frames for dead
+		enum state{ ENEMY_WALKING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
+		GLfloat m_velocityWalk, m_velocityDead, m_interVelocity; //velocity and actual value of interpolation
+		GLdouble m_dTime, m_TimeInTicks;
+		GLdouble m_startWalk, m_endWalk; //start and end frames for walking
+		GLdouble m_startDead, m_endDead;  //start and end frames for dead
 
 		GLuint m_shader;
 		DynamicModelLoader mod;
