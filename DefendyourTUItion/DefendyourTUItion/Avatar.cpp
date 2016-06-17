@@ -43,7 +43,9 @@ namespace GameObject{
 	void Avatar::update(double deltaTime) {
 		//btTransform trans = getRigidBody()->getWorldTransform();
 		//m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y() + 1.5f, trans.getOrigin().z());
-
+		if (m_startDelay >= 0.0f) {
+			m_startDelay -= deltaTime;
+		}
 		glm::vec3 temp = m_camera->getDirectionVec();
 		glm::vec3 force = temp * (float)deltaTime * m_movementspeed;
 		m_position += force;
@@ -57,7 +59,6 @@ namespace GameObject{
 			}
 			GLfloat height = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
 			height += m_jumpAcceleration * std::min(m_currentJumpTime, m_jumpTime / 2) - m_jumpAcceleration* std::max(m_currentJumpTime - m_jumpTime / 2, 0.0f);
-			std::cout << "Height: " << height << std::endl;
 			m_position.y = height;
 		}
 		m_camera->setCameraPosition(m_position);
@@ -77,7 +78,7 @@ namespace GameObject{
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
 		}
-		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping) {
+		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping && m_startDelay < 0.0f) {
 			m_jumping = true;
 			m_currentJumpTime = 0.0f;
 		}
