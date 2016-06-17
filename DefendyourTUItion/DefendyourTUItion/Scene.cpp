@@ -92,6 +92,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_dynamicShadowShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_dynamicShadowShader->loadShader("../DefendyourTUItion/DynamicShadowShader.vertexshader",
+			"../DefendyourTUItion/ShadowShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		// Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -152,14 +159,6 @@ namespace Scene {
 			m_physicsWorld,
 			m_extraGameObjectManager,
 			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum, ground));
-	
-		//glm::mat4 trans =
-		//	glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
-		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *
-		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(-1.0f, 0.0f, 0.0f)) *		//rotate
-		//	glm::scale(glm::mat4(1.0f), glm::vec3(0.011637)) *										//make it unitary
-		//	glm::translate(glm::mat4(1.0f), glm::vec3(7.24348, 1.70471, -40.0434));					//center object
-		//mod.LoadModel("../Assets/Model/warrior/warrior.md2", trans);
 		
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
@@ -224,7 +223,8 @@ namespace Scene {
 				fscanf(file, "%f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z);
 				auto enemy = std::shared_ptr<GameObject::Enemy>(
 					new GameObject::Enemy("enemy5", enemyPosition,
-					m_dynamicMeshShader->getProgramId(), mod, m_frustum));
+					m_dynamicMeshShader->getProgramId(),
+					m_dynamicShadowShader->getProgramId(),mod, m_frustum));
 				m_gameObjectManager->addObject(enemy);
 				m_physicsWorld->addPhysicsObject(enemy);
 				m_enemies.push_back(enemy);

@@ -840,5 +840,8 @@
     <None Include="DynamicMeshShader.vertexshader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="DynamicShadowShader.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
