@@ -153,13 +153,6 @@ namespace Scene {
 			m_extraGameObjectManager,
 			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum, ground));
 	
-		//glm::mat4 trans =
-		//	glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
-		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f)) *
-		//	glm::rotate(glm::mat4(), 90.0f * 3.1416f / 180.0f, glm::vec3(-1.0f, 0.0f, 0.0f)) *		//rotate
-		//	glm::scale(glm::mat4(1.0f), glm::vec3(0.011637)) *										//make it unitary
-		//	glm::translate(glm::mat4(1.0f), glm::vec3(7.24348, 1.70471, -40.0434));					//center object
-		//mod.LoadModel("../Assets/Model/warrior/warrior.md2", trans);
 		
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
@@ -171,6 +164,12 @@ namespace Scene {
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
 
+		auto boxModel = std::shared_ptr<ModelLoader>(new ModelLoader()); 
+		boxModel->loadModel("../Assets/Model/Box/Box1.obj");
+
+		//auto box = std::shared_ptr<GameObject::Box>(new GameObject::Box(boxModel, m_meshShader->getProgramId(), glm::vec3(3.0f, 1.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), m_frustum));
+		//m_gameObjectManager->addObject(box);
+		//m_physicsWorld->addPhysicsObject(box);
 
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
 			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 
@@ -221,10 +220,11 @@ namespace Scene {
 
 			if (strcmp(lineHeader, "e") == 0){
 				glm::vec3 enemyPosition;
-				fscanf(file, "%f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z);
+				GLfloat movementspeed;
+				fscanf(file, "%f %f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z, &movementspeed);
 				auto enemy = std::shared_ptr<GameObject::Enemy>(
 					new GameObject::Enemy("enemy5", enemyPosition,
-					m_dynamicMeshShader->getProgramId(), mod, m_frustum));
+					m_dynamicMeshShader->getProgramId(), mod, movementspeed, m_frustum));
 				m_gameObjectManager->addObject(enemy);
 				m_physicsWorld->addPhysicsObject(enemy);
 				m_enemies.push_back(enemy);

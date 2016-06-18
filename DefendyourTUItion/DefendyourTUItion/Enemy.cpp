@@ -7,7 +7,7 @@ namespace GameObject {
 	{
 	}
 
-	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, std::shared_ptr<Renderer::Frustum> frustum)
+	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum)
 	{
 		this->m_name = m_typeName;
 		this->m_position = position;
@@ -15,6 +15,7 @@ namespace GameObject {
 		this->m_shader = shader;
 		this->mod = mod;
 		this->m_frustum = frustum;
+		this->m_movementSpeed = movementspeed;
 
 		//rotate the enemy to face the objective 
 		glm::vec3 pos = -glm::vec3(position.x, position.y, position.z);
@@ -49,7 +50,7 @@ namespace GameObject {
 			m_position = glm::vec3(trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z());
 			//std::cout << "Enemy game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 
-			glm::vec3 forceVec = glm::normalize(-m_position) * movementSpeed;
+			glm::vec3 forceVec = glm::normalize(-m_position) * m_movementSpeed;
 
 			getRigidBody()->setLinearVelocity(btVector3(forceVec.x, forceVec.y, forceVec.z));
 		}

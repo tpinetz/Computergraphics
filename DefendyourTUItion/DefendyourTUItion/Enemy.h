@@ -14,7 +14,7 @@ namespace GameObject{
 	{
 	public:
 		static std::string m_typeName;
-		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, std::shared_ptr<Renderer::Frustum> frustum);
+		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum);
 		~Enemy();
 
 		void update(double time);
@@ -29,7 +29,7 @@ namespace GameObject{
 			return !m_dead;
 		}
 	private:
-		GLfloat movementSpeed = 2.5f;
+		GLfloat m_movementSpeed = 2.5f;
 		enum state{ ENEMY_WALKING, ENEMY_DYING, ENEMY_DEAD } m_actualState;
 		GLfloat m_velocityWalk, m_velocityDead, m_interVelocity; //velocity and actual value of interpolation
 		GLdouble m_dTime, m_TimeInTicks;

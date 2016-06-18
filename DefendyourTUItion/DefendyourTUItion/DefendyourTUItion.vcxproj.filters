@@ -92,6 +92,9 @@
     <ClCompile Include="DynamicMesh.cpp">
       <Filter>ObjectLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>GameObject\Box</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderHelper.h">
@@ -491,6 +494,9 @@
     <ClInclude Include="DynamicMesh.h">
       <Filter>ObjectLoader</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>GameObject\Box</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
@@ -561,6 +567,9 @@
     </Filter>
     <Filter Include="GameObject\Obstacles">
       <UniqueIdentifier>{9d3f6bf5-c3b9-46dc-a4bc-82ef9e60fa17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Box">
+      <UniqueIdentifier>{3bf3aa03-eec1-41ca-b3ff-101c0e4371a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

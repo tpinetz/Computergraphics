@@ -18,6 +18,7 @@
 #include "SkyBox.h"
 #include "Obstacle.h"
 #include "DynamicModelLoader.h"
+#include "Box.h"
 
 namespace Scene {
 
