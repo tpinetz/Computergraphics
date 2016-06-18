@@ -331,6 +331,7 @@
     <None Include="DepthMapTest.vertexshader" />
     <None Include="DynamicMeshShader.fragmentshader" />
     <None Include="DynamicMeshShader.vertexshader" />
+    <None Include="DynamicShadowShader.vertexshader" />
     <None Include="fragmentShader.fragmentshader" />
     <None Include="glm\gtc\bitfield.inl" />
     <None Include="glm\gtc\color_space.inl" />

@@ -14,7 +14,9 @@ namespace GameObject{
 	{
 	public:
 		static std::string m_typeName;
-		Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum);
+
+		Enemy(std::string name, glm::vec3 position, GLuint shader, GLuint shadowShader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum);
+
 		~Enemy();
 
 		void update(double time);
@@ -35,8 +37,9 @@ namespace GameObject{
 		GLdouble m_dTime, m_TimeInTicks;
 		GLdouble m_startWalk, m_endWalk; //start and end frames for walking
 		GLdouble m_startDead, m_endDead;  //start and end frames for dead
+		std::vector<glm::mat4> m_boneMovements;
 
-		GLuint m_shader;
+		GLuint m_shader, m_shadowShader;
 		DynamicModelLoader mod;
 
 		bool m_dead = false;

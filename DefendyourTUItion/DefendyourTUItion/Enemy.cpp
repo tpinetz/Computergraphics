@@ -7,12 +7,14 @@ namespace GameObject {
 	{
 	}
 
-	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum)
+
+	Enemy::Enemy(std::string name, glm::vec3 position, GLuint shader, GLuint shadowShader, DynamicModelLoader& mod, GLfloat movementspeed, std::shared_ptr<Renderer::Frustum> frustum)
 	{
 		this->m_name = m_typeName;
 		this->m_position = position;
 		this->m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		this->m_shader = shader;
+		this->m_shadowShader = shadowShader;
 		this->mod = mod;
 		this->m_frustum = frustum;
 		this->m_movementSpeed = movementspeed;
@@ -83,7 +85,14 @@ namespace GameObject {
 		default:
 			break;
 		}
-		
+
+
+		//Animate object for the given time
+		mod.Animate(m_dTime);
+
+		// pass bone information transformation to shader
+		GLuint count = 0;
+		m_boneMovements = mod.getBonesMatrix(count);
 	}
 
 	void Enemy::handlePhysicsCollision(PhysicsObject* otherObject) {
@@ -111,11 +120,8 @@ namespace GameObject {
 			renderer->startShader(m_shader);
 
 			// pass bone information transformation to shader
-			GLuint count = 0;
-			std::vector<glm::mat4> arr = mod.getBonesMatrix(count);
-
 			GLint loc = glGetUniformLocation(m_shader, "gBones");
-			glUniformMatrix4fv(loc, count, GL_FALSE, &(arr.data()[0][0][0]));
+			glUniformMatrix4fv(loc, m_boneMovements.size(), GL_FALSE, &(m_boneMovements.data()[0][0][0]));
 
 			renderer->drawModel(mod, transform);
 			renderer->stopShader();
@@ -129,7 +135,11 @@ namespace GameObject {
 
 			//Animate object for the given time
 			mod.Animate(m_dTime);
-			renderer->startShader(shader);
+			renderer->startShader(m_shadowShader);
+
+			GLint loc = glGetUniformLocation(m_shadowShader, "gBones");
+			glUniformMatrix4fv(loc, m_boneMovements.size(), GL_FALSE, &(m_boneMovements.data()[0][0][0]));
+
 			renderer->drawShadow(mod, transform);
 			renderer->stopShader();
 	}

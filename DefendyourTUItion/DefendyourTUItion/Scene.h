@@ -53,6 +53,8 @@ namespace Scene {
 		std::shared_ptr<ShaderHelper> m_shadowShader;
 		std::shared_ptr<ShaderHelper> m_depthTestShader;
 		std::shared_ptr<ShaderHelper> m_dynamicMeshShader;
+		std::shared_ptr<ShaderHelper> m_dynamicShadowShader;
+
 		// Used to store current Game Objects while the game is running
 		std::shared_ptr<GameObjectManager::GameObjectManager> m_gameObjectManager;
 		// Used to allocate new Game Objects while the game is running

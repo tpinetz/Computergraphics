@@ -92,6 +92,13 @@ namespace Scene {
 			return false;
 		}
 
+		this->m_dynamicShadowShader = std::shared_ptr<ShaderHelper>(new ShaderHelper());
+		if (!this->m_dynamicShadowShader->loadShader("../DefendyourTUItion/DynamicShadowShader.vertexshader",
+			"../DefendyourTUItion/ShadowShader.fragmentshader")) {
+			std::cerr << "Failed to read Shader";
+			return false;
+		}
+
 		// Input Initialization
 
 		m_keyboardManager = Input::KeyboardManager::getKeyboardManager();
@@ -152,7 +159,6 @@ namespace Scene {
 			m_physicsWorld,
 			m_extraGameObjectManager,
 			m_textureShader->getProgramId(), m_rockModel, m_particleShader->getProgramId(), m_frustum, ground));
-	
 		
 		glm::mat4 trans =
 			glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)) *								//scale to world dimensions
@@ -224,7 +230,8 @@ namespace Scene {
 				fscanf(file, "%f %f %f %f\n", &enemyPosition.x, &enemyPosition.y, &enemyPosition.z, &movementspeed);
 				auto enemy = std::shared_ptr<GameObject::Enemy>(
 					new GameObject::Enemy("enemy5", enemyPosition,
-					m_dynamicMeshShader->getProgramId(), mod, movementspeed, m_frustum));
+					m_dynamicMeshShader->getProgramId(),
+					m_dynamicShadowShader->getProgramId(), mod, movementspeed, m_frustum));
 				m_gameObjectManager->addObject(enemy);
 				m_physicsWorld->addPhysicsObject(enemy);
 				m_enemies.push_back(enemy);
