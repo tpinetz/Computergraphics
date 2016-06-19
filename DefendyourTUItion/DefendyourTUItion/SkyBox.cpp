@@ -62,12 +62,47 @@ namespace GameObject {
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 		glBindVertexArray(0);
 
-		faces.push_back("../Assets/Textures/skybox/right.jpg");
+		faces.push_back("../Assets/Textures/PondNight/posx.jpg");
+		faces.push_back("../Assets/Textures/PondNight/negx.jpg");
+		faces.push_back("../Assets/Textures/PondNight/posy.jpg");
+		faces.push_back("../Assets/Textures/PondNight/negy.jpg");
+		faces.push_back("../Assets/Textures/PondNight/posz.jpg");
+		faces.push_back("../Assets/Textures/PondNight/negz.jpg");
+
+		/*faces.push_back("../Assets/Textures/Powerlines/posx.jpg");
+		faces.push_back("../Assets/Textures/Powerlines/negx.jpg");
+		faces.push_back("../Assets/Textures/Powerlines/posy.jpg");
+		faces.push_back("../Assets/Textures/Powerlines/negy.jpg");
+		faces.push_back("../Assets/Textures/Powerlines/posz.jpg");
+		faces.push_back("../Assets/Textures/Powerlines/negz.jpg");*/
+
+		/*faces.push_back("../Assets/Textures/sor_land/land_rt.jpg");
+		faces.push_back("../Assets/Textures/sor_land/land_lf.jpg");
+		faces.push_back("../Assets/Textures/sor_land/land_up.jpg");
+		faces.push_back("../Assets/Textures/sor_land/land_dn.jpg");
+		faces.push_back("../Assets/Textures/sor_land/land_bk.jpg");
+		faces.push_back("../Assets/Textures/sor_land/land_ft.jpg");*/
+
+		/*faces.push_back("../Assets/Textures/skybox/right.jpg");
 		faces.push_back("../Assets/Textures/skybox/left.jpg");
 		faces.push_back("../Assets/Textures/skybox/top.jpg");
 		faces.push_back("../Assets/Textures/skybox/bottom.jpg");
 		faces.push_back("../Assets/Textures/skybox/back.jpg");
-		faces.push_back("../Assets/Textures/skybox/front.jpg");
+		faces.push_back("../Assets/Textures/skybox/front.jpg");*/
+
+		/*faces.push_back("../Assets/Textures/CNTower/posx.jpg");
+		faces.push_back("../Assets/Textures/CNTower/negx.jpg");
+		faces.push_back("../Assets/Textures/CNTower/posy.jpg");
+		faces.push_back("../Assets/Textures/CNTower/negy.jpg");
+		faces.push_back("../Assets/Textures/CNTower/posz.jpg");
+		faces.push_back("../Assets/Textures/CNTower/negz.jpg");*/
+
+		/*faces.push_back("../Assets/Textures/NightPath/posx.jpg");
+		faces.push_back("../Assets/Textures/NightPath/negx.jpg");
+		faces.push_back("../Assets/Textures/NightPath/posy.jpg");
+		faces.push_back("../Assets/Textures/NightPath/negy.jpg");
+		faces.push_back("../Assets/Textures/NightPath/posz.jpg");
+		faces.push_back("../Assets/Textures/NightPath/negz.jpg");*/
 		cubemapTexture = loadCubemap(faces);
 	}
 
