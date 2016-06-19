@@ -65,8 +65,8 @@ namespace GameObject{
 		m_camera->setCameraPosition(m_position);
 		
 
-		std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
-		//std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
+		// std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
+		// std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
 		m_bulletCooldown -= deltaTime;
 		if (Input::MouseInputManager::getMouseInputManagerInstance()
