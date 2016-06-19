@@ -53,7 +53,14 @@ namespace GameObject {
 	}
 
 
-	GLuint Ground::getheightOnCoordinates(GLuint x, GLuint y) {
+	GLfloat Ground::getheightOnCoordinates(GLfloat x, GLfloat y) {
+		for (auto box : boxes) {
+			glm::vec3& pos = box->getPosition();
+			if (x < pos.x + 1.0f && x > pos.x - 1.0f &&
+				y < pos.z + 1.0f && y > pos.z - 1.0f) {
+				return 2.0f;
+			}
+		}
 		return 0;
 	}
 	

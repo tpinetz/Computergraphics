@@ -9,7 +9,7 @@ namespace GameObject {
 		this->m_frustum = frustum;
 
 		m_position = position;
-		m_scale = glm::vec3(width, 0.1, height);
+		m_scale = glm::vec3(width, 1, height);
 		m_transform = getTransformMatrix();
 	}
 

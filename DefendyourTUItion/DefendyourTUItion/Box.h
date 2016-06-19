@@ -6,7 +6,7 @@ namespace GameObject {
 		public PhysicsObject
 	{
 	public:
-		Box(std::shared_ptr<ModelLoader> model, GLuint shader, glm::vec3 position, glm::vec3 scale,
+		Box(std::shared_ptr<Renderer::Model> model, GLuint shader, glm::vec3 position, glm::vec3 scale,
 			std::shared_ptr<Renderer::Frustum> frustum);
 		~Box();
 
@@ -22,7 +22,7 @@ namespace GameObject {
 
 	private:
 		GLuint m_shader;
-		std::shared_ptr<ModelLoader> m_model;
+		std::shared_ptr<Renderer::Model> m_model;
 		glm::mat4 m_transform;
 
 		std::shared_ptr<Renderer::Frustum> m_frustum;

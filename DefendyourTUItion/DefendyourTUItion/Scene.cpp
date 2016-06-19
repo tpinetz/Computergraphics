@@ -170,12 +170,14 @@ namespace Scene {
 		std::shared_ptr<ModelLoader> treeModel = std::shared_ptr<ModelLoader>(new ModelLoader());
 		treeModel->loadModel("../Assets/Model/Tree1/Tree.obj");
 
-		auto boxModel = std::shared_ptr<ModelLoader>(new ModelLoader()); 
-		boxModel->loadModel("../Assets/Model/Box/Box1.obj");
+		auto boxModel = Common::ModelLoaderHelper::getInstance()->getTextureModel("../Assets/Model/Box/cube.obj",
+			"../Assets/Model/Box/Texture/container2.png", "../Assets/Model/Box/Texture/container2.png", "../Assets/Model/Box/Texture/container2_specular.png");
 
-		//auto box = std::shared_ptr<GameObject::Box>(new GameObject::Box(boxModel, m_meshShader->getProgramId(), glm::vec3(3.0f, 1.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), m_frustum));
-		//m_gameObjectManager->addObject(box);
-		//m_physicsWorld->addPhysicsObject(box);
+		auto box = std::shared_ptr<GameObject::Box>(new GameObject::Box(boxModel, m_textureShader->getProgramId(), 
+			glm::vec3(3.0f, 2.0f, -5.0f), glm::vec3(0.7f, 0.7f, 0.7f), m_frustum));
+		m_gameObjectManager->addObject(box);
+		m_physicsWorld->addPhysicsObject(box);
+		ground->addBox(box);
 
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
 			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 

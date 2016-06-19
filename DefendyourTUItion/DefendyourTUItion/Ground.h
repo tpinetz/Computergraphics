@@ -5,6 +5,7 @@
 #include "PhysicsWorld.h"
 #include "ModelLoaderHelper.h"
 #include "FormattingHelper.h"
+#include "Box.h"
 
 namespace GameObject {
 	class Ground
@@ -25,7 +26,11 @@ namespace GameObject {
 			return true;
 		}
 
-		GLuint getheightOnCoordinates(GLuint x, GLuint y);
+		inline void addBox(std::shared_ptr<Box> box) {
+			boxes.push_back(box);
+		}
+
+		GLfloat getheightOnCoordinates(GLfloat x, GLfloat y);
 	private: 
 		std::vector<std::shared_ptr<Floor>> m_floorTiles;
 		GLint m_tileWidth = 25, m_tileHeight = 25;
@@ -41,6 +46,7 @@ namespace GameObject {
 		GLuint m_vertexBuffer;
 		GLuint m_textureBuffer;
 		GLuint m_vao;
+		std::vector<std::shared_ptr<Box>> boxes;
 
 	};
 }

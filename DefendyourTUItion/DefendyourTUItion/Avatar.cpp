@@ -10,6 +10,7 @@ namespace GameObject{
 		m_name = "Avatar";
 		m_camera = camera;
 		m_position = m_camera->getCameraPosition();
+		m_position.y = ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
 		m_scale = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_gameObjectManager = gameObjectManager;
 		m_particleModel = particleModel;
@@ -45,22 +46,26 @@ namespace GameObject{
 		glm::vec3 temp = m_camera->getDirectionVec();
 		glm::vec3 force = temp * (float)deltaTime * m_movementspeed;
 		m_position += force;
-		if (!m_jumping) {
-			m_position.y = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
-		}
-		else {
+		GLfloat groundHeight = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
+		if (m_jumping) {
 			m_currentJumpTime += deltaTime;
 			if (m_currentJumpTime > m_jumpTime) {
 				m_jumping = false;
 			}
-			GLfloat height = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
-			height += m_jumpAcceleration * std::min(m_currentJumpTime, m_jumpTime / 2) - m_jumpAcceleration* std::max(m_currentJumpTime - m_jumpTime / 2, 0.0f);
-			m_position.y = height;
+			m_position.y += m_jumpAcceleration * deltaTime;
 		}
+		
+		if (m_position.y  < groundHeight - 0.3f) {
+			m_position -= force;
+		}
+		else {
+			m_position.y = std::max(groundHeight, m_position.y - m_fallingSpeed * (float) deltaTime);
+		}
+		
 		m_camera->setCameraPosition(m_position);
 		
 
-		//std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
+		std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 		//std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
 		m_bulletCooldown -= deltaTime;
