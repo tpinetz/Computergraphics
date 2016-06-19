@@ -28,7 +28,7 @@ namespace GameObject {
 
 		m_mass = 10;
 		this->initPhysics(position, 
-			new btBoxShape(btVector3(1.5, 1.8, 1)));
+			new btBoxShape(btVector3(1.5, 2.4, 1)));
 
 
 		m_startWalk = 1.0;
