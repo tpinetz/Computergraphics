@@ -20,7 +20,7 @@ namespace Game {
 		GLFWwindow* m_window;
 		GLint m_top;
 		GLint m_right;
-		int m_maxLevel = 2;
+		int m_maxLevel = 3;
 	};
 }
 

@@ -179,6 +179,18 @@ namespace Scene {
 		m_physicsWorld->addPhysicsObject(box);
 		ground->addBox(box);
 
+		box = std::shared_ptr<GameObject::Box>(new GameObject::Box(boxModel, m_textureShader->getProgramId(),
+			glm::vec3(1.0f, 2.0f, -5.0f), glm::vec3(0.7f, 0.7f, 0.7f), m_frustum));
+		m_gameObjectManager->addObject(box);
+		m_physicsWorld->addPhysicsObject(box);
+		ground->addBox(box);
+
+		box = std::shared_ptr<GameObject::Box>(new GameObject::Box(boxModel, m_textureShader->getProgramId(),
+			glm::vec3(-3.0f, 2.0f, 3.0f), glm::vec3(0.7f, 0.7f, 0.7f), m_frustum));
+		m_gameObjectManager->addObject(box);
+		m_physicsWorld->addPhysicsObject(box);
+		ground->addBox(box);
+
 		auto tree = std::shared_ptr<GameObject::Obstacle>(new GameObject::Obstacle(
 			treeModel, m_meshShader->getProgramId(), glm::vec3(10.0f, 0.0f, -10.0f), 
 			glm::vec3(0.5f, 1.0f, 0.5f), m_frustum));
