@@ -45,6 +45,9 @@ namespace GameObject{
 		}
 		glm::vec3 temp = m_camera->getDirectionVec();
 		glm::vec3 force = temp * (float)deltaTime * m_movementspeed;
+		if (m_jumping) {
+			force.y = 0;
+		}
 		m_position += force;
 		GLfloat groundHeight = m_ground->getheightOnCoordinates(m_position.x, m_position.z) + 2.0f;
 		if (m_jumping) {
@@ -60,6 +63,12 @@ namespace GameObject{
 		}
 		else {
 			m_position.y = std::max(groundHeight, m_position.y - m_fallingSpeed * (float) deltaTime);
+			if (m_position.y - groundHeight < 0.1f) {
+				m_onGround = true;
+			}
+			else {
+				m_onGround = false;
+			}
 		}
 		
 		m_camera->setCameraPosition(m_position);
@@ -79,9 +88,10 @@ namespace GameObject{
 			m_physicsWorld->addPhysicsObject(newProjectile);
 			m_bulletCooldown = m_bulletCooldownAttribute;
 		}
-		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping && m_startDelay < 0.0f) {
+		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping && m_startDelay < 0.0f && m_onGround) {
 			m_jumping = true;
 			m_currentJumpTime = 0.0f;
+			m_onGround = false;
 		}
 	}
 

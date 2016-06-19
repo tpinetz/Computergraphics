@@ -64,6 +64,7 @@ namespace GameObject {
 		GLfloat m_currentJumpTime = 0.0f;
 		GLfloat m_jumpAcceleration = 5.0f;
 		bool m_jumping = false;
+		bool m_onGround = true;
 		GLfloat m_startDelay = 0.8f;
 		GLfloat m_fallingSpeed = 3.0f;
 
