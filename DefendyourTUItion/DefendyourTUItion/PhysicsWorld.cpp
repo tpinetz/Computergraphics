@@ -99,7 +99,7 @@ namespace Physics {
 	}
 
 	void PhysicsWorld::runPhysics(float deltaTime) {
-		m_world->stepSimulation(btScalar(deltaTime), 7);
+		m_world->stepSimulation(btScalar(deltaTime));
 
 		vector < std::shared_ptr<GameObject::PhysicsObject>> inactiveObjects;
 

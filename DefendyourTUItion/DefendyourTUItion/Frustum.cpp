@@ -13,13 +13,13 @@ namespace Renderer {
 	}
 
 	void Frustum::updateViewProjMatrix(glm::mat4& view, glm::mat4& projection) {
-		m_view = &view;
-		m_proj = &projection;
+		m_view = view;
+		m_proj = projection;
 	}
 
 	void Frustum::updateFrustum(glm::mat4& model) {
-		float*  proj = glm::value_ptr(*m_proj);
-		glm::mat4 modlview =  (*m_view) * model;
+		float*  proj = glm::value_ptr(m_proj);
+		glm::mat4 modlview =  (m_view) * model;
 		float*  modl = glm::value_ptr(modlview);
 		float   clip[16];
 		float   t;

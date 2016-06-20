@@ -22,10 +22,10 @@ namespace GameObject{
 		this->m_particleShader = particleShader;
 		this->m_frustum = frustum;
 
-		initPhysics(m_position +  2.0f * glm::normalize(direction), new btBoxShape(btVector3(2*scale.x, 2*scale.y, 2*scale.z)));
+		initPhysics(m_position + 2.0f * normalize(direction), new btBoxShape(btVector3(2*scale.x, 2*scale.y, 2*scale.z)));
 
-		glm::vec3 forceVector = m_direction * m_force;
-		getRigidBody()->applyCentralForce(btVector3(forceVector.x, forceVector.y, forceVector.z));
+		glm::vec3 forceVector = glm::normalize(m_direction) * m_force;
+		getRigidBody()->applyForce(btVector3(forceVector.x, forceVector.y, forceVector.z), btVector3(m_position.x, m_position.y, m_position.z));
 		setUpParticles();
 	}
 

@@ -7,7 +7,7 @@ namespace GameObject {
 		m_model(model),
 		m_frustum(frustum)
 	{
-		m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+		m_position = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_scale = glm::vec3(1, 2, 1);
 		m_transform = getTransformMatrix();
 	}

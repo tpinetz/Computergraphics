@@ -43,6 +43,20 @@ namespace GameObject{
 		if (m_startDelay >= 0.0f) {
 			m_startDelay -= deltaTime;
 		}
+
+		m_bulletCooldown -= deltaTime;
+		if (Input::MouseInputManager::getMouseInputManagerInstance()
+			->isKeyPressed(GLFW_MOUSE_BUTTON_1) && m_bulletCooldown < 0.0f) {
+			std::shared_ptr<Projectile> newProjectile =
+				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_camera->getCameraPosition(),
+				glm::vec3(0.4f, 0.4f, 0.4f), m_camera->getCameraDirection(),
+				m_projectileModel, m_particleModel, m_particleShader, m_frustum));
+			m_gameObjectManager->addObject(newProjectile);
+			m_physicsWorld->addPhysicsObject(newProjectile);
+			m_bulletCooldown = m_bulletCooldownAttribute;
+		}
+
+
 		glm::vec3 temp = m_camera->getDirectionVec();
 		glm::vec3 force = temp * (float)deltaTime * m_movementspeed;
 		if (m_jumping) {
@@ -77,17 +91,7 @@ namespace GameObject{
 		// std::cout << "!Avatar game position: " << Common::FormattingHelper::getFormattedVectorString(m_position) << std::endl;
 		// std::cout << "Avatar Position after updating: (" << trans.getOrigin().getX() << "," << trans.getOrigin().getY() << "," << trans.getOrigin().getZ() << ")" << std::endl;
 
-		m_bulletCooldown -= deltaTime;
-		if (Input::MouseInputManager::getMouseInputManagerInstance()
-			->isKeyPressed(GLFW_MOUSE_BUTTON_1) && m_bulletCooldown < 0.0f) {
-			std::shared_ptr<Projectile> newProjectile =
-				std::shared_ptr<Projectile>(new Projectile(m_projectileShader, m_camera->getCameraPosition(), 
-				glm::vec3(0.4f, 0.4f, 0.4f), m_camera->getCameraDirection(),
-				m_projectileModel, m_particleModel, m_particleShader, m_frustum));
-			m_gameObjectManager->addObject(newProjectile);
-			m_physicsWorld->addPhysicsObject(newProjectile);
-			m_bulletCooldown = m_bulletCooldownAttribute;
-		}
+
 		if (Input::KeyboardManager::getKeyboardManager()->isKeyPressed(GLFW_KEY_SPACE) && !m_jumping && m_startDelay < 0.0f && m_onGround) {
 			m_jumping = true;
 			m_currentJumpTime = 0.0f;

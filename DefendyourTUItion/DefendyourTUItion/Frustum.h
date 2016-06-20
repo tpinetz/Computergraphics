@@ -22,8 +22,8 @@ namespace Renderer {
 
 	private:
 		float frustum[6][4];
-		glm::mat4* m_view;
-		glm::mat4* m_proj;
+		glm::mat4 m_view;
+		glm::mat4 m_proj;
 		bool activated = true;
 	};
 }
